@@ -1,0 +1,11 @@
+{
+	"name": "datrooster/datrooster-partial-payments",
+	"description": "WooCommerce deposits and split payments foundation plugin.",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"autoload": {
+		"psr-4": {
+			"DatRooster\\PartialPayments\\": "src/"
+		}
+	}
+}

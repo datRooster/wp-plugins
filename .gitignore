@@ -1,0 +1,13 @@
+.DS_Store
+
+/vendor/
+
+node_modules/
+
+plugins/*/vendor/
+plugins/*/node_modules/
+plugins/*/build/
+plugins/*/dist/
+plugins/*/*.zip
+
+.phpcs-cache
