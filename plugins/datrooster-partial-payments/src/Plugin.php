@@ -15,6 +15,8 @@ use DatRooster\PartialPayments\Checkout\OrderDepositMeta;
 use DatRooster\PartialPayments\Deposits\Calculator;
 use DatRooster\PartialPayments\Deposits\SettingsResolver;
 use DatRooster\PartialPayments\Frontend\ProductSelection;
+use DatRooster\PartialPayments\Orders\BalanceOrderManager;
+use DatRooster\PartialPayments\Orders\PartiallyPaidStatus;
 use DatRooster\PartialPayments\Product\MetaRegistry;
 
 defined( 'ABSPATH' ) || exit;
@@ -72,13 +74,17 @@ final class Plugin {
 
 		$settings_resolver = new SettingsResolver();
 		$calculator        = new Calculator();
+		$status_manager    = new PartiallyPaidStatus();
 		$product_selection = new ProductSelection( $settings_resolver );
 		$cart_manager      = new DepositCartManager( $settings_resolver, $calculator );
 		$order_meta        = new OrderDepositMeta( $cart_manager );
+		$balance_manager   = new BalanceOrderManager( $settings_resolver );
 
+		$status_manager->register();
 		$product_selection->register();
 		$cart_manager->register();
 		$order_meta->register();
+		$balance_manager->register();
 
 		if ( ! is_admin() ) {
 			return;

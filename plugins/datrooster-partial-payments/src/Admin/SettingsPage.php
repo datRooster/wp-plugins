@@ -8,6 +8,7 @@
 namespace DatRooster\PartialPayments\Admin;
 
 use DatRooster\PartialPayments\Compatibility\WooCommerce;
+use DatRooster\PartialPayments\Orders\PartiallyPaidStatus;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -402,7 +403,7 @@ final class SettingsPage {
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Partial Payments', 'datrooster-partial-payments' ); ?></h1>
-			<p><?php esc_html_e( 'Current milestone adds deposit settings, product overrides, classic checkout calculations, and remaining balance tracking. Cart and Checkout Blocks integration is planned for a future release.', 'datrooster-partial-payments' ); ?></p>
+			<p><?php esc_html_e( 'Current milestone adds deposit settings, product overrides, classic checkout calculations, linked balance orders, and My Account balance payment actions. Cart and Checkout Blocks integration is planned for a future release.', 'datrooster-partial-payments' ); ?></p>
 
 			<nav class="nav-tab-wrapper" aria-label="<?php esc_attr_e( 'Settings tabs', 'datrooster-partial-payments' ); ?>">
 				<a class="nav-tab <?php echo esc_attr( 'general' === $tab ? 'nav-tab-active' : '' ); ?>" href="<?php echo esc_url( $this->get_tab_url( 'general' ) ); ?>">
@@ -611,6 +612,8 @@ final class SettingsPage {
 	 */
 	private function get_order_status_choices(): array {
 		$statuses = WooCommerce::get_order_statuses();
+
+		unset( $statuses[ PartiallyPaidStatus::STATUS_KEY ] );
 
 		if ( empty( $statuses ) ) {
 			return array(

@@ -39,14 +39,15 @@ wp-plugins/
 - riuso automatico dei gateway WooCommerce esistenti, salvo esclusioni configurate dall'admin;
 - gestione iniziale di coupon su articoli con deposito, tasse prodotto proporzionali e spedizione upfront o proporzionale;
 - riepilogo del saldo residuo stimato per prodotti, tasse e spedizione in carrello e checkout classici, con metadati ordine dedicati;
+- creazione automatica di un ordine saldo collegato, con stato `Partially paid` sull'ordine principale e pulsante `Pay balance` nell'area cliente;
 - niente gateway custom in questa fase: il plugin si affianca ai metodi gia presenti;
 - compatibilita HPOS dichiarata; Cart & Checkout Blocks marcati come non ancora supportati finche non completiamo l'integrazione dedicata.
 
 ## Prossimi passi
 
-1. aggiungere gestione del saldo residuo da area cliente, link sicuri e stati ordine dedicati;
-2. aggiungere email transazionali, reminder e automazioni;
-3. estendere le regole a variazioni, categorie, ruoli e condizioni carrello;
+1. aggiungere email transazionali, reminder e automazioni per il saldo residuo;
+2. estendere le regole a variazioni, categorie, ruoli e condizioni carrello;
+3. rifinire il backoffice per merchant con strumenti saldo e note piu chiare;
 4. integrare Cart & Checkout Blocks e preparare la checklist finale per WordPress.org.
 
 ## Release

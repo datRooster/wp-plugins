@@ -25,6 +25,8 @@
 ## Fase 4
 
 - pagamento saldo da area cliente;
+- ordine saldo collegato e link sicuri basati su `order-pay`;
+- stato ordine dedicato per ordini parzialmente pagati;
 - email transazionali e reminder;
 - scadenze, cron e automazioni;
 - storico pagamenti e note ordine;

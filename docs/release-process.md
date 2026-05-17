@@ -15,7 +15,7 @@ plugins/<plugin-slug>/vX.Y.Z
 Esempio:
 
 ```text
-plugins/datrooster-partial-payments/v0.3.0
+plugins/datrooster-partial-payments/v0.4.0
 ```
 
 ## Cosa succede
@@ -38,8 +38,8 @@ Quando viene pubblicato un tag che rispetta questo formato:
 3. creare il tag:
 
 ```bash
-git tag plugins/datrooster-partial-payments/v0.3.0
-git push origin plugins/datrooster-partial-payments/v0.3.0
+git tag plugins/datrooster-partial-payments/v0.4.0
+git push origin plugins/datrooster-partial-payments/v0.4.0
 ```
 
 4. attendere il workflow `Release Plugin`;
