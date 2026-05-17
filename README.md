@@ -23,7 +23,7 @@ wp-plugins/
 
 ## Plugin attuali
 
-- `datrooster-partial-payments`: base del plugin WooCommerce per acconti, depositi e pagamenti rateali, con impostazioni globali e override per singolo prodotto.
+- `datrooster-partial-payments`: base del plugin WooCommerce per acconti, depositi e pagamenti rateali, con impostazioni globali, override per prodotto e primo flusso storefront.
 
 ## Convenzioni di lavoro
 
@@ -37,12 +37,14 @@ wp-plugins/
 
 - scelta tra pagamento completo e deposito sulla pagina prodotto per prodotti supportati;
 - riuso automatico dei gateway WooCommerce esistenti, salvo esclusioni configurate dall'admin;
-- riepilogo del saldo residuo prodotti in carrello, checkout e metadati ordine;
-- niente gateway custom in questa fase: il plugin si affianca ai metodi gia presenti.
+- gestione iniziale di coupon su articoli con deposito, tasse prodotto proporzionali e spedizione upfront o proporzionale;
+- riepilogo del saldo residuo stimato per prodotti, tasse e spedizione in carrello e checkout classici, con metadati ordine dedicati;
+- niente gateway custom in questa fase: il plugin si affianca ai metodi gia presenti;
+- compatibilita HPOS dichiarata; Cart & Checkout Blocks marcati come non ancora supportati finche non completiamo l'integrazione dedicata.
 
 ## Prossimi passi
 
-1. aggiungere politiche avanzate per coupon, tasse e spedizione nei flussi deposito;
-2. aggiungere gestione saldo residuo, email e automazioni;
+1. aggiungere gestione del saldo residuo da area cliente, link sicuri e stati ordine dedicati;
+2. aggiungere email transazionali, reminder e automazioni;
 3. estendere le regole a variazioni, categorie, ruoli e condizioni carrello;
-4. preparare packaging e checklist di conformita per WordPress.org.
+4. integrare Cart & Checkout Blocks e preparare la checklist finale per WordPress.org.

@@ -59,6 +59,9 @@ final class SettingsResolver {
 			'deposit_amount'    => ProductSettings::sanitize_effective_amount( $settings['deposit_amount'] ?? $defaults['deposit_amount'], $defaults['deposit_amount'] ),
 			'default_selection' => ProductSettings::sanitize_effective_default_selection( $settings['default_selection'] ?? $defaults['default_selection'], $defaults['default_selection'] ),
 			'fully_paid_status' => sanitize_text_field( (string) ( $settings['fully_paid_status'] ?? $defaults['fully_paid_status'] ) ),
+			'tax_handling'      => 'proportional',
+			'shipping_handling' => in_array( $settings['shipping_handling'] ?? '', array( 'upfront', 'proportional' ), true ) ? $settings['shipping_handling'] : $defaults['shipping_handling'],
+			'coupon_handling'   => in_array( $settings['coupon_handling'] ?? '', array( 'initial_payment', 'exclude_deposit_items' ), true ) ? $settings['coupon_handling'] : $defaults['coupon_handling'],
 			'disabled_gateways' => $disabled_gateways,
 		);
 	}

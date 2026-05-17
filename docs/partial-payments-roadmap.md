@@ -17,21 +17,23 @@
 ## Fase 3
 
 - calcolo deposito nel carrello;
-- supporto checkout classico e checkout a blocchi;
+- supporto checkout classico;
 - gateway consentiti o esclusi;
-- creazione ordine con metadati chiari per saldo residuo.
+- creazione ordine con metadati chiari per saldo residuo;
+- prime politiche configurabili per coupon, tasse e spedizione.
 
 ## Fase 4
 
 - pagamento saldo da area cliente;
 - email transazionali e reminder;
 - scadenze, cron e automazioni;
-- storico pagamenti e note ordine.
+- storico pagamenti e note ordine;
+- integrazione Cart & Checkout Blocks.
 
 ## Fase 5
 
 - piani di pagamento multipli;
-- fee, tasse, spedizione e coupon configurabili;
+- fee, tasse, spedizione e coupon con matrici piu granulari;
 - regole per ruolo, categoria e totale carrello;
 - reportistica e dashboard merchant.
 

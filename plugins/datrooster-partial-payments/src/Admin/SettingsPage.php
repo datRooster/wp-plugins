@@ -36,6 +36,9 @@ final class SettingsPage {
 			'deposit_amount'      => '50',
 			'default_selection'   => 'deposit',
 			'fully_paid_status'   => 'wc-completed',
+			'tax_handling'        => 'proportional',
+			'shipping_handling'   => 'upfront',
+			'coupon_handling'     => 'initial_payment',
 			'disabled_gateways'   => array(),
 		);
 	}
@@ -202,6 +205,56 @@ final class SettingsPage {
 			)
 		);
 
+		add_settings_field(
+			'tax_handling',
+			__( 'Tax handling', 'datrooster-partial-payments' ),
+			array( $this, 'render_select_field' ),
+			'drpp_general',
+			'drpp_general_section',
+			array(
+				'option_name' => self::GENERAL_OPTION,
+				'key'         => 'tax_handling',
+				'choices'     => array(
+					'proportional' => __( 'Charge taxes proportionally with the deposit', 'datrooster-partial-payments' ),
+				),
+				'description' => __( 'This release keeps product taxes proportional to the portion paid today and tracks the remaining tax balance separately.', 'datrooster-partial-payments' ),
+			)
+		);
+
+		add_settings_field(
+			'shipping_handling',
+			__( 'Shipping handling', 'datrooster-partial-payments' ),
+			array( $this, 'render_select_field' ),
+			'drpp_general',
+			'drpp_general_section',
+			array(
+				'option_name' => self::GENERAL_OPTION,
+				'key'         => 'shipping_handling',
+				'choices'     => array(
+					'upfront'      => __( 'Charge full shipping with the initial payment', 'datrooster-partial-payments' ),
+					'proportional' => __( 'Split shipping proportionally with the deposit', 'datrooster-partial-payments' ),
+				),
+				'description' => __( 'Use proportional shipping when you want the customer to pay only part of the shipping amount today and defer the rest with the balance.', 'datrooster-partial-payments' ),
+			)
+		);
+
+		add_settings_field(
+			'coupon_handling',
+			__( 'Coupon handling', 'datrooster-partial-payments' ),
+			array( $this, 'render_select_field' ),
+			'drpp_general',
+			'drpp_general_section',
+			array(
+				'option_name' => self::GENERAL_OPTION,
+				'key'         => 'coupon_handling',
+				'choices'     => array(
+					'initial_payment'       => __( 'Allow coupons on the initial payment only', 'datrooster-partial-payments' ),
+					'exclude_deposit_items' => __( 'Exclude deposit items from coupons', 'datrooster-partial-payments' ),
+				),
+				'description' => __( 'The default policy lets WooCommerce discounts affect the amount paid today, while the remaining balance keeps its own tracked amount.', 'datrooster-partial-payments' ),
+			)
+		);
+
 		add_settings_section(
 			'drpp_labels_selection_section',
 			__( 'Deposit selection', 'datrooster-partial-payments' ),
@@ -308,6 +361,9 @@ final class SettingsPage {
 			'deposit_amount'    => isset( $input['deposit_amount'] ) ? (string) max( 0, (float) $input['deposit_amount'] ) : $defaults['deposit_amount'],
 			'default_selection' => in_array( $input['default_selection'] ?? '', array( 'deposit', 'full' ), true ) ? $input['default_selection'] : $defaults['default_selection'],
 			'fully_paid_status' => in_array( $input['fully_paid_status'] ?? '', $statuses, true ) ? $input['fully_paid_status'] : $defaults['fully_paid_status'],
+			'tax_handling'      => 'proportional',
+			'shipping_handling' => in_array( $input['shipping_handling'] ?? '', array( 'upfront', 'proportional' ), true ) ? $input['shipping_handling'] : $defaults['shipping_handling'],
+			'coupon_handling'   => in_array( $input['coupon_handling'] ?? '', array( 'initial_payment', 'exclude_deposit_items' ), true ) ? $input['coupon_handling'] : $defaults['coupon_handling'],
 			'disabled_gateways' => array(),
 		);
 
@@ -346,7 +402,7 @@ final class SettingsPage {
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Partial Payments', 'datrooster-partial-payments' ); ?></h1>
-			<p><?php esc_html_e( 'Foundation release: this milestone stores global settings and labels while checkout logic is added in the next iterations.', 'datrooster-partial-payments' ); ?></p>
+			<p><?php esc_html_e( 'Current milestone adds deposit settings, product overrides, classic checkout calculations, and remaining balance tracking. Cart and Checkout Blocks integration is planned for a future release.', 'datrooster-partial-payments' ); ?></p>
 
 			<nav class="nav-tab-wrapper" aria-label="<?php esc_attr_e( 'Settings tabs', 'datrooster-partial-payments' ); ?>">
 				<a class="nav-tab <?php echo esc_attr( 'general' === $tab ? 'nav-tab-active' : '' ); ?>" href="<?php echo esc_url( $this->get_tab_url( 'general' ) ); ?>">

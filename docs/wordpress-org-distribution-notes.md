@@ -9,11 +9,13 @@ La WordPress.org Plugin Directory non e un marketplace a pagamento. E una direct
 ## Implicazioni pratiche per questo progetto
 
 - la licenza attuale `GPL-2.0-or-later` va bene ed e in linea con le raccomandazioni ufficiali;
+- il plugin header con licenza GPL e una nota GPL nel file principale sono una base corretta per la distribuzione;
 - se pubblicheremo il plugin su WordPress.org, tutto il codice distribuito nella directory dovra restare GPL-compatible;
 - non possiamo caricare trialware o codice ofuscato;
 - il plugin inviato deve essere completo e pronto all'uso al momento della submission;
 - upsell e servizi esterni sono ammessi solo entro i limiti delle linee guida, senza invadere la dashboard;
-- la distribuzione su WordPress.org usa SVN per i rilasci, anche se lo sviluppo puo restare su GitHub.
+- la distribuzione su WordPress.org usa SVN per i rilasci, anche se lo sviluppo puo restare su GitHub;
+- le dichiarazioni di compatibilita WooCommerce vanno allineate a cio che e stato davvero testato: se Cart & Checkout Blocks non sono ancora integrati, e meglio dichiarare incompatibilita.
 
 ## Strategia consigliata
 
