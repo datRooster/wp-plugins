@@ -3,7 +3,7 @@ Contributors: datrooster
 Requires at least: 6.7
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 0.5.0
+Stable tag: 0.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires Plugins: woocommerce
@@ -22,6 +22,7 @@ Current milestone includes:
 * automatic reuse of existing WooCommerce payment gateways for deposit orders;
 * optional gateway restrictions only when deposit mode is active;
 * configurable handling for proportional product tax, shipping collection, and coupon eligibility on deposit items;
+* configurable minimum cart or product threshold before deposits become available;
 * estimated remaining balance summary for products, tax, and shipping in cart, checkout, and order metadata;
 * linked balance orders generated from paid deposit orders;
 * a `Partially paid` order status and a My Account balance payment action for classic WooCommerce flows;
@@ -42,6 +43,12 @@ This release focuses on classic WooCommerce product, cart, checkout, and My Acco
 4. Open `WooCommerce > Partial Payments`.
 
 == Changelog ==
+
+= 0.6.0 =
+
+* Added a configurable minimum eligible amount for deposits based on product price or cart products total.
+* Added storefront threshold messaging and add-to-cart validation for deposit eligibility.
+* Kept the threshold logic aligned across product page UI, deposit validation, and cart capture.
 
 = 0.5.0 =
 

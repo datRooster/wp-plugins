@@ -38,6 +38,7 @@ wp-plugins/
 - scelta tra pagamento completo e deposito sulla pagina prodotto per prodotti supportati;
 - riuso automatico dei gateway WooCommerce esistenti, salvo esclusioni configurate dall'admin;
 - gestione iniziale di coupon su articoli con deposito, tasse prodotto proporzionali e spedizione upfront o proporzionale;
+- soglia globale configurabile per abilitare gli acconti solo da un certo totale prodotto/carrello in poi;
 - riepilogo del saldo residuo stimato per prodotti, tasse e spedizione in carrello e checkout classici, con metadati ordine dedicati;
 - creazione automatica di un ordine saldo collegato, con stato `Partially paid` sull'ordine principale e pulsante `Pay balance` nell'area cliente;
 - email transazionali WooCommerce per creazione saldo e reminder, con scadenza configurabile;
@@ -47,7 +48,7 @@ wp-plugins/
 
 ## Prossimi passi
 
-1. estendere le regole a variazioni, categorie, ruoli e condizioni carrello;
+1. estendere le regole a categorie, ruoli e condizioni carrello piu avanzate;
 2. rifinire il backoffice per merchant con strumenti saldo, due date e note piu chiare;
 3. integrare Cart & Checkout Blocks e preparare la checklist finale per WordPress.org;
 4. aggiungere smoke test e QA funzionale su installazione WooCommerce reale.

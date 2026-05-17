@@ -24,6 +24,16 @@ La WordPress.org Plugin Directory non e un marketplace a pagamento. E una direct
 - usare WordPress.org per visibilita, installazione e aggiornamenti del core gratuito;
 - vendere supporto, customizzazioni o add-on esterni solo se davvero necessari e sempre in modo compatibile con le linee guida.
 
+## Checklist finale prima della submission
+
+- fare uno smoke test completo su WordPress + WooCommerce reali, inclusi ordine con acconto, ordine saldo, reminder email e pagamento finale;
+- eseguire PHPCS/WPCS e correggere eventuali warning bloccanti;
+- verificare che `readme.txt` sia allineato, chiaro e senza promesse di feature non ancora implementate;
+- preparare asset WordPress.org come icona, banner e screenshot coerenti con il flusso plugin;
+- confermare che tutte le dichiarazioni di compatibilita WooCommerce riflettano solo cio che e davvero testato;
+- decidere il naming finale da usare nella directory, evitando collisioni o problemi trademark;
+- preparare il pacchetto ZIP definitivo e poi il rilascio via SVN per WordPress.org.
+
 ## Note sul naming
 
 - evitare slug che iniziano con marchi di terzi;

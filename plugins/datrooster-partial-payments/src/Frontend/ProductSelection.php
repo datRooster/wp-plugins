@@ -8,6 +8,7 @@
 namespace DatRooster\PartialPayments\Frontend;
 
 use DatRooster\PartialPayments\Cart\DepositCartManager;
+use DatRooster\PartialPayments\Deposits\EligibilityChecker;
 use DatRooster\PartialPayments\Deposits\SettingsResolver;
 
 defined( 'ABSPATH' ) || exit;
@@ -21,12 +22,21 @@ final class ProductSelection {
 	private SettingsResolver $settings_resolver;
 
 	/**
+	 * Shared eligibility checker.
+	 *
+	 * @var EligibilityChecker
+	 */
+	private EligibilityChecker $eligibility_checker;
+
+	/**
 	 * Class constructor.
 	 *
-	 * @param SettingsResolver $settings_resolver Shared settings resolver.
+	 * @param SettingsResolver  $settings_resolver  Shared settings resolver.
+	 * @param EligibilityChecker $eligibility_checker Shared eligibility checker.
 	 */
-	public function __construct( SettingsResolver $settings_resolver ) {
-		$this->settings_resolver = $settings_resolver;
+	public function __construct( SettingsResolver $settings_resolver, EligibilityChecker $eligibility_checker ) {
+		$this->settings_resolver  = $settings_resolver;
+		$this->eligibility_checker = $eligibility_checker;
 	}
 
 	/**
@@ -54,9 +64,15 @@ final class ProductSelection {
 			return;
 		}
 
-		$settings = $this->settings_resolver->get_effective_product_settings( $product );
+		$eligibility = $this->eligibility_checker->get_product_eligibility( $product );
+		$settings    = $eligibility['settings'];
 
 		if ( empty( $settings['enabled'] ) ) {
+			return;
+		}
+
+		if ( ! $eligibility['eligible'] ) {
+			$this->render_threshold_notice( $product, $eligibility );
 			return;
 		}
 
@@ -99,6 +115,29 @@ final class ProductSelection {
 	}
 
 	/**
+	 * Renders a storefront notice when the threshold has not been met yet.
+	 *
+	 * @param \WC_Product         $product     Product object.
+	 * @param array<string,mixed> $eligibility Eligibility context.
+	 */
+	private function render_threshold_notice( \WC_Product $product, array $eligibility ): void {
+		$threshold = isset( $eligibility['threshold_amount'] ) ? (float) $eligibility['threshold_amount'] : 0.0;
+
+		if ( $threshold <= 0 ) {
+			return;
+		}
+		?>
+		<div class="drpp-product-selection">
+			<p class="description">
+				<?php
+				echo esc_html( $this->get_threshold_notice_text( $product, $threshold ) );
+				?>
+			</p>
+		</div>
+		<?php
+	}
+
+	/**
 	 * Builds the description shown above the product radios.
 	 *
 	 * @param \WC_Product        $product  Product object.
@@ -127,6 +166,30 @@ final class ProductSelection {
 			/* translators: %s: deposit percentage. */
 			__( 'Choose whether to pay in full or leave a %s%% deposit today.', 'datrooster-partial-payments' ),
 			$this->format_plain_amount( $amount )
+		);
+	}
+
+	/**
+	 * Builds the threshold notice shown when deposits are not yet eligible.
+	 *
+	 * @param \WC_Product $product   Product object.
+	 * @param float       $threshold Minimum eligible threshold.
+	 */
+	private function get_threshold_notice_text( \WC_Product $product, float $threshold ): string {
+		$formatted_threshold = $this->format_price( $threshold );
+
+		if ( 'variable' === $product->get_type() ) {
+			return sprintf(
+				/* translators: %s: formatted threshold amount. */
+				__( 'Deposits will become available when the selected variation or your cart products total reaches %s.', 'datrooster-partial-payments' ),
+				$formatted_threshold
+			);
+		}
+
+		return sprintf(
+			/* translators: %s: formatted threshold amount. */
+			__( 'Deposits will become available when this product or your cart products total reaches %s.', 'datrooster-partial-payments' ),
+			$formatted_threshold
 		);
 	}
 

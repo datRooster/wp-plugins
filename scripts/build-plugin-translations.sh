@@ -73,7 +73,7 @@ for po_file in "$languages_dir"/"$slug"-*.po; do
 		continue
 	fi
 
-	msgmerge --update --quiet "$po_file" "$pot_file"
+	msgmerge --backup=none --update --quiet "$po_file" "$pot_file"
 	msgfmt -o "${po_file%.po}.mo" "$po_file"
 done
 

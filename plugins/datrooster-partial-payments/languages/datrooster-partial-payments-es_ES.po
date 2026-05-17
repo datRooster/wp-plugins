@@ -1,9 +1,9 @@
 # Spanish translations for DatRooster Partial Payments.
 msgid ""
 msgstr ""
-"Project-Id-Version: DatRooster Partial Payments 0.4.0\n"
+"Project-Id-Version: DatRooster Partial Payments 0.6.0\n"
 "Report-Msgid-Bugs-To: https://github.com/datRooster/wp-plugins/issues\n"
-"POT-Creation-Date: 2026-05-17 19:51+0200\n"
+"POT-Creation-Date: 2026-05-17 20:22+0200\n"
 "PO-Revision-Date: 2026-05-17 20:14+0200\n"
 "Last-Translator: DatRooster\n"
 "Language-Team: Spanish\n"
@@ -14,9 +14,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/ProductDataPanel.php:49
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:72
 #: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:73
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:454
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:74
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:471
 #: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Emails/EmailManager.php:28
 msgid "Partial Payments"
 msgstr "Pagos parciales"
@@ -66,12 +66,12 @@ msgid "Inherit global type"
 msgstr "Heredar tipo global"
 
 #: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/ProductDataPanel.php:108
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:147
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:148
 msgid "Percentage"
 msgstr "Porcentaje"
 
 #: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/ProductDataPanel.php:109
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:148
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:149
 msgid "Fixed amount"
 msgstr "Importe fijo"
 
@@ -172,58 +172,58 @@ msgstr "pago completo"
 msgid "deposit payment"
 msgstr "pago con deposito"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:57
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:179
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:58
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:180
 msgid "Pay deposit"
 msgstr "Pagar deposito"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:58
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:59
 msgid "Pay full amount"
 msgstr "Pagar importe completo"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:59
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:60
 msgid "Deposit"
 msgstr "Deposito"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:60
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:61
 msgid "To pay"
 msgstr "Por pagar"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:61
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:62
 msgid "Future payments"
 msgstr "Pagos futuros"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:62
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:156
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:63
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:157
 msgid "Deposit amount"
 msgstr "Importe del deposito"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:106
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:459
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:107
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:476
 msgid "General settings"
 msgstr "Configuracion general"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:113
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:114
 msgid "Enable deposits"
 msgstr "Activar depositos"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:120
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:121
 msgid "Allow store-wide deposit features."
 msgstr "Permitir funciones de deposito en toda la tienda."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:126
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:127
 msgid "Require login"
 msgstr "Requerir inicio de sesion"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:133
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:134
 msgid "Restrict deposit purchases to authenticated customers."
 msgstr "Restringe las compras con deposito a clientes autenticados."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:139
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:140
 msgid "Deposit type"
 msgstr "Tipo de deposito"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:150
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:151
 msgid ""
 "Defines whether the default deposit is calculated as a percentage or a fixed "
 "amount."
@@ -231,39 +231,51 @@ msgstr ""
 "Define si el deposito predeterminado se calcula como un porcentaje o como un "
 "importe fijo."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:165
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:166
 msgid "Default global amount used when no product-level rule is present."
 msgstr ""
 "Importe global predeterminado usado cuando no existe una regla a nivel de "
 "producto."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:171
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:172
 msgid "Default selection"
 msgstr "Seleccion predeterminada"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:180
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:181
 msgid "Pay in full"
 msgstr "Pagar completo"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:187
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:188
 msgid "Order fully paid status"
 msgstr "Estado del pedido completamente pagado"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:200
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:201
 msgid "Disabled payment gateways"
 msgstr "Pasarelas de pago desactivadas"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:208
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:209
 msgid "Gateways selected here will be excluded when a deposit flow is active."
 msgstr ""
 "Las pasarelas seleccionadas aqui se excluiran cuando haya un flujo con "
 "deposito activo."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:214
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:215
+msgid "Minimum eligible amount"
+msgstr "Importe minimo elegible"
+
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:224
+msgid ""
+"Set a minimum product or cart products total required before deposits become "
+"available. Use 0 to disable this threshold."
+msgstr ""
+"Establece un total minimo de producto o de productos en el carrito antes de "
+"que los depositos esten disponibles. Usa 0 para desactivar este umbral."
+
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:230
 msgid "Balance due in days"
 msgstr "Vencimiento del saldo en dias"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:223
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:239
 msgid ""
 "Defines how many days the customer has to pay the remaining balance after "
 "the deposit order is paid."
@@ -271,21 +283,21 @@ msgstr ""
 "Define cuantos dias tiene el cliente para pagar el saldo restante despues de "
 "que se pague el pedido con deposito."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:229
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:245
 msgid "Send balance reminders"
 msgstr "Enviar recordatorios de saldo"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:236
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:252
 msgid "Send an automatic reminder email before the balance due date."
 msgstr ""
 "Enviar automaticamente un correo de recordatorio antes de la fecha de "
 "vencimiento del saldo."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:242
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:258
 msgid "Reminder lead time"
 msgstr "Antelacion del recordatorio"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:251
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:267
 msgid ""
 "Number of days before the due date when the reminder email should be sent. "
 "Use 0 to remind on the due date itself."
@@ -293,15 +305,15 @@ msgstr ""
 "Numero de dias antes de la fecha de vencimiento en que debe enviarse el "
 "correo de recordatorio. Usa 0 para recordarlo el mismo dia del vencimiento."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:257
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:273
 msgid "Tax handling"
 msgstr "Gestion de impuestos"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:265
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:281
 msgid "Charge taxes proportionally with the deposit"
 msgstr "Cobrar impuestos de forma proporcional con el deposito"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:267
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:283
 msgid ""
 "This release keeps product taxes proportional to the portion paid today and "
 "tracks the remaining tax balance separately."
@@ -309,19 +321,19 @@ msgstr ""
 "Esta version mantiene los impuestos del producto proporcionales a la parte "
 "pagada hoy y registra por separado el saldo restante de impuestos."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:273
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:289
 msgid "Shipping handling"
 msgstr "Gestion del envio"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:281
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:297
 msgid "Charge full shipping with the initial payment"
 msgstr "Cobrar el envio completo con el pago inicial"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:282
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:298
 msgid "Split shipping proportionally with the deposit"
 msgstr "Dividir el envio proporcionalmente con el deposito"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:284
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:300
 msgid ""
 "Use proportional shipping when you want the customer to pay only part of the "
 "shipping amount today and defer the rest with the balance."
@@ -329,19 +341,19 @@ msgstr ""
 "Usa el envio proporcional cuando quieras que el cliente pague hoy solo una "
 "parte del envio y deje el resto para el saldo."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:290
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:306
 msgid "Coupon handling"
 msgstr "Gestion de cupones"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:298
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:314
 msgid "Allow coupons on the initial payment only"
 msgstr "Permitir cupones solo en el pago inicial"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:299
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:315
 msgid "Exclude deposit items from coupons"
 msgstr "Excluir de los cupones los articulos con deposito"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:301
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:317
 msgid ""
 "The default policy lets WooCommerce discounts affect the amount paid today, "
 "while the remaining balance keeps its own tracked amount."
@@ -350,39 +362,39 @@ msgstr ""
 "al importe pagado hoy, mientras que el saldo restante mantiene su propio "
 "importe registrado."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:307
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:323
 msgid "Deposit selection"
 msgstr "Seleccion de deposito"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:314
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:330
 msgid "Pay deposit text"
 msgstr "Texto pagar deposito"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:326
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:342
 msgid "Pay full amount text"
 msgstr "Texto pagar importe completo"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:338
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:354
 msgid "Deposit text"
 msgstr "Texto de deposito"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:350
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:366
 msgid "Checkout and order"
 msgstr "Pago y pedido"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:357
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:373
 msgid "To pay text"
 msgstr "Texto por pagar"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:369
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:385
 msgid "Future payments text"
 msgstr "Texto de pagos futuros"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:381
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:397
 msgid "Deposit amount text"
 msgstr "Texto del importe del deposito"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:455
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:472
 msgid ""
 "Current milestone adds deposit settings, product overrides, classic checkout "
 "calculations, linked balance orders, customer balance emails, reminders, and "
@@ -395,19 +407,19 @@ msgstr ""
 "cuenta. La integracion con Cart y Checkout Blocks esta prevista para una "
 "futura version."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:457
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:474
 msgid "Settings tabs"
 msgstr "Pestanas de configuracion"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:462
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:479
 msgid "Labels & text"
 msgstr "Etiquetas y texto"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:475
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:492
 msgid "Save changes"
 msgstr "Guardar cambios"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:485
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:502
 msgid ""
 "Start with sensible store-wide defaults. Product, category, cart, "
 "installment, and balance collection rules will build on top of these "
@@ -417,7 +429,7 @@ msgstr ""
 "configuraciones se construiran reglas de producto, categoria, carrito, "
 "cuotas y cobro del saldo."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:492
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:509
 msgid ""
 "Customize the labels customers will see when choosing between a deposit and "
 "a full payment."
@@ -425,7 +437,7 @@ msgstr ""
 "Personaliza las etiquetas que los clientes veran al elegir entre un deposito "
 "y el pago completo."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:499
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:516
 msgid ""
 "These strings are used around the order summary and future balance "
 "communication."
@@ -433,62 +445,72 @@ msgstr ""
 "Estas cadenas se usan en el resumen del pedido y en futuras comunicaciones "
 "sobre el saldo."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:557
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:574
 msgid "No payment gateways are currently available to configure."
 msgstr "Actualmente no hay pasarelas de pago disponibles para configurar."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:669
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Admin/SettingsPage.php:686
 msgid "Completed"
 msgstr "Completado"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:87
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:97
 msgid "The selected product could not be prepared for a deposit purchase."
 msgstr ""
 "No se pudo preparar el producto seleccionado para una compra con deposito."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:92
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:104
 msgid "Deposits are not available for this product."
 msgstr "Los depositos no estan disponibles para este producto."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:99
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:111
 msgid "Deposits are currently disabled for this product."
 msgstr "Los depositos estan actualmente desactivados para este producto."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:104
+#. translators: %s: formatted threshold amount.
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:119
+#, php-format
+msgid ""
+"Deposits become available only when the product or cart products total "
+"reaches %s."
+msgstr ""
+"Los depositos solo estaran disponibles cuando el producto o el total de "
+"productos del carrito alcance %s."
+
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:128
 msgid "Please log in before purchasing this product with a deposit."
 msgstr "Inicia sesion antes de comprar este producto con deposito."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:173
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:198
 msgid "Payment option"
 msgstr "Opcion de pago"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:178
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:203
 msgid "Due today"
 msgstr "A pagar hoy"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:183
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:335
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:336
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:208
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:360
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:361
 msgid "Remaining product balance"
 msgstr "Saldo restante de productos"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:342
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:343
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:367
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:368
 msgid "Remaining product tax"
 msgstr "Impuesto restante de productos"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:350
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:351
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:375
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:376
 msgid "Remaining shipping balance"
 msgstr "Saldo restante de envio"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:358
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:359
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:383
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:384
 msgid "Remaining shipping tax"
 msgstr "Impuesto restante de envio"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:365
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:366
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:390
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:391
 msgid "Estimated remaining balance"
 msgstr "Saldo restante estimado"
 
@@ -642,16 +664,16 @@ msgid ""
 msgstr ""
 "Este es un recordatorio de que tu saldo restante sigue pendiente de pago."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Frontend/ProductSelection.php:69
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Frontend/ProductSelection.php:85
 msgid "Payment options"
 msgstr "Opciones de pago"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Frontend/ProductSelection.php:93
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Frontend/ProductSelection.php:109
 msgid "Please log in to use deposits for this product."
 msgstr "Inicia sesion para usar depositos en este producto."
 
 #. translators: %s: fixed deposit amount.
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Frontend/ProductSelection.php:113
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Frontend/ProductSelection.php:152
 #, php-format
 msgid ""
 "Choose whether to pay in full or leave a fixed deposit of %s per item today."
@@ -660,7 +682,7 @@ msgstr ""
 "articulo."
 
 #. translators: %s: deposit percentage.
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Frontend/ProductSelection.php:121
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Frontend/ProductSelection.php:160
 #, php-format
 msgid ""
 "Choose whether to pay in full or leave a %s%% deposit today. The deposit "
@@ -670,10 +692,30 @@ msgstr ""
 "importe del deposito seguira el precio de la variacion seleccionada."
 
 #. translators: %s: deposit percentage.
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Frontend/ProductSelection.php:128
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Frontend/ProductSelection.php:167
 #, php-format
 msgid "Choose whether to pay in full or leave a %s%% deposit today."
 msgstr "Elige si pagar el importe completo o dejar hoy un deposito del %s%%."
+
+#. translators: %s: formatted threshold amount.
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Frontend/ProductSelection.php:184
+#, php-format
+msgid ""
+"Deposits will become available when the selected variation or your cart "
+"products total reaches %s."
+msgstr ""
+"Los depositos estaran disponibles cuando la variacion seleccionada o el "
+"total de productos de tu carrito alcance %s."
+
+#. translators: %s: formatted threshold amount.
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Frontend/ProductSelection.php:191
+#, php-format
+msgid ""
+"Deposits will become available when this product or your cart products total "
+"reaches %s."
+msgstr ""
+"Los depositos estaran disponibles cuando este producto o el total de "
+"productos de tu carrito alcance %s."
 
 #. translators: %s: parent order number.
 #: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:119

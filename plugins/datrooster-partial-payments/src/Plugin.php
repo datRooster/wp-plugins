@@ -13,6 +13,7 @@ use DatRooster\PartialPayments\Cart\DepositCartManager;
 use DatRooster\PartialPayments\Compatibility\WooCommerce;
 use DatRooster\PartialPayments\Checkout\OrderDepositMeta;
 use DatRooster\PartialPayments\Deposits\Calculator;
+use DatRooster\PartialPayments\Deposits\EligibilityChecker;
 use DatRooster\PartialPayments\Deposits\SettingsResolver;
 use DatRooster\PartialPayments\Emails\BalanceNotifications;
 use DatRooster\PartialPayments\Emails\EmailManager;
@@ -80,10 +81,11 @@ final class Plugin {
 		$meta_registry->register();
 
 		$settings_resolver = new SettingsResolver();
+		$eligibility       = new EligibilityChecker( $settings_resolver );
 		$calculator        = new Calculator();
 		$status_manager    = new PartiallyPaidStatus();
-		$product_selection = new ProductSelection( $settings_resolver );
-		$cart_manager      = new DepositCartManager( $settings_resolver, $calculator );
+		$product_selection = new ProductSelection( $settings_resolver, $eligibility );
+		$cart_manager      = new DepositCartManager( $settings_resolver, $calculator, $eligibility );
 		$order_meta        = new OrderDepositMeta( $cart_manager );
 		$email_manager     = new EmailManager();
 		$balance_manager   = new BalanceOrderManager( $settings_resolver );

@@ -8,6 +8,7 @@
 namespace DatRooster\PartialPayments\Cart;
 
 use DatRooster\PartialPayments\Deposits\Calculator;
+use DatRooster\PartialPayments\Deposits\EligibilityChecker;
 use DatRooster\PartialPayments\Deposits\SettingsResolver;
 
 defined( 'ABSPATH' ) || exit;
@@ -33,14 +34,23 @@ final class DepositCartManager {
 	private Calculator $calculator;
 
 	/**
+	 * Shared eligibility checker.
+	 *
+	 * @var EligibilityChecker
+	 */
+	private EligibilityChecker $eligibility_checker;
+
+	/**
 	 * Class constructor.
 	 *
-	 * @param SettingsResolver $settings_resolver Shared settings resolver.
-	 * @param Calculator       $calculator        Shared calculator.
+	 * @param SettingsResolver  $settings_resolver  Shared settings resolver.
+	 * @param Calculator        $calculator         Shared calculator.
+	 * @param EligibilityChecker $eligibility_checker Shared eligibility checker.
 	 */
-	public function __construct( SettingsResolver $settings_resolver, Calculator $calculator ) {
-		$this->settings_resolver = $settings_resolver;
-		$this->calculator        = $calculator;
+	public function __construct( SettingsResolver $settings_resolver, Calculator $calculator, EligibilityChecker $eligibility_checker ) {
+		$this->settings_resolver  = $settings_resolver;
+		$this->calculator         = $calculator;
+		$this->eligibility_checker = $eligibility_checker;
 	}
 
 	/**
@@ -88,15 +98,29 @@ final class DepositCartManager {
 			return false;
 		}
 
-		if ( ! $this->settings_resolver->product_supports_deposits( $product ) ) {
+		$eligibility = $this->eligibility_checker->get_product_eligibility( $product, max( 1, (int) $quantity ) );
+
+		if ( EligibilityChecker::REASON_UNSUPPORTED === $eligibility['reason'] ) {
 			wc_add_notice( __( 'Deposits are not available for this product.', 'datrooster-partial-payments' ), 'error' );
 			return false;
 		}
 
-		$settings = $this->settings_resolver->get_effective_product_settings( $product );
+		$settings = $eligibility['settings'];
 
 		if ( empty( $settings['enabled'] ) ) {
 			wc_add_notice( __( 'Deposits are currently disabled for this product.', 'datrooster-partial-payments' ), 'error' );
+			return false;
+		}
+
+		if ( ! $eligibility['eligible'] ) {
+			wc_add_notice(
+				sprintf(
+					/* translators: %s: formatted threshold amount. */
+					__( 'Deposits become available only when the product or cart products total reaches %s.', 'datrooster-partial-payments' ),
+					$this->format_price( (float) $eligibility['threshold_amount'] )
+				),
+				'error'
+			);
 			return false;
 		}
 
@@ -132,9 +156,10 @@ final class DepositCartManager {
 			return $cart_item_data;
 		}
 
-		$settings = $this->settings_resolver->get_effective_product_settings( $product );
+		$eligibility = $this->eligibility_checker->get_product_eligibility( $product, max( 1, (int) $quantity ) );
+		$settings    = $eligibility['settings'];
 
-		if ( empty( $settings['enabled'] ) ) {
+		if ( empty( $settings['enabled'] ) || ! $eligibility['eligible'] ) {
 			return $cart_item_data;
 		}
 

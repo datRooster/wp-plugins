@@ -37,6 +37,7 @@ final class SettingsPage {
 			'deposit_amount'                  => '50',
 			'default_selection'               => 'deposit',
 			'fully_paid_status'               => 'wc-completed',
+			'minimum_deposit_eligible_amount' => '0',
 			'balance_due_days'                => 7,
 			'balance_reminder_enabled'        => 1,
 			'balance_reminder_days_before_due' => 1,
@@ -206,6 +207,21 @@ final class SettingsPage {
 				'key'         => 'disabled_gateways',
 				'choices'     => $this->get_payment_gateway_choices(),
 				'description' => __( 'Gateways selected here will be excluded when a deposit flow is active.', 'datrooster-partial-payments' ),
+			)
+		);
+
+		add_settings_field(
+			'minimum_deposit_eligible_amount',
+			__( 'Minimum eligible amount', 'datrooster-partial-payments' ),
+			array( $this, 'render_number_field' ),
+			'drpp_general',
+			'drpp_general_section',
+			array(
+				'option_name' => self::GENERAL_OPTION,
+				'key'         => 'minimum_deposit_eligible_amount',
+				'min'         => '0',
+				'step'        => '0.01',
+				'description' => __( 'Set a minimum product or cart products total required before deposits become available. Use 0 to disable this threshold.', 'datrooster-partial-payments' ),
 			)
 		);
 
@@ -408,6 +424,7 @@ final class SettingsPage {
 			'deposit_amount'                  => isset( $input['deposit_amount'] ) ? (string) max( 0, (float) $input['deposit_amount'] ) : $defaults['deposit_amount'],
 			'default_selection'               => in_array( $input['default_selection'] ?? '', array( 'deposit', 'full' ), true ) ? $input['default_selection'] : $defaults['default_selection'],
 			'fully_paid_status'               => in_array( $input['fully_paid_status'] ?? '', $statuses, true ) ? $input['fully_paid_status'] : $defaults['fully_paid_status'],
+			'minimum_deposit_eligible_amount' => isset( $input['minimum_deposit_eligible_amount'] ) ? (string) max( 0, (float) $input['minimum_deposit_eligible_amount'] ) : $defaults['minimum_deposit_eligible_amount'],
 			'balance_due_days'                => isset( $input['balance_due_days'] ) ? max( 1, min( 365, (int) $input['balance_due_days'] ) ) : $defaults['balance_due_days'],
 			'balance_reminder_enabled'        => ! empty( $input['balance_reminder_enabled'] ) ? 1 : 0,
 			'balance_reminder_days_before_due' => isset( $input['balance_reminder_days_before_due'] ) ? max( 0, min( 365, (int) $input['balance_reminder_days_before_due'] ) ) : $defaults['balance_reminder_days_before_due'],

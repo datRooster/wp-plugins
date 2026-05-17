@@ -59,6 +59,7 @@ final class SettingsResolver {
 			'deposit_amount'                  => ProductSettings::sanitize_effective_amount( $settings['deposit_amount'] ?? $defaults['deposit_amount'], $defaults['deposit_amount'] ),
 			'default_selection'               => ProductSettings::sanitize_effective_default_selection( $settings['default_selection'] ?? $defaults['default_selection'], $defaults['default_selection'] ),
 			'fully_paid_status'               => sanitize_text_field( (string) ( $settings['fully_paid_status'] ?? $defaults['fully_paid_status'] ) ),
+			'minimum_deposit_eligible_amount' => ProductSettings::sanitize_effective_amount( $settings['minimum_deposit_eligible_amount'] ?? $defaults['minimum_deposit_eligible_amount'], $defaults['minimum_deposit_eligible_amount'] ),
 			'balance_due_days'                => max( 1, (int) ( $settings['balance_due_days'] ?? $defaults['balance_due_days'] ) ),
 			'balance_reminder_enabled'        => ! empty( $settings['balance_reminder_enabled'] ),
 			'balance_reminder_days_before_due' => max( 0, (int) ( $settings['balance_reminder_days_before_due'] ?? $defaults['balance_reminder_days_before_due'] ) ),
