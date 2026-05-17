@@ -23,7 +23,7 @@ wp-plugins/
 
 ## Plugin attuali
 
-- `datrooster-partial-payments`: base del plugin WooCommerce per acconti, depositi e pagamenti rateali.
+- `datrooster-partial-payments`: base del plugin WooCommerce per acconti, depositi e pagamenti rateali, con impostazioni globali e override per singolo prodotto.
 
 ## Convenzioni di lavoro
 
@@ -35,7 +35,7 @@ wp-plugins/
 
 ## Prossimi passi
 
-1. implementare regole deposito globali e per prodotto;
-2. collegare il calcolo acconto al carrello e al checkout;
-3. aggiungere gestione saldo residuo, email e automazioni;
-4. aggiungere test, CI e pacchettizzazione di rilascio.
+1. collegare il calcolo acconto al carrello e al checkout;
+2. aggiungere gestione saldo residuo, email e automazioni;
+3. estendere le regole a variazioni, categorie, ruoli e condizioni carrello;
+4. aggiungere test, CI avanzata e pacchettizzazione di rilascio.

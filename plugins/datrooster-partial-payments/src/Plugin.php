@@ -7,8 +7,11 @@
 
 namespace DatRooster\PartialPayments;
 
+use DatRooster\PartialPayments\Admin\ProductDataPanel;
 use DatRooster\PartialPayments\Admin\SettingsPage;
 use DatRooster\PartialPayments\Compatibility\WooCommerce;
+use DatRooster\PartialPayments\Deposits\SettingsResolver;
+use DatRooster\PartialPayments\Product\MetaRegistry;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -60,11 +63,18 @@ final class Plugin {
 			return;
 		}
 
+		$meta_registry = new MetaRegistry();
+		$meta_registry->register();
+
 		if ( ! is_admin() ) {
 			return;
 		}
 
-		$settings_page = new SettingsPage();
+		$settings_resolver = new SettingsResolver();
+		$settings_page     = new SettingsPage();
+		$product_data      = new ProductDataPanel( $settings_resolver );
+
 		$settings_page->register();
+		$product_data->register();
 	}
 }

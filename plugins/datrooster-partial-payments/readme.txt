@@ -18,6 +18,7 @@ Current milestone includes:
 
 * monorepo-ready structure;
 * WordPress Settings API integration;
+* product-level deposit overrides for simple and variable products;
 * WooCommerce dependency checks;
 * HPOS and modern WooCommerce compatibility declarations;
 * customizable labels and global deposit defaults.
