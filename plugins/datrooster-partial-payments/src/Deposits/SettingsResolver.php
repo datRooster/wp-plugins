@@ -53,16 +53,19 @@ final class SettingsResolver {
 		}
 
 		return array(
-			'enabled'           => ! empty( $settings['enabled'] ),
-			'require_login'     => ! empty( $settings['require_login'] ),
-			'deposit_type'      => ProductSettings::sanitize_effective_type( $settings['deposit_type'] ?? $defaults['deposit_type'], $defaults['deposit_type'] ),
-			'deposit_amount'    => ProductSettings::sanitize_effective_amount( $settings['deposit_amount'] ?? $defaults['deposit_amount'], $defaults['deposit_amount'] ),
-			'default_selection' => ProductSettings::sanitize_effective_default_selection( $settings['default_selection'] ?? $defaults['default_selection'], $defaults['default_selection'] ),
-			'fully_paid_status' => sanitize_text_field( (string) ( $settings['fully_paid_status'] ?? $defaults['fully_paid_status'] ) ),
-			'tax_handling'      => 'proportional',
-			'shipping_handling' => in_array( $settings['shipping_handling'] ?? '', array( 'upfront', 'proportional' ), true ) ? $settings['shipping_handling'] : $defaults['shipping_handling'],
-			'coupon_handling'   => in_array( $settings['coupon_handling'] ?? '', array( 'initial_payment', 'exclude_deposit_items' ), true ) ? $settings['coupon_handling'] : $defaults['coupon_handling'],
-			'disabled_gateways' => $disabled_gateways,
+			'enabled'                         => ! empty( $settings['enabled'] ),
+			'require_login'                   => ! empty( $settings['require_login'] ),
+			'deposit_type'                    => ProductSettings::sanitize_effective_type( $settings['deposit_type'] ?? $defaults['deposit_type'], $defaults['deposit_type'] ),
+			'deposit_amount'                  => ProductSettings::sanitize_effective_amount( $settings['deposit_amount'] ?? $defaults['deposit_amount'], $defaults['deposit_amount'] ),
+			'default_selection'               => ProductSettings::sanitize_effective_default_selection( $settings['default_selection'] ?? $defaults['default_selection'], $defaults['default_selection'] ),
+			'fully_paid_status'               => sanitize_text_field( (string) ( $settings['fully_paid_status'] ?? $defaults['fully_paid_status'] ) ),
+			'balance_due_days'                => max( 1, (int) ( $settings['balance_due_days'] ?? $defaults['balance_due_days'] ) ),
+			'balance_reminder_enabled'        => ! empty( $settings['balance_reminder_enabled'] ),
+			'balance_reminder_days_before_due' => max( 0, (int) ( $settings['balance_reminder_days_before_due'] ?? $defaults['balance_reminder_days_before_due'] ) ),
+			'tax_handling'                    => 'proportional',
+			'shipping_handling'               => in_array( $settings['shipping_handling'] ?? '', array( 'upfront', 'proportional' ), true ) ? $settings['shipping_handling'] : $defaults['shipping_handling'],
+			'coupon_handling'                 => in_array( $settings['coupon_handling'] ?? '', array( 'initial_payment', 'exclude_deposit_items' ), true ) ? $settings['coupon_handling'] : $defaults['coupon_handling'],
+			'disabled_gateways'               => $disabled_gateways,
 		);
 	}
 

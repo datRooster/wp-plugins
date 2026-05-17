@@ -29,6 +29,7 @@
 - stato ordine dedicato per ordini parzialmente pagati;
 - email transazionali e reminder;
 - scadenze, cron e automazioni;
+- internazionalizzazione del plugin con catalogo `.pot` e prime lingue bundle;
 - storico pagamenti e note ordine;
 - integrazione Cart & Checkout Blocks.
 

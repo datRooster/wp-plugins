@@ -14,6 +14,8 @@ use DatRooster\PartialPayments\Compatibility\WooCommerce;
 use DatRooster\PartialPayments\Checkout\OrderDepositMeta;
 use DatRooster\PartialPayments\Deposits\Calculator;
 use DatRooster\PartialPayments\Deposits\SettingsResolver;
+use DatRooster\PartialPayments\Emails\BalanceNotifications;
+use DatRooster\PartialPayments\Emails\EmailManager;
 use DatRooster\PartialPayments\Frontend\ProductSelection;
 use DatRooster\PartialPayments\Orders\BalanceOrderManager;
 use DatRooster\PartialPayments\Orders\PartiallyPaidStatus;
@@ -26,7 +28,7 @@ final class Plugin {
 	 * Boots the plugin.
 	 */
 	public function boot(): void {
-		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
+		add_action( 'init', array( $this, 'load_textdomain' ) );
 		add_action( 'plugins_loaded', array( $this, 'init' ), 20 );
 	}
 
@@ -47,6 +49,11 @@ final class Plugin {
 	 * Runs deactivation logic.
 	 */
 	public static function deactivate(): void {
+		wp_clear_scheduled_hook( BalanceNotifications::REMINDER_ACTION_HOOK );
+
+		if ( function_exists( 'as_unschedule_all_actions' ) ) {
+			as_unschedule_all_actions( BalanceNotifications::REMINDER_ACTION_HOOK, array(), BalanceNotifications::SCHEDULER_GROUP );
+		}
 	}
 
 	/**
@@ -78,13 +85,17 @@ final class Plugin {
 		$product_selection = new ProductSelection( $settings_resolver );
 		$cart_manager      = new DepositCartManager( $settings_resolver, $calculator );
 		$order_meta        = new OrderDepositMeta( $cart_manager );
+		$email_manager     = new EmailManager();
 		$balance_manager   = new BalanceOrderManager( $settings_resolver );
+		$notifications     = new BalanceNotifications( $settings_resolver, $email_manager );
 
 		$status_manager->register();
 		$product_selection->register();
 		$cart_manager->register();
 		$order_meta->register();
+		$email_manager->register();
 		$balance_manager->register();
+		$notifications->register();
 
 		if ( ! is_admin() ) {
 			return;

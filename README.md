@@ -23,7 +23,7 @@ wp-plugins/
 
 ## Plugin attuali
 
-- `datrooster-partial-payments`: base del plugin WooCommerce per acconti, depositi e pagamenti rateali, con impostazioni globali, override per prodotto e primo flusso storefront.
+- `datrooster-partial-payments`: base del plugin WooCommerce per acconti, depositi e pagamenti rateali, con impostazioni globali, override per prodotto, flusso storefront classico, email saldo e localizzazione iniziale.
 
 ## Convenzioni di lavoro
 
@@ -40,18 +40,21 @@ wp-plugins/
 - gestione iniziale di coupon su articoli con deposito, tasse prodotto proporzionali e spedizione upfront o proporzionale;
 - riepilogo del saldo residuo stimato per prodotti, tasse e spedizione in carrello e checkout classici, con metadati ordine dedicati;
 - creazione automatica di un ordine saldo collegato, con stato `Partially paid` sull'ordine principale e pulsante `Pay balance` nell'area cliente;
+- email transazionali WooCommerce per creazione saldo e reminder, con scadenza configurabile;
+- file lingua bundle per `it_IT`, `es_ES` e `de_DE`, piu catalogo `.pot` e script di rebuild traduzioni;
 - niente gateway custom in questa fase: il plugin si affianca ai metodi gia presenti;
 - compatibilita HPOS dichiarata; Cart & Checkout Blocks marcati come non ancora supportati finche non completiamo l'integrazione dedicata.
 
 ## Prossimi passi
 
-1. aggiungere email transazionali, reminder e automazioni per il saldo residuo;
-2. estendere le regole a variazioni, categorie, ruoli e condizioni carrello;
-3. rifinire il backoffice per merchant con strumenti saldo e note piu chiare;
-4. integrare Cart & Checkout Blocks e preparare la checklist finale per WordPress.org.
+1. estendere le regole a variazioni, categorie, ruoli e condizioni carrello;
+2. rifinire il backoffice per merchant con strumenti saldo, due date e note piu chiare;
+3. integrare Cart & Checkout Blocks e preparare la checklist finale per WordPress.org;
+4. aggiungere smoke test e QA funzionale su installazione WooCommerce reale.
 
 ## Release
 
 - i pacchetti installabili vengono pubblicati tramite GitHub Releases;
 - la convenzione tag del monorepo e `plugins/<slug>/vX.Y.Z`;
 - il flusso completo e documentato in `docs/release-process.md`.
+- la manutenzione delle traduzioni del plugin e documentata in `docs/i18n-process.md`.

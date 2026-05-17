@@ -31,16 +31,19 @@ final class SettingsPage {
 	 */
 	public static function get_default_general_settings(): array {
 		return array(
-			'enabled'             => 0,
-			'require_login'       => 0,
-			'deposit_type'        => 'percentage',
-			'deposit_amount'      => '50',
-			'default_selection'   => 'deposit',
-			'fully_paid_status'   => 'wc-completed',
-			'tax_handling'        => 'proportional',
-			'shipping_handling'   => 'upfront',
-			'coupon_handling'     => 'initial_payment',
-			'disabled_gateways'   => array(),
+			'enabled'                         => 0,
+			'require_login'                   => 0,
+			'deposit_type'                    => 'percentage',
+			'deposit_amount'                  => '50',
+			'default_selection'               => 'deposit',
+			'fully_paid_status'               => 'wc-completed',
+			'balance_due_days'                => 7,
+			'balance_reminder_enabled'        => 1,
+			'balance_reminder_days_before_due' => 1,
+			'tax_handling'                    => 'proportional',
+			'shipping_handling'               => 'upfront',
+			'coupon_handling'                 => 'initial_payment',
+			'disabled_gateways'               => array(),
 		);
 	}
 
@@ -207,6 +210,49 @@ final class SettingsPage {
 		);
 
 		add_settings_field(
+			'balance_due_days',
+			__( 'Balance due in days', 'datrooster-partial-payments' ),
+			array( $this, 'render_number_field' ),
+			'drpp_general',
+			'drpp_general_section',
+			array(
+				'option_name' => self::GENERAL_OPTION,
+				'key'         => 'balance_due_days',
+				'min'         => '1',
+				'step'        => '1',
+				'description' => __( 'Defines how many days the customer has to pay the remaining balance after the deposit order is paid.', 'datrooster-partial-payments' ),
+			)
+		);
+
+		add_settings_field(
+			'balance_reminder_enabled',
+			__( 'Send balance reminders', 'datrooster-partial-payments' ),
+			array( $this, 'render_checkbox_field' ),
+			'drpp_general',
+			'drpp_general_section',
+			array(
+				'option_name' => self::GENERAL_OPTION,
+				'key'         => 'balance_reminder_enabled',
+				'label'       => __( 'Send an automatic reminder email before the balance due date.', 'datrooster-partial-payments' ),
+			)
+		);
+
+		add_settings_field(
+			'balance_reminder_days_before_due',
+			__( 'Reminder lead time', 'datrooster-partial-payments' ),
+			array( $this, 'render_number_field' ),
+			'drpp_general',
+			'drpp_general_section',
+			array(
+				'option_name' => self::GENERAL_OPTION,
+				'key'         => 'balance_reminder_days_before_due',
+				'min'         => '0',
+				'step'        => '1',
+				'description' => __( 'Number of days before the due date when the reminder email should be sent. Use 0 to remind on the due date itself.', 'datrooster-partial-payments' ),
+			)
+		);
+
+		add_settings_field(
 			'tax_handling',
 			__( 'Tax handling', 'datrooster-partial-payments' ),
 			array( $this, 'render_select_field' ),
@@ -356,16 +402,19 @@ final class SettingsPage {
 		$gateways = array_keys( $this->get_payment_gateway_choices() );
 
 		$sanitized = array(
-			'enabled'           => ! empty( $input['enabled'] ) ? 1 : 0,
-			'require_login'     => ! empty( $input['require_login'] ) ? 1 : 0,
-			'deposit_type'      => in_array( $input['deposit_type'] ?? '', array( 'percentage', 'fixed' ), true ) ? $input['deposit_type'] : $defaults['deposit_type'],
-			'deposit_amount'    => isset( $input['deposit_amount'] ) ? (string) max( 0, (float) $input['deposit_amount'] ) : $defaults['deposit_amount'],
-			'default_selection' => in_array( $input['default_selection'] ?? '', array( 'deposit', 'full' ), true ) ? $input['default_selection'] : $defaults['default_selection'],
-			'fully_paid_status' => in_array( $input['fully_paid_status'] ?? '', $statuses, true ) ? $input['fully_paid_status'] : $defaults['fully_paid_status'],
-			'tax_handling'      => 'proportional',
-			'shipping_handling' => in_array( $input['shipping_handling'] ?? '', array( 'upfront', 'proportional' ), true ) ? $input['shipping_handling'] : $defaults['shipping_handling'],
-			'coupon_handling'   => in_array( $input['coupon_handling'] ?? '', array( 'initial_payment', 'exclude_deposit_items' ), true ) ? $input['coupon_handling'] : $defaults['coupon_handling'],
-			'disabled_gateways' => array(),
+			'enabled'                         => ! empty( $input['enabled'] ) ? 1 : 0,
+			'require_login'                   => ! empty( $input['require_login'] ) ? 1 : 0,
+			'deposit_type'                    => in_array( $input['deposit_type'] ?? '', array( 'percentage', 'fixed' ), true ) ? $input['deposit_type'] : $defaults['deposit_type'],
+			'deposit_amount'                  => isset( $input['deposit_amount'] ) ? (string) max( 0, (float) $input['deposit_amount'] ) : $defaults['deposit_amount'],
+			'default_selection'               => in_array( $input['default_selection'] ?? '', array( 'deposit', 'full' ), true ) ? $input['default_selection'] : $defaults['default_selection'],
+			'fully_paid_status'               => in_array( $input['fully_paid_status'] ?? '', $statuses, true ) ? $input['fully_paid_status'] : $defaults['fully_paid_status'],
+			'balance_due_days'                => isset( $input['balance_due_days'] ) ? max( 1, min( 365, (int) $input['balance_due_days'] ) ) : $defaults['balance_due_days'],
+			'balance_reminder_enabled'        => ! empty( $input['balance_reminder_enabled'] ) ? 1 : 0,
+			'balance_reminder_days_before_due' => isset( $input['balance_reminder_days_before_due'] ) ? max( 0, min( 365, (int) $input['balance_reminder_days_before_due'] ) ) : $defaults['balance_reminder_days_before_due'],
+			'tax_handling'                    => 'proportional',
+			'shipping_handling'               => in_array( $input['shipping_handling'] ?? '', array( 'upfront', 'proportional' ), true ) ? $input['shipping_handling'] : $defaults['shipping_handling'],
+			'coupon_handling'                 => in_array( $input['coupon_handling'] ?? '', array( 'initial_payment', 'exclude_deposit_items' ), true ) ? $input['coupon_handling'] : $defaults['coupon_handling'],
+			'disabled_gateways'               => array(),
 		);
 
 		if ( ! empty( $input['disabled_gateways'] ) && is_array( $input['disabled_gateways'] ) ) {
@@ -403,7 +452,7 @@ final class SettingsPage {
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Partial Payments', 'datrooster-partial-payments' ); ?></h1>
-			<p><?php esc_html_e( 'Current milestone adds deposit settings, product overrides, classic checkout calculations, linked balance orders, and My Account balance payment actions. Cart and Checkout Blocks integration is planned for a future release.', 'datrooster-partial-payments' ); ?></p>
+			<p><?php esc_html_e( 'Current milestone adds deposit settings, product overrides, classic checkout calculations, linked balance orders, customer balance emails, reminders, and My Account balance payment actions. Cart and Checkout Blocks integration is planned for a future release.', 'datrooster-partial-payments' ); ?></p>
 
 			<nav class="nav-tab-wrapper" aria-label="<?php esc_attr_e( 'Settings tabs', 'datrooster-partial-payments' ); ?>">
 				<a class="nav-tab <?php echo esc_attr( 'general' === $tab ? 'nav-tab-active' : '' ); ?>" href="<?php echo esc_url( $this->get_tab_url( 'general' ) ); ?>">
@@ -433,7 +482,7 @@ final class SettingsPage {
 	 * Renders the general settings section description.
 	 */
 	public function render_general_section(): void {
-		echo '<p>' . esc_html__( 'Start with sensible store-wide defaults. Product, category, cart, and installment rules will build on top of these settings.', 'datrooster-partial-payments' ) . '</p>';
+		echo '<p>' . esc_html__( 'Start with sensible store-wide defaults. Product, category, cart, installment, and balance collection rules will build on top of these settings.', 'datrooster-partial-payments' ) . '</p>';
 	}
 
 	/**

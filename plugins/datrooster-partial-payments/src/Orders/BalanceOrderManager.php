@@ -18,6 +18,9 @@ final class BalanceOrderManager {
 	public const META_BALANCE_PAID           = '_drpp_balance_paid';
 	public const META_BALANCE_PAID_AT        = '_drpp_balance_paid_at';
 	public const META_BALANCE_CREATED_AT     = '_drpp_balance_created_at';
+	public const META_BALANCE_DUE_AT               = '_drpp_balance_due_at';
+	public const META_BALANCE_REMINDER_SENT_AT     = '_drpp_balance_reminder_sent_at';
+	public const META_BALANCE_REMINDER_SCHEDULED_AT = '_drpp_balance_reminder_scheduled_at';
 
 	/**
 	 * Shared settings resolver.
@@ -142,6 +145,7 @@ final class BalanceOrderManager {
 		}
 
 		$status_name = wc_get_order_status_name( $balance_order->get_status() );
+		$due_date    = $this->get_balance_due_date_text( $balance_order );
 		?>
 		<section class="woocommerce-order-details drpp-balance-details">
 			<h2 class="woocommerce-order-details__title"><?php esc_html_e( 'Remaining balance', 'datrooster-partial-payments' ); ?></h2>
@@ -155,6 +159,17 @@ final class BalanceOrderManager {
 				);
 				?>
 			</p>
+			<?php if ( '' !== $due_date ) : ?>
+				<p>
+					<?php
+					printf(
+						/* translators: %s: localized due date. */
+						esc_html__( 'Payment due date: %s.', 'datrooster-partial-payments' ),
+						esc_html( $due_date )
+					);
+					?>
+				</p>
+			<?php endif; ?>
 			<?php if ( $balance_order->needs_payment() ) : ?>
 				<p>
 					<a class="button" href="<?php echo esc_url( $balance_order->get_checkout_payment_url() ); ?>">
@@ -230,6 +245,14 @@ final class BalanceOrderManager {
 		);
 
 		$this->maybe_mark_parent_partially_paid( $order );
+
+		/**
+		 * Fires after a linked balance order has been created for a deposit purchase.
+		 *
+		 * @param int $balance_order_id Newly created balance order ID.
+		 * @param int $parent_order_id  Parent deposit order ID.
+		 */
+		do_action( 'drpp_balance_order_created', $balance_order->get_id(), $order->get_id() );
 	}
 
 	/**
@@ -473,6 +496,27 @@ final class BalanceOrderManager {
 	 */
 	private function get_expected_balance_total( \WC_Order $order ): float {
 		return (float) $order->get_meta( '_drpp_estimated_remaining_total', true );
+	}
+
+	/**
+	 * Returns the localized due date text stored on a balance order.
+	 *
+	 * @param \WC_Order $balance_order Balance order object.
+	 */
+	private function get_balance_due_date_text( \WC_Order $balance_order ): string {
+		$raw_due_date = (string) $balance_order->get_meta( self::META_BALANCE_DUE_AT, true );
+
+		if ( '' === $raw_due_date ) {
+			return '';
+		}
+
+		$timestamp = strtotime( $raw_due_date );
+
+		if ( false === $timestamp ) {
+			return '';
+		}
+
+		return wp_date( get_option( 'date_format' ), $timestamp, wp_timezone() );
 	}
 
 	/**

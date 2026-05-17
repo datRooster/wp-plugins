@@ -3,7 +3,7 @@ Contributors: datrooster
 Requires at least: 6.7
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 0.4.0
+Stable tag: 0.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires Plugins: woocommerce
@@ -25,11 +25,14 @@ Current milestone includes:
 * estimated remaining balance summary for products, tax, and shipping in cart, checkout, and order metadata;
 * linked balance orders generated from paid deposit orders;
 * a `Partially paid` order status and a My Account balance payment action for classic WooCommerce flows;
+* transactional balance emails with configurable WooCommerce subjects, headings, and email formats;
+* automatic balance due dates and reminder scheduling for classic WooCommerce order-pay flows;
+* bundled translation files for Italian, Spanish, and German, with English kept as the source locale;
 * WooCommerce dependency checks;
 * HPOS compatibility declaration and explicit Cart & Checkout Blocks incompatibility until the dedicated integration is built;
 * customizable labels and global deposit defaults.
 
-This release focuses on classic WooCommerce product, cart, checkout, and My Account flows. Cart & Checkout Blocks support, customer emails, and reminder automation are planned for future milestones.
+This release focuses on classic WooCommerce product, cart, checkout, and My Account flows. Cart & Checkout Blocks support, more advanced deposit rules, and merchant tooling are planned for future milestones.
 
 == Installation ==
 
@@ -39,6 +42,13 @@ This release focuses on classic WooCommerce product, cart, checkout, and My Acco
 4. Open `WooCommerce > Partial Payments`.
 
 == Changelog ==
+
+= 0.5.0 =
+
+* Added WooCommerce customer emails for balance creation and balance reminders.
+* Added configurable balance due dates and reminder lead times.
+* Added bundled `it_IT`, `es_ES`, and `de_DE` translation files plus a translation build script.
+* Moved plugin textdomain loading to `init` for current WordPress i18n best practices.
 
 = 0.4.0 =
 
