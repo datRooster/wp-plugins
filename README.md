@@ -33,9 +33,16 @@ wp-plugins/
 - la compatibilita con HPOS e le superfici Woo moderne va dichiarata e testata a ogni milestone;
 - documentazione funzionale e roadmap restano dentro `docs/`.
 
+## Stato attuale
+
+- scelta tra pagamento completo e deposito sulla pagina prodotto per prodotti supportati;
+- riuso automatico dei gateway WooCommerce esistenti, salvo esclusioni configurate dall'admin;
+- riepilogo del saldo residuo prodotti in carrello, checkout e metadati ordine;
+- niente gateway custom in questa fase: il plugin si affianca ai metodi gia presenti.
+
 ## Prossimi passi
 
-1. collegare il calcolo acconto al carrello e al checkout;
+1. aggiungere politiche avanzate per coupon, tasse e spedizione nei flussi deposito;
 2. aggiungere gestione saldo residuo, email e automazioni;
 3. estendere le regole a variazioni, categorie, ruoli e condizioni carrello;
-4. aggiungere test, CI avanzata e pacchettizzazione di rilascio.
+4. preparare packaging e checklist di conformita per WordPress.org.

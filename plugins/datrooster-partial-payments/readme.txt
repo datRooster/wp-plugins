@@ -3,7 +3,7 @@ Contributors: datrooster
 Requires at least: 6.7
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires Plugins: woocommerce
@@ -19,9 +19,14 @@ Current milestone includes:
 * monorepo-ready structure;
 * WordPress Settings API integration;
 * product-level deposit overrides for simple and variable products;
+* automatic reuse of existing WooCommerce payment gateways for deposit orders;
+* optional gateway restrictions only when deposit mode is active;
+* remaining product balance summary in cart, checkout, and order metadata;
 * WooCommerce dependency checks;
 * HPOS and modern WooCommerce compatibility declarations;
 * customizable labels and global deposit defaults.
+
+Current balance calculations in this milestone focus on product amounts. Advanced handling for coupons, taxes, and shipping will be extended in upcoming releases.
 
 == Installation ==
 
@@ -31,6 +36,12 @@ Current milestone includes:
 4. Open `WooCommerce > Partial Payments`.
 
 == Changelog ==
+
+= 0.2.0 =
+
+* Added product-level deposit storefront flow.
+* Added automatic gateway reuse for deposit checkouts.
+* Added remaining product balance summaries and order metadata.
 
 = 0.1.0 =
 

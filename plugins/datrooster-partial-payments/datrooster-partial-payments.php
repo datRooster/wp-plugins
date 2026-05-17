@@ -3,7 +3,7 @@
  * Plugin Name:       DatRooster Partial Payments
  * Plugin URI:        https://github.com/datRooster/wp-plugins
  * Description:       Foundation plugin for WooCommerce deposits, split payments, and balance collection.
- * Version:           0.1.0
+ * Version:           0.2.0
  * Requires at least: 6.7
  * Requires PHP:      8.1
  * Author:            DatRooster
@@ -25,7 +25,7 @@ define( 'DATROOSTER_PP_FILE', __FILE__ );
 define( 'DATROOSTER_PP_PATH', plugin_dir_path( __FILE__ ) );
 define( 'DATROOSTER_PP_URL', plugin_dir_url( __FILE__ ) );
 define( 'DATROOSTER_PP_BASENAME', plugin_basename( __FILE__ ) );
-define( 'DATROOSTER_PP_VERSION', '0.1.0' );
+define( 'DATROOSTER_PP_VERSION', '0.2.0' );
 
 require_once DATROOSTER_PP_PATH . 'src/Autoloader.php';
 
