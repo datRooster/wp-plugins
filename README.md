@@ -31,7 +31,7 @@ wp-plugins/
 - namespace e prefissi devono essere unici per evitare collisioni;
 - niente accesso diretto ai dati ordine via `wp_posts` o `postmeta`: usare le API WooCommerce CRUD;
 - la compatibilita con HPOS e le superfici Woo moderne va dichiarata e testata a ogni milestone;
-- documentazione funzionale e roadmap restano dentro `docs/`.
+- documentazione funzionale, roadmap e processo release restano dentro `docs/`.
 
 ## Stato attuale
 
@@ -48,3 +48,9 @@ wp-plugins/
 2. aggiungere email transazionali, reminder e automazioni;
 3. estendere le regole a variazioni, categorie, ruoli e condizioni carrello;
 4. integrare Cart & Checkout Blocks e preparare la checklist finale per WordPress.org.
+
+## Release
+
+- i pacchetti installabili vengono pubblicati tramite GitHub Releases;
+- la convenzione tag del monorepo e `plugins/<slug>/vX.Y.Z`;
+- il flusso completo e documentato in `docs/release-process.md`.

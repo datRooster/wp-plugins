@@ -1,0 +1,71 @@
+name: Release Plugin
+
+on:
+  push:
+    tags:
+      - 'plugins/*/v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Resolve plugin metadata
+        id: meta
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          tag="${GITHUB_REF_NAME}"
+          IFS='/' read -r scope slug version <<< "${tag}"
+
+          if [[ "${scope}" != "plugins" || -z "${slug}" || -z "${version}" ]]; then
+            echo "Unsupported tag format: ${tag}" >&2
+            exit 1
+          fi
+
+          if [[ ! "${version}" =~ ^v[0-9]+(\.[0-9]+)*$ ]]; then
+            echo "Unsupported version format: ${version}" >&2
+            exit 1
+          fi
+
+          echo "tag=${tag}" >> "${GITHUB_OUTPUT}"
+          echo "slug=${slug}" >> "${GITHUB_OUTPUT}"
+          echo "version=${version}" >> "${GITHUB_OUTPUT}"
+          echo "normalized_version=${version#v}" >> "${GITHUB_OUTPUT}"
+
+      - name: Build plugin package
+        id: package
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          package_path="$(bash ./scripts/package-plugin.sh "${{ steps.meta.outputs.slug }}" "${{ steps.meta.outputs.normalized_version }}")"
+          echo "package_path=${package_path}" >> "${GITHUB_OUTPUT}"
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          tag="${{ steps.meta.outputs.tag }}"
+          title="${{ steps.meta.outputs.slug }} ${{ steps.meta.outputs.version }}"
+          package_path="${{ steps.package.outputs.package_path }}"
+
+          if gh release view "${tag}" >/dev/null 2>&1; then
+            gh release upload "${tag}" "${package_path}" --clobber
+            exit 0
+          fi
+
+          gh release create "${tag}" "${package_path}" \
+            --title "${title}" \
+            --generate-notes \
+            --verify-tag
