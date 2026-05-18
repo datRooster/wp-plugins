@@ -139,6 +139,7 @@ final class SettingsResolver {
 			'deposit_amount'       => '' !== $product_overrides['deposit_amount'] ? $product_overrides['deposit_amount'] : $global_settings['deposit_amount'],
 			'default_selection'    => 'inherit' !== $product_overrides['default_selection'] ? $product_overrides['default_selection'] : $global_settings['default_selection'],
 			'fully_paid_status'    => $global_settings['fully_paid_status'],
+			'minimum_deposit_eligible_amount' => $global_settings['minimum_deposit_eligible_amount'],
 			'disabled_gateways'    => $global_settings['disabled_gateways'],
 			'product_behavior'     => $behavior,
 			'has_product_override' => ProductSettings::has_overrides( $product_overrides ),

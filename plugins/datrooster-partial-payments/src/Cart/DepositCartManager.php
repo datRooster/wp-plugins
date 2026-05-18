@@ -14,10 +14,14 @@ use DatRooster\PartialPayments\Deposits\SettingsResolver;
 defined( 'ABSPATH' ) || exit;
 
 final class DepositCartManager {
-	public const REQUEST_KEY = 'drpp_payment_mode';
-	public const CART_KEY    = 'drpp_deposit';
-	public const MODE_FULL   = 'full';
-	public const MODE_DEPOSIT = 'deposit';
+	public const REQUEST_KEY            = 'drpp_payment_mode';
+	public const CART_MODE_REQUEST_KEY  = 'drpp_cart_payment_mode';
+	public const CART_MODE_NONCE_KEY    = 'drpp_cart_payment_mode_nonce';
+	public const CART_MODE_NONCE_ACTION = 'drpp_update_cart_payment_mode';
+	public const SESSION_MODE_KEY       = 'drpp_cart_payment_mode';
+	public const CART_KEY               = 'drpp_deposit';
+	public const MODE_FULL              = 'full';
+	public const MODE_DEPOSIT           = 'deposit';
 
 	/**
 	 * Shared settings resolver.
@@ -61,6 +65,9 @@ final class DepositCartManager {
 		add_filter( 'woocommerce_add_cart_item_data', array( $this, 'capture_cart_item_data' ), 10, 4 );
 		add_filter( 'woocommerce_get_item_data', array( $this, 'get_item_data' ), 10, 2 );
 		add_action( 'woocommerce_before_calculate_totals', array( $this, 'apply_deposit_prices' ) );
+		add_action( 'woocommerce_checkout_update_order_review', array( $this, 'capture_checkout_mode' ) );
+		add_action( 'woocommerce_after_cart_table', array( $this, 'render_cart_payment_selector' ) );
+		add_action( 'woocommerce_review_order_before_payment', array( $this, 'render_checkout_payment_selector' ), 5 );
 		add_filter( 'woocommerce_package_rates', array( $this, 'filter_package_rates' ), 20, 2 );
 		add_filter( 'woocommerce_available_payment_gateways', array( $this, 'filter_available_payment_gateways' ) );
 		add_filter( 'woocommerce_coupon_is_valid_for_product', array( $this, 'filter_coupon_valid_for_product' ), 10, 4 );
@@ -79,13 +86,13 @@ final class DepositCartManager {
 	 * @param array<string,mixed> $cart_item_data Existing cart item data.
 	 */
 	public function validate_add_to_cart( bool $passed, int $product_id, $quantity, int $variation_id = 0, array $variations = array(), array $cart_item_data = array() ): bool {
-		unset( $quantity, $variations, $cart_item_data );
+		unset( $variations, $cart_item_data );
 
 		if ( ! $passed ) {
 			return false;
 		}
 
-		$mode = $this->get_requested_mode();
+		$mode = $this->get_requested_product_mode();
 
 		if ( self::MODE_DEPOSIT !== $mode ) {
 			return true;
@@ -142,13 +149,7 @@ final class DepositCartManager {
 	 * @return array<string,mixed>
 	 */
 	public function capture_cart_item_data( array $cart_item_data, int $product_id, int $variation_id = 0, $quantity = 1 ): array {
-		unset( $quantity );
-
-		$mode = $this->get_requested_mode();
-
-		if ( self::MODE_DEPOSIT !== $mode ) {
-			return $cart_item_data;
-		}
+		$mode = $this->get_requested_product_mode();
 
 		$product = $this->get_request_product( $product_id, $variation_id );
 
@@ -156,24 +157,29 @@ final class DepositCartManager {
 			return $cart_item_data;
 		}
 
+		if ( ! $this->settings_resolver->product_supports_deposits( $product ) ) {
+			return $cart_item_data;
+		}
+
 		$eligibility = $this->eligibility_checker->get_product_eligibility( $product, max( 1, (int) $quantity ) );
 		$settings    = $eligibility['settings'];
+
+		if ( ! empty( $settings['enabled'] ) && $this->has_requested_product_mode() ) {
+			$this->set_session_cart_mode( $mode );
+		}
+
+		if ( self::MODE_DEPOSIT !== $mode ) {
+			return $cart_item_data;
+		}
 
 		if ( empty( $settings['enabled'] ) || ! $eligibility['eligible'] ) {
 			return $cart_item_data;
 		}
 
-		$original_price = (float) $product->get_price( 'edit' );
-		$breakdown      = $this->calculator->get_breakdown( $original_price, 1, $settings );
-
-		$cart_item_data[ self::CART_KEY ] = array(
-			'payment_mode'       => self::MODE_DEPOSIT,
-			'deposit_type'       => (string) $settings['deposit_type'],
-			'deposit_amount'     => (string) $settings['deposit_amount'],
-			'original_unit_price' => $this->format_decimal( $breakdown['full_unit_price'] ),
-			'deposit_unit_price' => $this->format_decimal( $breakdown['deposit_unit_price'] ),
-			'balance_unit_price' => $this->format_decimal( $breakdown['balance_unit_price'] ),
-			'disabled_gateways'  => ! empty( $settings['disabled_gateways'] ) && is_array( $settings['disabled_gateways'] ) ? array_values( $settings['disabled_gateways'] ) : array(),
+		$cart_item_data[ self::CART_KEY ] = $this->build_cart_item_deposit_data(
+			(float) $product->get_price( 'edit' ),
+			$settings,
+			self::MODE_DEPOSIT
 		);
 
 		return $cart_item_data;
@@ -213,6 +219,23 @@ final class DepositCartManager {
 	}
 
 	/**
+	 * Captures checkout payment mode changes from WooCommerce review updates.
+	 *
+	 * @param string $posted_data Serialized checkout form data.
+	 */
+	public function capture_checkout_mode( string $posted_data ): void {
+		$request_data = array();
+
+		parse_str( $posted_data, $request_data );
+
+		if ( ! is_array( $request_data ) ) {
+			return;
+		}
+
+		$this->capture_cart_mode_from_data( $request_data );
+	}
+
+	/**
 	 * Rewrites eligible cart item prices to the chosen deposit amount.
 	 *
 	 * @param \WC_Cart $cart WooCommerce cart instance.
@@ -222,25 +245,66 @@ final class DepositCartManager {
 			return;
 		}
 
-		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
-			if ( ! $this->is_deposit_cart_item( $cart_item ) ) {
-				continue;
-			}
+		$this->maybe_store_cart_mode_from_request();
 
+		$cart_eligibility = $this->eligibility_checker->get_cart_eligibility();
+
+		if ( ! $cart_eligibility['eligible'] ) {
+			$this->clear_session_cart_mode();
+		}
+
+		$selected_mode = $this->get_effective_cart_mode( $cart_eligibility );
+
+		foreach ( $cart->get_cart() as $cart_item_key => $cart_item ) {
 			if ( empty( $cart_item['data'] ) || ! $cart_item['data'] instanceof \WC_Product ) {
 				continue;
 			}
 
-			$breakdown = $this->get_cart_item_breakdown( $cart_item );
+			$product = $cart_item['data'];
 
-			$cart_item['data']->set_price( $breakdown['deposit_unit_price'] );
+			if ( ! $this->settings_resolver->product_supports_deposits( $product ) ) {
+				$this->restore_full_price( $cart, $cart_item_key, $cart_item );
+				continue;
+			}
 
-			$cart->cart_contents[ $cart_item_key ][ self::CART_KEY ]['deposit_unit_price'] = $this->format_decimal( $breakdown['deposit_unit_price'] );
-			$cart->cart_contents[ $cart_item_key ][ self::CART_KEY ]['balance_unit_price'] = $this->format_decimal( $breakdown['balance_unit_price'] );
-			$cart->cart_contents[ $cart_item_key ][ self::CART_KEY ]['full_line_total']    = $this->format_decimal( $breakdown['full_line_total'] );
-			$cart->cart_contents[ $cart_item_key ][ self::CART_KEY ]['deposit_line_total'] = $this->format_decimal( $breakdown['deposit_line_total'] );
-			$cart->cart_contents[ $cart_item_key ][ self::CART_KEY ]['balance_line_total'] = $this->format_decimal( $breakdown['balance_line_total'] );
+			$settings = $this->settings_resolver->get_effective_product_settings( $product );
+
+			if ( empty( $settings['enabled'] ) ) {
+				$this->restore_full_price( $cart, $cart_item_key, $cart_item );
+				continue;
+			}
+
+			$this->prime_cart_item_deposit_data( $cart, $cart_item_key, $cart_item, $settings );
+
+			if ( self::MODE_DEPOSIT === $selected_mode && $cart_eligibility['eligible'] ) {
+				$this->set_cart_item_deposit_price( $cart, $cart_item_key, $cart->cart_contents[ $cart_item_key ], $settings );
+				continue;
+			}
+
+			$this->restore_full_price( $cart, $cart_item_key, $cart->cart_contents[ $cart_item_key ], $settings );
 		}
+	}
+
+	/**
+	 * Renders the cart-level selector inside the cart form.
+	 */
+	public function render_cart_payment_selector(): void {
+		if ( is_admin() ) {
+			return;
+		}
+
+		$this->render_payment_selector( 'cart' );
+	}
+
+	/**
+	 * Renders the checkout-level selector above the payment gateways.
+	 */
+	public function render_checkout_payment_selector(): void {
+		if ( is_admin() ) {
+			return;
+		}
+
+		$this->render_payment_selector( 'checkout' );
 	}
 
 	/**
@@ -579,18 +643,434 @@ final class DepositCartManager {
 	}
 
 	/**
-	 * Reads the selected payment mode from the current request.
+	 * Renders cart or checkout selection controls, or the relevant threshold notice.
 	 */
-	private function get_requested_mode(): string {
+	private function render_payment_selector( string $context ): void {
+		if ( ! function_exists( 'WC' ) || ! WC()->cart || WC()->cart->is_empty() ) {
+			return;
+		}
+
+		$eligibility = $this->eligibility_checker->get_cart_eligibility();
+
+		if ( empty( $eligibility['settings']['enabled'] ) || empty( $eligibility['supported_item_count'] ) ) {
+			return;
+		}
+
+		$notice = '';
+
+		if ( ! $eligibility['eligible'] ) {
+			$notice = $this->get_cart_unavailable_message( $eligibility );
+
+			if ( '' === $notice ) {
+				return;
+			}
+		}
+
+		$this->enqueue_payment_selector_script();
+		?>
+		<div class="drpp-cart-selection drpp-cart-selection--<?php echo esc_attr( $context ); ?>">
+			<?php if ( '' !== $notice ) : ?>
+				<p class="description"><?php echo esc_html( $notice ); ?></p>
+			<?php else : ?>
+				<?php $labels = $this->settings_resolver->get_label_settings(); ?>
+				<fieldset>
+					<legend><strong><?php esc_html_e( 'Payment options', 'datrooster-partial-payments' ); ?></strong></legend>
+					<p><?php echo esc_html( $this->get_cart_selection_description() ); ?></p>
+					<?php wp_nonce_field( self::CART_MODE_NONCE_ACTION, self::CART_MODE_NONCE_KEY, false ); ?>
+					<label>
+						<input
+							type="radio"
+							name="<?php echo esc_attr( self::CART_MODE_REQUEST_KEY ); ?>"
+							value="<?php echo esc_attr( self::MODE_FULL ); ?>"
+							<?php checked( self::MODE_FULL, $this->get_effective_cart_mode( $eligibility ) ); ?>
+						/>
+						<?php echo esc_html( $labels['pay_full_amount_text'] ); ?>
+					</label>
+					<br />
+					<label>
+						<input
+							type="radio"
+							name="<?php echo esc_attr( self::CART_MODE_REQUEST_KEY ); ?>"
+							value="<?php echo esc_attr( self::MODE_DEPOSIT ); ?>"
+							<?php checked( self::MODE_DEPOSIT, $this->get_effective_cart_mode( $eligibility ) ); ?>
+						/>
+						<?php echo esc_html( $labels['pay_deposit_text'] ); ?>
+					</label>
+				</fieldset>
+			<?php endif; ?>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Returns the cart-level descriptive copy shown above the selector.
+	 */
+	private function get_cart_selection_description(): string {
+		return __( 'Your cart qualifies for partial payments. Choose whether to pay in full or leave the configured deposit today.', 'datrooster-partial-payments' );
+	}
+
+	/**
+	 * Returns the message to show when the cart is not yet eligible for deposits.
+	 *
+	 * @param array<string,mixed> $eligibility Cart eligibility context.
+	 */
+	private function get_cart_unavailable_message( array $eligibility ): string {
+		$reason    = isset( $eligibility['reason'] ) ? (string) $eligibility['reason'] : '';
+		$threshold = isset( $eligibility['threshold_amount'] ) ? (float) $eligibility['threshold_amount'] : 0.0;
+
+		if ( EligibilityChecker::REASON_LOGIN_REQUIRED === $reason ) {
+			return __( 'Please log in to use deposits on this order.', 'datrooster-partial-payments' );
+		}
+
+		if ( EligibilityChecker::REASON_THRESHOLD_NOT_MET === $reason && $threshold > 0 ) {
+			return sprintf(
+				/* translators: %s: formatted threshold amount. */
+				__( 'Deposits will become available when your cart products total reaches %s.', 'datrooster-partial-payments' ),
+				wp_strip_all_tags( $this->format_price( $threshold ) )
+			);
+		}
+
+		return '';
+	}
+
+	/**
+	 * Enqueues the small delegated script that refreshes cart or checkout totals.
+	 */
+	private function enqueue_payment_selector_script(): void {
+		if ( ! function_exists( 'wc_enqueue_js' ) ) {
+			return;
+		}
+
+		static $script_enqueued = false;
+
+		if ( $script_enqueued ) {
+			return;
+		}
+
+		$script_enqueued = true;
+
+		wc_enqueue_js(
+			"jQuery( function( $ ) {
+				$( document.body ).on( 'change', 'input[name=\"" . esc_js( self::CART_MODE_REQUEST_KEY ) . "\"]', function() {
+					var \$input = $( this );
+					var \$cartForm = \$input.closest( 'form.woocommerce-cart-form' );
+
+					if ( \$cartForm.length ) {
+						var \$updateButton = \$cartForm.find( 'button[name=\"update_cart\"]' );
+
+						if ( \$updateButton.length ) {
+							\$updateButton.prop( 'disabled', false );
+							\$updateButton.trigger( 'click' );
+							return;
+						}
+
+						\$cartForm.trigger( 'submit' );
+						return;
+					}
+
+					$( document.body ).trigger( 'update_checkout' );
+				} );
+			} );"
+		);
+	}
+
+	/**
+	 * Captures cart mode changes sent from the cart form.
+	 */
+	private function maybe_store_cart_mode_from_request(): void {
+		$this->capture_cart_mode_from_data( $_POST );
+	}
+
+	/**
+	 * Validates and stores a cart-level payment mode selection.
+	 *
+	 * @param array<string,mixed> $request_data Raw request data.
+	 */
+	private function capture_cart_mode_from_data( array $request_data ): void {
+		if ( ! function_exists( 'WC' ) || ! WC()->session ) {
+			return;
+		}
+
+		if ( ! isset( $request_data[ self::CART_MODE_REQUEST_KEY ], $request_data[ self::CART_MODE_NONCE_KEY ] ) ) {
+			return;
+		}
+
+		$nonce = sanitize_text_field( wp_unslash( (string) $request_data[ self::CART_MODE_NONCE_KEY ] ) );
+
+		if ( ! wp_verify_nonce( $nonce, self::CART_MODE_NONCE_ACTION ) ) {
+			return;
+		}
+
+		$mode = $this->read_mode_from_value( $request_data[ self::CART_MODE_REQUEST_KEY ], '' );
+
+		if ( '' === $mode ) {
+			return;
+		}
+
+		$this->set_session_cart_mode( $mode );
+	}
+
+	/**
+	 * Returns the effective cart-wide payment mode.
+	 *
+	 * @param array<string,mixed> $cart_eligibility Cart eligibility context.
+	 */
+	private function get_effective_cart_mode( array $cart_eligibility ): string {
+		if ( empty( $cart_eligibility['eligible'] ) ) {
+			return self::MODE_FULL;
+		}
+
+		$session_mode = $this->get_session_cart_mode();
+
+		if ( '' !== $session_mode ) {
+			return $session_mode;
+		}
+
+		if ( $this->cart_contains_deposit_items() ) {
+			return self::MODE_DEPOSIT;
+		}
+
+		return $this->read_mode_from_value( $cart_eligibility['settings']['default_selection'] ?? self::MODE_FULL, self::MODE_FULL );
+	}
+
+	/**
+	 * Returns whether the current cart already contains deposit-mode items.
+	 */
+	private function cart_contains_deposit_items(): bool {
+		if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+			return false;
+		}
+
+		foreach ( WC()->cart->get_cart() as $cart_item ) {
+			if ( $this->is_deposit_cart_item( $cart_item ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Stores the current cart payment mode in the WooCommerce session.
+	 *
+	 * @param string $mode Requested payment mode.
+	 */
+	private function set_session_cart_mode( string $mode ): void {
+		if ( ! function_exists( 'WC' ) || ! WC()->session ) {
+			return;
+		}
+
+		WC()->session->set( self::SESSION_MODE_KEY, $this->read_mode_from_value( $mode, self::MODE_FULL ) );
+	}
+
+	/**
+	 * Clears any explicit cart mode from the current session.
+	 */
+	private function clear_session_cart_mode(): void {
+		if ( ! function_exists( 'WC' ) || ! WC()->session ) {
+			return;
+		}
+
+		if ( method_exists( WC()->session, '__unset' ) ) {
+			WC()->session->__unset( self::SESSION_MODE_KEY );
+			return;
+		}
+
+		WC()->session->set( self::SESSION_MODE_KEY, null );
+	}
+
+	/**
+	 * Returns the cart mode explicitly selected by the shopper, if any.
+	 */
+	private function get_session_cart_mode(): string {
+		if ( ! function_exists( 'WC' ) || ! WC()->session ) {
+			return '';
+		}
+
+		$stored_mode = WC()->session->get( self::SESSION_MODE_KEY );
+
+		return $this->read_mode_from_value( is_string( $stored_mode ) ? $stored_mode : '', '' );
+	}
+
+	/**
+	 * Ensures the cart item carries the original full price and deposit rule snapshot.
+	 *
+	 * @param \WC_Cart            $cart          WooCommerce cart instance.
+	 * @param string              $cart_item_key Cart item key.
+	 * @param array<string,mixed> $cart_item     Cart item values.
+	 * @param array<string,mixed> $settings      Effective deposit settings.
+	 */
+	private function prime_cart_item_deposit_data( \WC_Cart $cart, string $cart_item_key, array $cart_item, array $settings ): void {
+		$original_price = $this->get_original_unit_price( $cart_item );
+
+		if ( $original_price <= 0 && ! empty( $cart_item['data'] ) && $cart_item['data'] instanceof \WC_Product ) {
+			$original_price = (float) $cart_item['data']->get_price( 'edit' );
+		}
+
+		$payment_mode = ! empty( $cart_item[ self::CART_KEY ]['payment_mode'] )
+			? $this->read_mode_from_value( (string) $cart_item[ self::CART_KEY ]['payment_mode'], self::MODE_FULL )
+			: self::MODE_FULL;
+
+		$cart->cart_contents[ $cart_item_key ][ self::CART_KEY ] = array_merge(
+			$cart_item[ self::CART_KEY ] ?? array(),
+			$this->build_cart_item_deposit_data( $original_price, $settings, $payment_mode )
+		);
+	}
+
+	/**
+	 * Applies deposit pricing and updates cached breakdown data for one cart item.
+	 *
+	 * @param \WC_Cart            $cart          WooCommerce cart instance.
+	 * @param string              $cart_item_key Cart item key.
+	 * @param array<string,mixed> $cart_item     Cart item values.
+	 * @param array<string,mixed> $settings      Effective deposit settings.
+	 */
+	private function set_cart_item_deposit_price( \WC_Cart $cart, string $cart_item_key, array $cart_item, array $settings ): void {
+		if ( empty( $cart_item['data'] ) || ! $cart_item['data'] instanceof \WC_Product ) {
+			return;
+		}
+
+		$quantity       = isset( $cart_item['quantity'] ) ? max( 1, (int) $cart_item['quantity'] ) : 1;
+		$original_price = $this->get_original_unit_price( $cart_item );
+		$breakdown      = $this->calculator->get_breakdown( $original_price, $quantity, $settings );
+
+		$cart->cart_contents[ $cart_item_key ]['data']->set_price( $breakdown['deposit_unit_price'] );
+		$cart->cart_contents[ $cart_item_key ][ self::CART_KEY ] = array_merge(
+			$cart->cart_contents[ $cart_item_key ][ self::CART_KEY ] ?? array(),
+			$this->build_cart_item_deposit_data( $original_price, $settings, self::MODE_DEPOSIT ),
+			array(
+				'full_line_total'    => $this->format_decimal( $breakdown['full_line_total'] ),
+				'deposit_line_total' => $this->format_decimal( $breakdown['deposit_line_total'] ),
+				'balance_line_total' => $this->format_decimal( $breakdown['balance_line_total'] ),
+			)
+		);
+	}
+
+	/**
+	 * Restores a cart item to full-price mode while keeping the original snapshot data.
+	 *
+	 * @param \WC_Cart                  $cart          WooCommerce cart instance.
+	 * @param string                    $cart_item_key Cart item key.
+	 * @param array<string,mixed>       $cart_item     Cart item values.
+	 * @param array<string,mixed>|null  $settings      Effective deposit settings when available.
+	 */
+	private function restore_full_price( \WC_Cart $cart, string $cart_item_key, array $cart_item, ?array $settings = null ): void {
+		if ( empty( $cart_item['data'] ) || ! $cart_item['data'] instanceof \WC_Product ) {
+			return;
+		}
+
+		$original_price = $this->get_original_unit_price( $cart_item );
+
+		if ( $original_price <= 0 ) {
+			$original_price = (float) $cart_item['data']->get_price( 'edit' );
+		}
+
+		$cart->cart_contents[ $cart_item_key ]['data']->set_price( $original_price );
+
+		if ( empty( $cart_item[ self::CART_KEY ] ) && null === $settings ) {
+			return;
+		}
+
+		if ( null === $settings ) {
+			$settings = $this->get_cart_item_settings_from_data( $cart_item );
+		}
+
+		$cart->cart_contents[ $cart_item_key ][ self::CART_KEY ] = array_merge(
+			$cart_item[ self::CART_KEY ] ?? array(),
+			$this->build_cart_item_deposit_data( $original_price, $settings, self::MODE_FULL )
+		);
+	}
+
+	/**
+	 * Builds normalized deposit data stored on a cart line.
+	 *
+	 * @param float              $original_price Original product unit price.
+	 * @param array<string,mixed> $settings       Effective deposit settings.
+	 * @param string             $payment_mode   Stored payment mode.
+	 * @return array<string,mixed>
+	 */
+	private function build_cart_item_deposit_data( float $original_price, array $settings, string $payment_mode ): array {
+		$breakdown = $this->calculator->get_breakdown( $original_price, 1, $settings );
+
+		return array(
+			'payment_mode'        => $this->read_mode_from_value( $payment_mode, self::MODE_FULL ),
+			'deposit_type'        => (string) ( $settings['deposit_type'] ?? 'percentage' ),
+			'deposit_amount'      => (string) ( $settings['deposit_amount'] ?? '0' ),
+			'original_unit_price' => $this->format_decimal( $breakdown['full_unit_price'] ),
+			'deposit_unit_price'  => $this->format_decimal( $breakdown['deposit_unit_price'] ),
+			'balance_unit_price'  => $this->format_decimal( $breakdown['balance_unit_price'] ),
+			'disabled_gateways'   => ! empty( $settings['disabled_gateways'] ) && is_array( $settings['disabled_gateways'] )
+				? array_values( $settings['disabled_gateways'] )
+				: array(),
+		);
+	}
+
+	/**
+	 * Reads deposit settings back from existing cart line data.
+	 *
+	 * @param array<string,mixed> $cart_item Cart item values.
+	 * @return array<string,mixed>
+	 */
+	private function get_cart_item_settings_from_data( array $cart_item ): array {
+		$deposit_data = $cart_item[ self::CART_KEY ] ?? array();
+
+		return array(
+			'deposit_type'      => $deposit_data['deposit_type'] ?? 'percentage',
+			'deposit_amount'    => $deposit_data['deposit_amount'] ?? '0',
+			'disabled_gateways' => ! empty( $deposit_data['disabled_gateways'] ) && is_array( $deposit_data['disabled_gateways'] )
+				? array_values( $deposit_data['disabled_gateways'] )
+				: array(),
+		);
+	}
+
+	/**
+	 * Returns the original unit price tracked for a cart item.
+	 *
+	 * @param array<string,mixed> $cart_item Cart item values.
+	 */
+	private function get_original_unit_price( array $cart_item ): float {
+		if ( ! empty( $cart_item[ self::CART_KEY ]['original_unit_price'] ) ) {
+			return (float) $cart_item[ self::CART_KEY ]['original_unit_price'];
+		}
+
+		if ( ! empty( $cart_item['data'] ) && $cart_item['data'] instanceof \WC_Product ) {
+			return (float) $cart_item['data']->get_price( 'edit' );
+		}
+
+		return 0.0;
+	}
+
+	/**
+	 * Reads the selected product-page payment mode from the current request.
+	 */
+	private function get_requested_product_mode(): string {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce validates add to cart requests in its own handlers.
 		if ( ! isset( $_POST[ self::REQUEST_KEY ] ) ) {
 			return self::MODE_FULL;
 		}
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce validates add to cart requests in its own handlers.
-		$mode = sanitize_key( wp_unslash( (string) $_POST[ self::REQUEST_KEY ] ) );
+		return $this->read_mode_from_value( wp_unslash( $_POST[ self::REQUEST_KEY ] ), self::MODE_FULL );
+	}
 
-		return in_array( $mode, array( self::MODE_FULL, self::MODE_DEPOSIT ), true ) ? $mode : self::MODE_FULL;
+	/**
+	 * Returns whether the current add-to-cart request contains the storefront selector.
+	 */
+	private function has_requested_product_mode(): bool {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce validates add to cart requests in its own handlers.
+		return isset( $_POST[ self::REQUEST_KEY ] );
+	}
+
+	/**
+	 * Normalizes an arbitrary value to a supported payment mode.
+	 *
+	 * @param mixed  $value    Raw request or session value.
+	 * @param string $fallback Fallback mode when the value is invalid.
+	 */
+	private function read_mode_from_value( $value, string $fallback ): string {
+		$mode = sanitize_key( (string) $value );
+
+		return in_array( $mode, array( self::MODE_FULL, self::MODE_DEPOSIT ), true ) ? $mode : $fallback;
 	}
 
 	/**

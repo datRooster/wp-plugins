@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: DatRooster Partial Payments 0.6.0\n"
+"Project-Id-Version: DatRooster Partial Payments 0.6.1\n"
 "Report-Msgid-Bugs-To: https://github.com/datRooster/wp-plugins/issues\n"
-"POT-Creation-Date: 2026-05-17 20:22+0200\n"
+"POT-Creation-Date: 2026-05-18 15:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -407,62 +407,84 @@ msgstr ""
 msgid "Completed"
 msgstr ""
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:97
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:104
 msgid "The selected product could not be prepared for a deposit purchase."
 msgstr ""
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:104
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:111
 msgid "Deposits are not available for this product."
 msgstr ""
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:111
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:118
 msgid "Deposits are currently disabled for this product."
 msgstr ""
 
 #. translators: %s: formatted threshold amount.
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:119
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:126
 #, php-format
 msgid ""
 "Deposits become available only when the product or cart products total "
 "reaches %s."
 msgstr ""
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:128
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:135
 msgid "Please log in before purchasing this product with a deposit."
 msgstr ""
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:198
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:204
 msgid "Payment option"
 msgstr ""
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:203
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:209
 msgid "Due today"
 msgstr ""
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:208
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:360
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:361
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:214
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:424
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:425
 msgid "Remaining product balance"
 msgstr ""
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:367
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:368
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:431
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:432
 msgid "Remaining product tax"
 msgstr ""
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:375
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:376
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:439
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:440
 msgid "Remaining shipping balance"
 msgstr ""
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:383
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:384
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:447
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:448
 msgid "Remaining shipping tax"
 msgstr ""
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:390
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:391
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:454
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:455
 msgid "Estimated remaining balance"
+msgstr ""
+
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:677
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Frontend/ProductSelection.php:85
+msgid "Payment options"
+msgstr ""
+
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:709
+msgid ""
+"Your cart qualifies for partial payments. Choose whether to pay in full or "
+"leave the configured deposit today."
+msgstr ""
+
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:722
+msgid "Please log in to use deposits on this order."
+msgstr ""
+
+#. translators: %s: formatted threshold amount.
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Cart/DepositCartManager.php:728
+#, php-format
+msgid ""
+"Deposits will become available when your cart products total reaches %s."
 msgstr ""
 
 #: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Compatibility/WooCommerce.php:30
@@ -600,10 +622,6 @@ msgstr ""
 #: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Emails/CustomerBalanceReminderEmail.php:45
 msgid ""
 "This is a reminder that your remaining balance is still awaiting payment."
-msgstr ""
-
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Frontend/ProductSelection.php:85
-msgid "Payment options"
 msgstr ""
 
 #: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Frontend/ProductSelection.php:109

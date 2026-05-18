@@ -14,6 +14,8 @@ defined( 'ABSPATH' ) || exit;
 final class EligibilityChecker {
 	public const REASON_ENABLED           = 'enabled';
 	public const REASON_DISABLED          = 'disabled';
+	public const REASON_LOGIN_REQUIRED    = 'login_required';
+	public const REASON_NO_ELIGIBLE_ITEMS = 'no_eligible_items';
 	public const REASON_UNSUPPORTED       = 'unsupported_product';
 	public const REASON_THRESHOLD_NOT_MET = 'threshold_not_met';
 
@@ -86,6 +88,58 @@ final class EligibilityChecker {
 	}
 
 	/**
+	 * Returns deposit eligibility details for the current cart context.
+	 *
+	 * @return array<string,mixed>
+	 */
+	public function get_cart_eligibility(): array {
+		$settings = $this->settings_resolver->get_global_settings();
+
+		$eligibility = array(
+			'eligible'            => false,
+			'reason'              => self::REASON_DISABLED,
+			'settings'            => $settings,
+			'threshold_amount'    => max( 0, (float) ( $settings['minimum_deposit_eligible_amount'] ?? 0 ) ),
+			'cart_product_total'  => $this->round_amount( $this->get_current_cart_product_total() ),
+			'supported_item_count' => 0,
+			'enabled_item_count'  => 0,
+		);
+
+		if ( empty( $settings['enabled'] ) ) {
+			return $eligibility;
+		}
+
+		$eligibility['supported_item_count'] = $this->count_supported_cart_items();
+		$eligibility['enabled_item_count']   = $this->count_enabled_cart_items();
+
+		if ( 0 === $eligibility['enabled_item_count'] ) {
+			$eligibility['reason'] = self::REASON_NO_ELIGIBLE_ITEMS;
+			return $eligibility;
+		}
+
+		if ( ! empty( $settings['require_login'] ) && ! is_user_logged_in() ) {
+			$eligibility['reason'] = self::REASON_LOGIN_REQUIRED;
+			return $eligibility;
+		}
+
+		if ( $eligibility['threshold_amount'] <= 0 ) {
+			$eligibility['eligible'] = true;
+			$eligibility['reason']   = self::REASON_ENABLED;
+			return $eligibility;
+		}
+
+		if ( $eligibility['cart_product_total'] >= $eligibility['threshold_amount'] ) {
+			$eligibility['eligible'] = true;
+			$eligibility['reason']   = self::REASON_ENABLED;
+			return $eligibility;
+		}
+
+		$eligibility['reason'] = self::REASON_THRESHOLD_NOT_MET;
+
+		return $eligibility;
+	}
+
+	/**
 	 * Returns the full-price product total currently in the cart plus this request.
 	 *
 	 * @param \WC_Product $product  WooCommerce product object.
@@ -148,6 +202,62 @@ final class EligibilityChecker {
 		}
 
 		return $total;
+	}
+
+	/**
+	 * Counts cart line items supported by the plugin.
+	 */
+	private function count_supported_cart_items(): int {
+		$count = 0;
+
+		if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+			return $count;
+		}
+
+		foreach ( WC()->cart->get_cart() as $cart_item ) {
+			if ( empty( $cart_item['data'] ) || ! $cart_item['data'] instanceof \WC_Product ) {
+				continue;
+			}
+
+			if ( ! $this->settings_resolver->product_supports_deposits( $cart_item['data'] ) ) {
+				continue;
+			}
+
+			++$count;
+		}
+
+		return $count;
+	}
+
+	/**
+	 * Counts cart line items that can currently inherit deposit settings.
+	 */
+	private function count_enabled_cart_items(): int {
+		$count = 0;
+
+		if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+			return $count;
+		}
+
+		foreach ( WC()->cart->get_cart() as $cart_item ) {
+			if ( empty( $cart_item['data'] ) || ! $cart_item['data'] instanceof \WC_Product ) {
+				continue;
+			}
+
+			if ( ! $this->settings_resolver->product_supports_deposits( $cart_item['data'] ) ) {
+				continue;
+			}
+
+			$settings = $this->settings_resolver->get_effective_product_settings( $cart_item['data'] );
+
+			if ( empty( $settings['enabled'] ) ) {
+				continue;
+			}
+
+			++$count;
+		}
+
+		return $count;
 	}
 
 	/**

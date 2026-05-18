@@ -38,7 +38,7 @@ wp-plugins/
 - scelta tra pagamento completo e deposito sulla pagina prodotto per prodotti supportati;
 - riuso automatico dei gateway WooCommerce esistenti, salvo esclusioni configurate dall'admin;
 - gestione iniziale di coupon su articoli con deposito, tasse prodotto proporzionali e spedizione upfront o proporzionale;
-- soglia globale configurabile per abilitare gli acconti solo da un certo totale prodotto/carrello in poi;
+- soglia globale configurabile per abilitare gli acconti solo da un certo totale prodotto/carrello in poi, con selezione globale in carrello e checkout classici quando la soglia viene raggiunta;
 - riepilogo del saldo residuo stimato per prodotti, tasse e spedizione in carrello e checkout classici, con metadati ordine dedicati;
 - creazione automatica di un ordine saldo collegato, con stato `Partially paid` sull'ordine principale e pulsante `Pay balance` nell'area cliente;
 - email transazionali WooCommerce per creazione saldo e reminder, con scadenza configurabile;
