@@ -31,6 +31,8 @@ final class BalanceNotifications {
 	private EmailManager $email_manager;
 
 	/**
+	 * Sets up shared notification services.
+	 *
 	 * @param SettingsResolver $settings_resolver Shared settings resolver.
 	 * @param EmailManager     $email_manager     Shared email dispatcher.
 	 */

@@ -77,6 +77,10 @@ final class Plugin {
 			return;
 		}
 
+		if ( is_admin() ) {
+			add_action( 'admin_notices', array( WooCommerce::class, 'render_blocks_incompatibility_notice' ) );
+		}
+
 		$meta_registry = new MetaRegistry();
 		$meta_registry->register();
 

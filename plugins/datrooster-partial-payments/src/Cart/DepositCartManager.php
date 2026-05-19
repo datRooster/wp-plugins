@@ -644,6 +644,8 @@ final class DepositCartManager {
 
 	/**
 	 * Renders cart or checkout selection controls, or the relevant threshold notice.
+	 *
+	 * @param string $context Rendering context, such as cart or checkout.
 	 */
 	private function render_payment_selector( string $context ): void {
 		if ( ! function_exists( 'WC' ) || ! WC()->cart || WC()->cart->is_empty() ) {
@@ -778,6 +780,7 @@ final class DepositCartManager {
 	 * Captures cart mode changes sent from the cart form.
 	 */
 	private function maybe_store_cart_mode_from_request(): void {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce validation happens inside capture_cart_mode_from_data().
 		$this->capture_cart_mode_from_data( $_POST );
 	}
 

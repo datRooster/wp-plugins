@@ -66,8 +66,12 @@ final class MetaRegistry {
 
 	/**
 	 * Limits access to users allowed to edit products.
+	 *
+	 * @param mixed ...$unused_args Unused callback arguments provided by WordPress.
 	 */
-	public static function can_edit_meta( ...$unused ): bool {
+	public static function can_edit_meta( ...$unused_args ): bool {
+		unset( $unused_args );
+
 		return current_user_can( 'edit_products' );
 	}
 }

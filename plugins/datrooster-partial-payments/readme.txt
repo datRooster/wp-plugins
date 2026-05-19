@@ -3,7 +3,7 @@ Contributors: datrooster
 Requires at least: 6.7
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 0.6.1
+Stable tag: 0.6.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires Plugins: woocommerce
@@ -30,7 +30,7 @@ Current milestone includes:
 * automatic balance due dates and reminder scheduling for classic WooCommerce order-pay flows;
 * bundled translation files for Italian, Spanish, and German, with English kept as the source locale;
 * WooCommerce dependency checks;
-* HPOS compatibility declaration and explicit Cart & Checkout Blocks incompatibility until the dedicated integration is built;
+* HPOS compatibility declaration and explicit Cart & Checkout Blocks incompatibility until the dedicated integration is built, with an admin notice when block-based cart or checkout pages are detected;
 * customizable labels and global deposit defaults.
 
 This release focuses on classic WooCommerce product, cart, checkout, and My Account flows. Cart & Checkout Blocks support, more advanced deposit rules, and merchant tooling are planned for future milestones.
@@ -40,9 +40,21 @@ This release focuses on classic WooCommerce product, cart, checkout, and My Acco
 1. Copy the plugin folder into `/wp-content/plugins/`.
 2. Activate WooCommerce.
 3. Activate DatRooster Partial Payments.
-4. Open `WooCommerce > Partial Payments`.
+4. Make sure the Cart and Checkout pages use the classic shortcodes `[woocommerce_cart]` and `[woocommerce_checkout]` until Cart & Checkout Blocks support is released.
+5. Open `WooCommerce > Partial Payments`.
+
+== Frequently Asked Questions ==
+
+= Does this plugin support Cart and Checkout Blocks? =
+
+Not yet. The current release supports classic WooCommerce cart, checkout, and My Account flows. If your store uses WooCommerce Cart or Checkout Blocks, replace those page contents with `[woocommerce_cart]` and `[woocommerce_checkout]`.
 
 == Changelog ==
+
+= 0.6.2 =
+
+* Added a contextual admin notice when WooCommerce Cart or Checkout Blocks are detected on the configured store pages.
+* Clarified the classic shortcode requirement in the installation instructions and FAQ for WordPress.org distribution.
 
 = 0.6.1 =
 

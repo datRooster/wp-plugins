@@ -651,6 +651,7 @@ final class SettingsPage {
 	 * Returns the current tab slug.
 	 */
 	private function get_current_tab(): string {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only tab selection controls the current admin view only.
 		$tab = sanitize_key( wp_unslash( $_GET['tab'] ?? 'general' ) );
 
 		return in_array( $tab, array( 'general', 'labels' ), true ) ? $tab : 'general';

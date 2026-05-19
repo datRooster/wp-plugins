@@ -176,6 +176,8 @@ abstract class AbstractBalanceEmail extends \WC_Email {
 	/**
 	 * Builds the template context shared by HTML and plain emails.
 	 *
+	 * @param bool $plain_text Whether the plain-text template is being rendered.
+	 *
 	 * @return array<string,mixed>
 	 */
 	protected function get_template_args( bool $plain_text ): array {

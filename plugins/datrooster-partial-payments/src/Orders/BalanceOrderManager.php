@@ -146,6 +146,12 @@ final class BalanceOrderManager {
 
 		$status_name = wc_get_order_status_name( $balance_order->get_status() );
 		$due_date    = $this->get_balance_due_date_text( $balance_order );
+		$total_text  = wp_strip_all_tags(
+			wc_price(
+				(float) $balance_order->get_total(),
+				array( 'currency' => $balance_order->get_currency() )
+			)
+		);
 		?>
 		<section class="woocommerce-order-details drpp-balance-details">
 			<h2 class="woocommerce-order-details__title"><?php esc_html_e( 'Remaining balance', 'datrooster-partial-payments' ); ?></h2>
@@ -154,7 +160,7 @@ final class BalanceOrderManager {
 				printf(
 					/* translators: 1: formatted total, 2: balance order status. */
 					esc_html__( 'Balance order total: %1$s. Current status: %2$s.', 'datrooster-partial-payments' ),
-					wp_strip_all_tags( wc_price( (float) $balance_order->get_total(), array( 'currency' => $balance_order->get_currency() ) ) ),
+					esc_html( $total_text ),
 					esc_html( $status_name )
 				);
 				?>

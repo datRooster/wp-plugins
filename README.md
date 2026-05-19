@@ -44,7 +44,7 @@ wp-plugins/
 - email transazionali WooCommerce per creazione saldo e reminder, con scadenza configurabile;
 - file lingua bundle per `it_IT`, `es_ES` e `de_DE`, piu catalogo `.pot` e script di rebuild traduzioni;
 - niente gateway custom in questa fase: il plugin si affianca ai metodi gia presenti;
-- compatibilita HPOS dichiarata; Cart & Checkout Blocks marcati come non ancora supportati finche non completiamo l'integrazione dedicata.
+- compatibilita HPOS dichiarata; Cart & Checkout Blocks marcati come non ancora supportati finche non completiamo l'integrazione dedicata, con avviso admin mirato quando il merchant usa le pagine block-based.
 
 ## Prossimi passi
 
@@ -59,3 +59,4 @@ wp-plugins/
 - la convenzione tag del monorepo e `plugins/<slug>/vX.Y.Z`;
 - il flusso completo e documentato in `docs/release-process.md`.
 - la manutenzione delle traduzioni del plugin e documentata in `docs/i18n-process.md`.
+- la preparazione finale per WordPress.org e documentata in `docs/wordpress-org-distribution-notes.md` e `docs/wordpress-org-submission-checklist.md`.

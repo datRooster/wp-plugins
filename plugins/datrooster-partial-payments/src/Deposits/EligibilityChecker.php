@@ -27,6 +27,8 @@ final class EligibilityChecker {
 	private SettingsResolver $settings_resolver;
 
 	/**
+	 * Sets up the eligibility checker with shared plugin settings.
+	 *
 	 * @param SettingsResolver $settings_resolver Shared settings resolver.
 	 */
 	public function __construct( SettingsResolver $settings_resolver ) {
