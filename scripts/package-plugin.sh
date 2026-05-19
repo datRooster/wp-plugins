@@ -61,6 +61,8 @@ archive_path="${build_dir}/${slug}-${normalized_version}.zip"
 mkdir -p "$stage_dir"
 cp -R "${plugin_dir}/." "$stage_dir/"
 
+find "$stage_dir" -name '.*' -type f -delete
+
 (
 	cd "$build_dir"
 	zip -qr "$archive_path" "$slug"

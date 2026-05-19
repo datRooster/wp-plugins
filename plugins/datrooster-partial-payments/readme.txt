@@ -3,7 +3,7 @@ Contributors: datrooster
 Requires at least: 6.7
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 0.6.2
+Stable tag: 0.6.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires Plugins: woocommerce
@@ -50,6 +50,11 @@ This release focuses on classic WooCommerce product, cart, checkout, and My Acco
 Not yet. The current release supports classic WooCommerce cart, checkout, and My Account flows. If your store uses WooCommerce Cart or Checkout Blocks, replace those page contents with `[woocommerce_cart]` and `[woocommerce_checkout]`.
 
 == Changelog ==
+
+= 0.6.3 =
+
+* Removed hidden packaging files that are not allowed by the WordPress.org automated submission checks.
+* Hardened the release packaging script so hidden files are excluded from future plugin ZIP archives.
 
 = 0.6.2 =
 
