@@ -19,9 +19,9 @@ defined( 'ABSPATH' ) || exit;
 
 do_action( 'woocommerce_email_header', $email_heading, $email );
 
-foreach ( $message_lines as $message_line ) :
+foreach ( $message_lines as $drpp_message_line ) :
 	?>
-	<p><?php echo esc_html( $message_line ); ?></p>
+	<p><?php echo esc_html( $drpp_message_line ); ?></p>
 	<?php
 endforeach;
 

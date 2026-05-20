@@ -19,12 +19,12 @@ defined( 'ABSPATH' ) || exit;
 
 echo '= ' . esc_html( wp_strip_all_tags( $email_heading ) ) . " =\n\n";
 
-foreach ( $message_lines as $message_line ) {
-	echo esc_html( wp_strip_all_tags( $message_line ) ) . "\n\n";
+foreach ( $message_lines as $drpp_message_line ) {
+	echo esc_html( wp_strip_all_tags( $drpp_message_line ) ) . "\n\n";
 }
 
 if ( '' !== $pay_url ) {
-	echo esc_html( wp_strip_all_tags( $payment_button_text ) ) . ': ' . esc_url_raw( $pay_url ) . "\n\n";
+	echo esc_html( wp_strip_all_tags( $payment_button_text ) ) . ': ' . esc_url( $pay_url ) . "\n\n";
 }
 
 do_action( 'woocommerce_email_order_details', $balance_order, $sent_to_admin, $plain_text, $email );

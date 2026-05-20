@@ -29,7 +29,6 @@ final class Plugin {
 	 * Boots the plugin.
 	 */
 	public function boot(): void {
-		add_action( 'init', array( $this, 'load_textdomain' ) );
 		add_action( 'plugins_loaded', array( $this, 'init' ), 20 );
 	}
 
@@ -55,17 +54,6 @@ final class Plugin {
 		if ( function_exists( 'as_unschedule_all_actions' ) ) {
 			as_unschedule_all_actions( BalanceNotifications::REMINDER_ACTION_HOOK, array(), BalanceNotifications::SCHEDULER_GROUP );
 		}
-	}
-
-	/**
-	 * Loads translations.
-	 */
-	public function load_textdomain(): void {
-		load_plugin_textdomain(
-			'datrooster-partial-payments',
-			false,
-			dirname( DATROOSTER_PP_BASENAME ) . '/languages'
-		);
 	}
 
 	/**

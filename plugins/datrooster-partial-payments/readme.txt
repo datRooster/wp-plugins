@@ -1,14 +1,14 @@
 === DatRooster Partial Payments ===
-Contributors: datrooster
+Contributors: datroooster
 Requires at least: 6.7
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 0.6.3
+Stable tag: 0.6.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires Plugins: woocommerce
 
-Flexible WooCommerce deposits and split payments foundation with a modern architecture ready for future balance collection, payment plans, and advanced rules.
+WooCommerce deposits and split payments with cart thresholds, linked balance orders, balance reminders, and classic checkout support.
 
 == Description ==
 
@@ -50,6 +50,13 @@ This release focuses on classic WooCommerce product, cart, checkout, and My Acco
 Not yet. The current release supports classic WooCommerce cart, checkout, and My Account flows. If your store uses WooCommerce Cart or Checkout Blocks, replace those page contents with `[woocommerce_cart]` and `[woocommerce_checkout]`.
 
 == Changelog ==
+
+= 0.6.4 =
+
+* Updated the contributor username to match the WordPress.org owner account.
+* Removed the manual plugin textdomain loader for WordPress.org-hosted translations.
+* Corrected URL escaping in the plain-text balance email template.
+* Reduced common Plugin Check warnings around request handling and readme metadata.
 
 = 0.6.3 =
 

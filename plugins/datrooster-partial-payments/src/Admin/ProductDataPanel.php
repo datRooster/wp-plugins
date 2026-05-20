@@ -251,12 +251,12 @@ final class ProductDataPanel {
 	 * @param string $key Posted field name.
 	 */
 	private function get_posted_value( string $key ): string {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce verifies product edit requests before this hook runs.
-		if ( ! isset( $_POST[ $key ] ) ) {
+		$posted_value = filter_input( INPUT_POST, $key, FILTER_UNSAFE_RAW, FILTER_REQUIRE_SCALAR );
+
+		if ( ! is_string( $posted_value ) ) {
 			return '';
 		}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce verifies product edit requests before this hook runs.
-		return wc_clean( wp_unslash( (string) $_POST[ $key ] ) );
+		return wc_clean( $posted_value );
 	}
 }

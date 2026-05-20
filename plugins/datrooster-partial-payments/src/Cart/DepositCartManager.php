@@ -1047,21 +1047,20 @@ final class DepositCartManager {
 	 * Reads the selected product-page payment mode from the current request.
 	 */
 	private function get_requested_product_mode(): string {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce validates add to cart requests in its own handlers.
-		if ( ! isset( $_POST[ self::REQUEST_KEY ] ) ) {
+		$posted_mode = filter_input( INPUT_POST, self::REQUEST_KEY, FILTER_UNSAFE_RAW, FILTER_REQUIRE_SCALAR );
+
+		if ( ! is_string( $posted_mode ) ) {
 			return self::MODE_FULL;
 		}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce validates add to cart requests in its own handlers.
-		return $this->read_mode_from_value( wp_unslash( $_POST[ self::REQUEST_KEY ] ), self::MODE_FULL );
+		return $this->read_mode_from_value( $posted_mode, self::MODE_FULL );
 	}
 
 	/**
 	 * Returns whether the current add-to-cart request contains the storefront selector.
 	 */
 	private function has_requested_product_mode(): bool {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce validates add to cart requests in its own handlers.
-		return isset( $_POST[ self::REQUEST_KEY ] );
+		return is_string( filter_input( INPUT_POST, self::REQUEST_KEY, FILTER_UNSAFE_RAW, FILTER_REQUIRE_SCALAR ) );
 	}
 
 	/**
