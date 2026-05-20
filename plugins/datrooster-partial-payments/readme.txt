@@ -1,9 +1,9 @@
 === DatRooster Partial Payments ===
 Contributors: datroooster
 Requires at least: 6.7
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 0.6.4
+Stable tag: 0.6.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires Plugins: woocommerce
@@ -50,6 +50,11 @@ This release focuses on classic WooCommerce product, cart, checkout, and My Acco
 Not yet. The current release supports classic WooCommerce cart, checkout, and My Account flows. If your store uses WooCommerce Cart or Checkout Blocks, replace those page contents with `[woocommerce_cart]` and `[woocommerce_checkout]`.
 
 == Changelog ==
+
+= 0.6.5 =
+
+* Updated the WordPress compatibility metadata for the current Plugin Check requirements.
+* Reworked the My Account balance-order filtering to avoid slow query warnings while keeping only technical balance orders hidden.
 
 = 0.6.4 =
 

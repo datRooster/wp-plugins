@@ -12,6 +12,7 @@ use DatRooster\PartialPayments\Deposits\SettingsResolver;
 defined( 'ABSPATH' ) || exit;
 
 final class BalanceOrderManager {
+	public const BALANCE_ORDER_CREATED_VIA  = 'datrooster-partial-payments-balance';
 	public const META_IS_BALANCE_ORDER       = '_drpp_is_balance_order';
 	public const META_PARENT_DEPOSIT_ORDER   = '_drpp_parent_deposit_order_id';
 	public const META_BALANCE_ORDER_ID       = '_drpp_balance_order_id';
@@ -46,6 +47,7 @@ final class BalanceOrderManager {
 		add_action( 'woocommerce_order_status_processing', array( $this, 'handle_paid_order' ) );
 		add_action( 'woocommerce_order_status_completed', array( $this, 'handle_paid_order' ) );
 		add_filter( 'woocommerce_my_account_my_orders_query', array( $this, 'filter_account_orders_query' ) );
+		add_filter( 'woocommerce_order_query', array( $this, 'filter_account_order_results' ), 10, 2 );
 		add_filter( 'woocommerce_my_account_my_orders_actions', array( $this, 'filter_account_order_actions' ), 10, 2 );
 		add_action( 'woocommerce_order_details_after_order_table', array( $this, 'render_balance_section' ), 20 );
 	}
@@ -81,16 +83,50 @@ final class BalanceOrderManager {
 	 * @return array<string,mixed>
 	 */
 	public function filter_account_orders_query( array $args ): array {
-		$meta_query   = $args['meta_query'] ?? array();
-		$meta_query   = is_array( $meta_query ) ? $meta_query : array();
-		$meta_query[] = array(
-			'key'     => self::META_IS_BALANCE_ORDER,
-			'compare' => 'NOT EXISTS',
-		);
-
-		$args['meta_query'] = $meta_query;
+		$args['drpp_exclude_balance_orders'] = true;
 
 		return $args;
+	}
+
+	/**
+	 * Removes technical balance orders from the My Account query results.
+	 *
+	 * WooCommerce resolves this filter after the order query has run, which lets
+	 * us keep the account list clean without introducing a custom meta query in
+	 * the storefront order lookup itself.
+	 *
+	 * @param array<int,\WC_Order|int>|object $results Order query results.
+	 * @param array<string,mixed>             $args    Query arguments.
+	 * @return array<int,\WC_Order|int>|object
+	 */
+	public function filter_account_order_results( array|object $results, array $args ): array|object {
+		if ( empty( $args['drpp_exclude_balance_orders'] ) ) {
+			return $results;
+		}
+
+		$excluded_ids = $this->get_customer_balance_order_ids( $args );
+
+		if ( array() === $excluded_ids ) {
+			return $results;
+		}
+
+		if ( is_object( $results ) && isset( $results->orders ) && is_array( $results->orders ) ) {
+			$results->orders = $this->exclude_order_ids_from_collection( $results->orders, $excluded_ids );
+
+			if ( isset( $results->total, $args['limit'] ) ) {
+				$results->total = max( 0, (int) $results->total - count( $excluded_ids ) );
+				$page_size      = max( 1, (int) $args['limit'] );
+				$results->max_num_pages = (int) ceil( $results->total / $page_size );
+			}
+
+			return $results;
+		}
+
+		if ( is_array( $results ) ) {
+			return $this->exclude_order_ids_from_collection( $results, $excluded_ids );
+		}
+
+		return $results;
 	}
 
 	/**
@@ -341,7 +377,7 @@ final class BalanceOrderManager {
 	 * @param \WC_Order $balance_order Balance order instance.
 	 */
 	private function copy_order_context( \WC_Order $source_order, \WC_Order $balance_order ): void {
-		$balance_order->set_created_via( 'datrooster-partial-payments-balance' );
+		$balance_order->set_created_via( self::BALANCE_ORDER_CREATED_VIA );
 		$balance_order->set_parent_id( $source_order->get_id() );
 		$balance_order->set_currency( $source_order->get_currency() );
 		$balance_order->set_prices_include_tax( $source_order->get_prices_include_tax() );
@@ -458,6 +494,60 @@ final class BalanceOrderManager {
 		$balance_order = wc_get_order( $balance_order_id );
 
 		return $balance_order instanceof \WC_Order ? $balance_order : null;
+	}
+
+	/**
+	 * Returns balance order IDs belonging to the same customer scope as the query.
+	 *
+	 * @param array<string,mixed> $args Account orders query arguments.
+	 * @return array<int,int>
+	 */
+	private function get_customer_balance_order_ids( array $args ): array {
+		if ( empty( $args['customer'] ) && empty( $args['customer_id'] ) ) {
+			return array();
+		}
+
+		$query_args = $args;
+		unset( $query_args['drpp_exclude_balance_orders'], $query_args['page'], $query_args['offset'] );
+
+		$query_args['limit']       = -1;
+		$query_args['paginate']    = false;
+		$query_args['return']      = 'ids';
+		$query_args['created_via'] = self::BALANCE_ORDER_CREATED_VIA;
+
+		$balance_order_ids = wc_get_orders( $query_args );
+
+		if ( ! is_array( $balance_order_ids ) ) {
+			return array();
+		}
+
+		return array_values(
+			array_filter(
+				array_map( 'absint', $balance_order_ids )
+			)
+		);
+	}
+
+	/**
+	 * Removes specific order IDs from an order collection.
+	 *
+	 * @param array<int,\WC_Order|int> $orders       Order objects or order IDs.
+	 * @param array<int,int>           $excluded_ids Order IDs to exclude.
+	 * @return array<int,\WC_Order|int>
+	 */
+	private function exclude_order_ids_from_collection( array $orders, array $excluded_ids ): array {
+		$excluded_lookup = array_fill_keys( $excluded_ids, true );
+
+		return array_values(
+			array_filter(
+				$orders,
+				static function ( $order ) use ( $excluded_lookup ): bool {
+					$order_id = $order instanceof \WC_Order ? $order->get_id() : absint( $order );
+
+					return $order_id > 0 && ! isset( $excluded_lookup[ $order_id ] );
+				}
+			)
+		);
 	}
 
 	/**
