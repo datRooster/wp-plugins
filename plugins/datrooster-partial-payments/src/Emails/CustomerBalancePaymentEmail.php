@@ -2,10 +2,10 @@
 /**
  * Customer email sent when a linked balance order is created.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Emails;
+namespace DatRoosterPartialPayments\Emails;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -14,7 +14,7 @@ final class CustomerBalancePaymentEmail extends AbstractBalanceEmail {
 	 * Configures the email metadata.
 	 */
 	public function __construct() {
-		$this->id          = 'drpp_customer_balance_payment';
+		$this->id          = 'datrooster_partial_payments_customer_balance_payment';
 		$this->title       = __( 'Balance payment request', 'datrooster-partial-payments' );
 		$this->description = __( 'Sent to customers when a remaining balance order is created after the initial deposit is paid.', 'datrooster-partial-payments' );
 

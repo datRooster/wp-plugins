@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DatRooster Partial Payments 0.6.0\n"
 "Report-Msgid-Bugs-To: https://github.com/datRooster/wp-plugins/issues\n"
-"POT-Creation-Date: 2026-05-19 19:58+0200\n"
+"POT-Creation-Date: 2026-06-03 08:43+0200\n"
 "PO-Revision-Date: 2026-05-17 20:14+0200\n"
 "Last-Translator: DatRooster\n"
 "Language-Team: Spanish\n"
@@ -556,9 +556,9 @@ msgid ""
 "correctly."
 msgstr ""
 "DatRooster Partial Payments actualmente solo es compatible con los flujos "
-"clasicos de carrito y pago de WooCommerce. Tu tienda esta usando "
-"WooCommerce Blocks en %1$s. Edita esas paginas y reemplaza su contenido por "
-"%2$s y %3$s para habilitar correctamente los depositos."
+"clasicos de carrito y pago de WooCommerce. Tu tienda esta usando WooCommerce "
+"Blocks en %1$s. Edita esas paginas y reemplaza su contenido por %2$s y %3$s "
+"para habilitar correctamente los depositos."
 
 #: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Emails/AbstractBalanceEmail.php:48
 msgid ""
@@ -618,8 +618,8 @@ msgid "Choose which format of email to send."
 msgstr "Elige que formato de correo enviar."
 
 #: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Emails/AbstractBalanceEmail.php:187
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:116
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:182
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:152
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:218
 msgid "Pay balance"
 msgstr "Pagar saldo"
 
@@ -754,57 +754,57 @@ msgstr ""
 "productos de tu carrito alcance %s."
 
 #. translators: %s: parent order number.
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:119
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:155
 #, php-format
 msgid "Pay remaining balance for order %s"
 msgstr "Pagar el saldo restante del pedido %s"
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:157
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:193
 msgid "Remaining balance"
 msgstr "Saldo restante"
 
 #. translators: 1: formatted total, 2: balance order status.
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:162
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:198
 #, php-format
 msgid "Balance order total: %1$s. Current status: %2$s."
 msgstr "Total del pedido de saldo: %1$s. Estado actual: %2$s."
 
 #. translators: %s: localized due date.
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:173
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:209
 #, php-format
 msgid "Payment due date: %s."
 msgstr "Fecha de vencimiento del pago: %s."
 
 #. translators: 1: balance order number, 2: formatted total.
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:239
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:275
 #, php-format
 msgid "Balance order %1$s has been created for the remaining amount of %2$s."
 msgstr "El pedido de saldo %1$s se ha creado por el importe restante de %2$s."
 
 #. translators: %s: parent order number.
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:248
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:284
 #, php-format
 msgid "This order collects the remaining balance for deposit order %s."
 msgstr "Este pedido cobra el saldo restante del pedido con deposito %s."
 
 #. translators: 1: balance order number, 2: formatted total.
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:289
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:325
 #, php-format
 msgid "The remaining balance was paid via order %1$s for %2$s."
 msgstr "El saldo restante se pago mediante el pedido %1$s por %2$s."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:298
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:334
 msgid "The linked balance order has been paid in full."
 msgstr "El pedido de saldo vinculado se ha pagado por completo."
 
 #. translators: %s: parent order number.
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:306
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:342
 #, php-format
 msgid "The parent deposit order %s has been marked as fully paid."
 msgstr ""
 "El pedido principal con deposito %s se ha marcado como totalmente pagado."
 
-#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:332
+#: /Applications/MAMP/htdocs/wp-plugins/plugins/datrooster-partial-payments/src/Orders/BalanceOrderManager.php:368
 msgid ""
 "The initial deposit has been paid and the remaining balance is now awaiting "
 "payment."

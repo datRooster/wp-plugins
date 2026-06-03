@@ -2,12 +2,12 @@
 /**
  * Resolves whether deposits are currently eligible for a product context.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Deposits;
+namespace DatRoosterPartialPayments\Deposits;
 
-use DatRooster\PartialPayments\Cart\DepositCartManager;
+use DatRoosterPartialPayments\Cart\DepositCartManager;
 
 defined( 'ABSPATH' ) || exit;
 

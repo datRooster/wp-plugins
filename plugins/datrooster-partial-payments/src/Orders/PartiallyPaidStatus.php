@@ -2,10 +2,10 @@
 /**
  * Partial payment order status registration.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Orders;
+namespace DatRoosterPartialPayments\Orders;
 
 defined( 'ABSPATH' ) || exit;
 

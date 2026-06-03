@@ -2,10 +2,10 @@
 /**
  * Deposit amount calculations.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Deposits;
+namespace DatRoosterPartialPayments\Deposits;
 
 defined( 'ABSPATH' ) || exit;
 

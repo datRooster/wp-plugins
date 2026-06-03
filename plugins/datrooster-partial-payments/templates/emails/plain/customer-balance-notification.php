@@ -2,7 +2,7 @@
 /**
  * Customer balance notification email (plain text).
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  *
  * @var string             $email_heading
  * @var array<int,string>  $message_lines
@@ -19,8 +19,8 @@ defined( 'ABSPATH' ) || exit;
 
 echo '= ' . esc_html( wp_strip_all_tags( $email_heading ) ) . " =\n\n";
 
-foreach ( $message_lines as $drpp_message_line ) {
-	echo esc_html( wp_strip_all_tags( $drpp_message_line ) ) . "\n\n";
+foreach ( $message_lines as $datrooster_partial_payments_message_line ) {
+	echo esc_html( wp_strip_all_tags( $datrooster_partial_payments_message_line ) ) . "\n\n";
 }
 
 if ( '' !== $pay_url ) {

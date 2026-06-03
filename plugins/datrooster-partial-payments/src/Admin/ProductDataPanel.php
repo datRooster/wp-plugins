@@ -2,13 +2,13 @@
 /**
  * Product-level deposit settings UI.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Admin;
+namespace DatRoosterPartialPayments\Admin;
 
-use DatRooster\PartialPayments\Deposits\ProductSettings;
-use DatRooster\PartialPayments\Deposits\SettingsResolver;
+use DatRoosterPartialPayments\Deposits\ProductSettings;
+use DatRoosterPartialPayments\Deposits\SettingsResolver;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -45,9 +45,9 @@ final class ProductDataPanel {
 	 * @return array<string,array<string,mixed>>
 	 */
 	public function register_tab( array $tabs ): array {
-		$tabs['drpp_partial_payments'] = array(
+		$tabs['datrooster_partial_payments_partial_payments'] = array(
 			'label'    => __( 'Partial Payments', 'datrooster-partial-payments' ),
-			'target'   => 'drpp_partial_payments_product_data',
+			'target'   => 'datrooster_partial_payments_partial_payments_product_data',
 			'class'    => array( 'show_if_simple', 'show_if_variable' ),
 			'priority' => 75,
 		);
@@ -69,7 +69,7 @@ final class ProductDataPanel {
 		$overrides       = $this->settings_resolver->get_product_overrides( $product_object );
 		$effective       = $this->settings_resolver->get_effective_product_settings( $product_object );
 		?>
-		<div id="drpp_partial_payments_product_data" class="panel woocommerce_options_panel hidden">
+		<div id="datrooster_partial_payments_partial_payments_product_data" class="panel woocommerce_options_panel hidden">
 			<div class="options_group">
 				<p class="form-field">
 					<strong><?php esc_html_e( 'Product-level deposit rules', 'datrooster-partial-payments' ); ?></strong><br />

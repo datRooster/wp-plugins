@@ -2,12 +2,12 @@
 /**
  * Shared base for customer balance collection emails.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Emails;
+namespace DatRoosterPartialPayments\Emails;
 
-use DatRooster\PartialPayments\Orders\BalanceOrderManager;
+use DatRoosterPartialPayments\Orders\BalanceOrderManager;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -32,7 +32,7 @@ abstract class AbstractBalanceEmail extends \WC_Email {
 	public function __construct() {
 		$this->customer_email = true;
 		$this->email_group    = 'datrooster-partial-payments';
-		$this->template_base  = trailingslashit( DATROOSTER_PP_PATH ) . 'templates/';
+		$this->template_base  = trailingslashit( DATROOSTER_PARTIAL_PAYMENTS_PATH ) . 'templates/';
 		$this->template_html  = 'emails/customer-balance-notification.php';
 		$this->template_plain = 'emails/plain/customer-balance-notification.php';
 

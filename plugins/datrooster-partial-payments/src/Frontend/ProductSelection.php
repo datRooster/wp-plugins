@@ -2,14 +2,14 @@
 /**
  * Product page deposit selection UI.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Frontend;
+namespace DatRoosterPartialPayments\Frontend;
 
-use DatRooster\PartialPayments\Cart\DepositCartManager;
-use DatRooster\PartialPayments\Deposits\EligibilityChecker;
-use DatRooster\PartialPayments\Deposits\SettingsResolver;
+use DatRoosterPartialPayments\Cart\DepositCartManager;
+use DatRoosterPartialPayments\Deposits\EligibilityChecker;
+use DatRoosterPartialPayments\Deposits\SettingsResolver;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -80,7 +80,7 @@ final class ProductSelection {
 		$deposit_allowed = ! $settings['require_login'] || is_user_logged_in();
 		$default_mode    = $deposit_allowed ? (string) $settings['default_selection'] : DepositCartManager::MODE_FULL;
 		?>
-		<div class="drpp-product-selection">
+		<div class="datrooster-partial-payments-product-selection">
 			<fieldset>
 				<legend><strong><?php esc_html_e( 'Payment options', 'datrooster-partial-payments' ); ?></strong></legend>
 				<p><?php echo esc_html( $this->get_description_text( $product, $settings ) ); ?></p>
@@ -127,7 +127,7 @@ final class ProductSelection {
 			return;
 		}
 		?>
-		<div class="drpp-product-selection">
+		<div class="datrooster-partial-payments-product-selection">
 			<p class="description">
 				<?php
 				echo esc_html( $this->get_threshold_notice_text( $product, $threshold ) );

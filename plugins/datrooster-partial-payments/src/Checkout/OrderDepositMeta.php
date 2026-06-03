@@ -2,12 +2,12 @@
 /**
  * Persists deposit metadata to WooCommerce orders.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Checkout;
+namespace DatRoosterPartialPayments\Checkout;
 
-use DatRooster\PartialPayments\Cart\DepositCartManager;
+use DatRoosterPartialPayments\Cart\DepositCartManager;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -55,16 +55,16 @@ final class OrderDepositMeta {
 		$breakdown    = $this->cart_manager->get_cart_item_breakdown( $values );
 		$remaining_tax = $this->cart_manager->get_cart_item_remaining_tax( $values, $breakdown );
 
-		$item->add_meta_data( '_drpp_payment_mode', DepositCartManager::MODE_DEPOSIT, true );
-		$item->add_meta_data( '_drpp_deposit_type', sanitize_text_field( (string) ( $deposit_data['deposit_type'] ?? '' ) ), true );
-		$item->add_meta_data( '_drpp_deposit_rule_amount', sanitize_text_field( (string) ( $deposit_data['deposit_amount'] ?? '' ) ), true );
-		$item->add_meta_data( '_drpp_original_unit_price', $this->format_decimal( $breakdown['full_unit_price'] ), true );
-		$item->add_meta_data( '_drpp_deposit_unit_price', $this->format_decimal( $breakdown['deposit_unit_price'] ), true );
-		$item->add_meta_data( '_drpp_balance_unit_price', $this->format_decimal( $breakdown['balance_unit_price'] ), true );
-		$item->add_meta_data( '_drpp_full_products_total', $this->format_decimal( $breakdown['full_line_total'] ), true );
-		$item->add_meta_data( '_drpp_deposit_products_total', $this->format_decimal( $breakdown['deposit_line_total'] ), true );
-		$item->add_meta_data( '_drpp_remaining_products_total', $this->format_decimal( $breakdown['balance_line_total'] ), true );
-		$item->add_meta_data( '_drpp_remaining_products_tax', $this->format_decimal( $remaining_tax ), true );
+		$item->add_meta_data( '_datrooster_partial_payments_payment_mode', DepositCartManager::MODE_DEPOSIT, true );
+		$item->add_meta_data( '_datrooster_partial_payments_deposit_type', sanitize_text_field( (string) ( $deposit_data['deposit_type'] ?? '' ) ), true );
+		$item->add_meta_data( '_datrooster_partial_payments_deposit_rule_amount', sanitize_text_field( (string) ( $deposit_data['deposit_amount'] ?? '' ) ), true );
+		$item->add_meta_data( '_datrooster_partial_payments_original_unit_price', $this->format_decimal( $breakdown['full_unit_price'] ), true );
+		$item->add_meta_data( '_datrooster_partial_payments_deposit_unit_price', $this->format_decimal( $breakdown['deposit_unit_price'] ), true );
+		$item->add_meta_data( '_datrooster_partial_payments_balance_unit_price', $this->format_decimal( $breakdown['balance_unit_price'] ), true );
+		$item->add_meta_data( '_datrooster_partial_payments_full_products_total', $this->format_decimal( $breakdown['full_line_total'] ), true );
+		$item->add_meta_data( '_datrooster_partial_payments_deposit_products_total', $this->format_decimal( $breakdown['deposit_line_total'] ), true );
+		$item->add_meta_data( '_datrooster_partial_payments_remaining_products_total', $this->format_decimal( $breakdown['balance_line_total'] ), true );
+		$item->add_meta_data( '_datrooster_partial_payments_remaining_products_tax', $this->format_decimal( $remaining_tax ), true );
 	}
 
 	/**
@@ -82,17 +82,17 @@ final class OrderDepositMeta {
 			return;
 		}
 
-		$order->update_meta_data( '_drpp_has_deposit', 'yes' );
-		$order->update_meta_data( '_drpp_full_products_total', $this->format_decimal( (float) $summary['full_total'] ) );
-		$order->update_meta_data( '_drpp_deposit_products_total', $this->format_decimal( (float) $summary['deposit_total'] ) );
-		$order->update_meta_data( '_drpp_remaining_products_total', $this->format_decimal( (float) $summary['balance_total'] ) );
-		$order->update_meta_data( '_drpp_remaining_products_tax', $this->format_decimal( (float) $summary['remaining_product_tax'] ) );
-		$order->update_meta_data( '_drpp_remaining_shipping_total', $this->format_decimal( (float) $summary['remaining_shipping_total'] ) );
-		$order->update_meta_data( '_drpp_remaining_shipping_tax', $this->format_decimal( (float) $summary['remaining_shipping_tax'] ) );
-		$order->update_meta_data( '_drpp_estimated_remaining_total', $this->format_decimal( (float) $summary['estimated_remaining_total'] ) );
-		$order->update_meta_data( '_drpp_tax_handling', sanitize_text_field( (string) $summary['tax_handling'] ) );
-		$order->update_meta_data( '_drpp_shipping_handling', sanitize_text_field( (string) $summary['shipping_handling'] ) );
-		$order->update_meta_data( '_drpp_coupon_handling', sanitize_text_field( (string) $summary['coupon_handling'] ) );
+		$order->update_meta_data( '_datrooster_partial_payments_has_deposit', 'yes' );
+		$order->update_meta_data( '_datrooster_partial_payments_full_products_total', $this->format_decimal( (float) $summary['full_total'] ) );
+		$order->update_meta_data( '_datrooster_partial_payments_deposit_products_total', $this->format_decimal( (float) $summary['deposit_total'] ) );
+		$order->update_meta_data( '_datrooster_partial_payments_remaining_products_total', $this->format_decimal( (float) $summary['balance_total'] ) );
+		$order->update_meta_data( '_datrooster_partial_payments_remaining_products_tax', $this->format_decimal( (float) $summary['remaining_product_tax'] ) );
+		$order->update_meta_data( '_datrooster_partial_payments_remaining_shipping_total', $this->format_decimal( (float) $summary['remaining_shipping_total'] ) );
+		$order->update_meta_data( '_datrooster_partial_payments_remaining_shipping_tax', $this->format_decimal( (float) $summary['remaining_shipping_tax'] ) );
+		$order->update_meta_data( '_datrooster_partial_payments_estimated_remaining_total', $this->format_decimal( (float) $summary['estimated_remaining_total'] ) );
+		$order->update_meta_data( '_datrooster_partial_payments_tax_handling', sanitize_text_field( (string) $summary['tax_handling'] ) );
+		$order->update_meta_data( '_datrooster_partial_payments_shipping_handling', sanitize_text_field( (string) $summary['shipping_handling'] ) );
+		$order->update_meta_data( '_datrooster_partial_payments_coupon_handling', sanitize_text_field( (string) $summary['coupon_handling'] ) );
 	}
 
 	/**

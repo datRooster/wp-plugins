@@ -2,25 +2,25 @@
 /**
  * Main plugin bootstrap.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments;
+namespace DatRoosterPartialPayments;
 
-use DatRooster\PartialPayments\Admin\ProductDataPanel;
-use DatRooster\PartialPayments\Admin\SettingsPage;
-use DatRooster\PartialPayments\Cart\DepositCartManager;
-use DatRooster\PartialPayments\Compatibility\WooCommerce;
-use DatRooster\PartialPayments\Checkout\OrderDepositMeta;
-use DatRooster\PartialPayments\Deposits\Calculator;
-use DatRooster\PartialPayments\Deposits\EligibilityChecker;
-use DatRooster\PartialPayments\Deposits\SettingsResolver;
-use DatRooster\PartialPayments\Emails\BalanceNotifications;
-use DatRooster\PartialPayments\Emails\EmailManager;
-use DatRooster\PartialPayments\Frontend\ProductSelection;
-use DatRooster\PartialPayments\Orders\BalanceOrderManager;
-use DatRooster\PartialPayments\Orders\PartiallyPaidStatus;
-use DatRooster\PartialPayments\Product\MetaRegistry;
+use DatRoosterPartialPayments\Admin\ProductDataPanel;
+use DatRoosterPartialPayments\Admin\SettingsPage;
+use DatRoosterPartialPayments\Cart\DepositCartManager;
+use DatRoosterPartialPayments\Compatibility\WooCommerce;
+use DatRoosterPartialPayments\Checkout\OrderDepositMeta;
+use DatRoosterPartialPayments\Deposits\Calculator;
+use DatRoosterPartialPayments\Deposits\EligibilityChecker;
+use DatRoosterPartialPayments\Deposits\SettingsResolver;
+use DatRoosterPartialPayments\Emails\BalanceNotifications;
+use DatRoosterPartialPayments\Emails\EmailManager;
+use DatRoosterPartialPayments\Frontend\ProductSelection;
+use DatRoosterPartialPayments\Orders\BalanceOrderManager;
+use DatRoosterPartialPayments\Orders\PartiallyPaidStatus;
+use DatRoosterPartialPayments\Product\MetaRegistry;
 
 defined( 'ABSPATH' ) || exit;
 

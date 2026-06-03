@@ -2,24 +2,24 @@
 /**
  * Cart and checkout integration for deposit items.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Cart;
+namespace DatRoosterPartialPayments\Cart;
 
-use DatRooster\PartialPayments\Deposits\Calculator;
-use DatRooster\PartialPayments\Deposits\EligibilityChecker;
-use DatRooster\PartialPayments\Deposits\SettingsResolver;
+use DatRoosterPartialPayments\Deposits\Calculator;
+use DatRoosterPartialPayments\Deposits\EligibilityChecker;
+use DatRoosterPartialPayments\Deposits\SettingsResolver;
 
 defined( 'ABSPATH' ) || exit;
 
 final class DepositCartManager {
-	public const REQUEST_KEY            = 'drpp_payment_mode';
-	public const CART_MODE_REQUEST_KEY  = 'drpp_cart_payment_mode';
-	public const CART_MODE_NONCE_KEY    = 'drpp_cart_payment_mode_nonce';
-	public const CART_MODE_NONCE_ACTION = 'drpp_update_cart_payment_mode';
-	public const SESSION_MODE_KEY       = 'drpp_cart_payment_mode';
-	public const CART_KEY               = 'drpp_deposit';
+	public const REQUEST_KEY            = 'datrooster_partial_payments_payment_mode';
+	public const CART_MODE_REQUEST_KEY  = 'datrooster_partial_payments_cart_payment_mode';
+	public const CART_MODE_NONCE_KEY    = 'datrooster_partial_payments_cart_payment_mode_nonce';
+	public const CART_MODE_NONCE_ACTION = 'datrooster_partial_payments_update_cart_payment_mode';
+	public const SESSION_MODE_KEY       = 'datrooster_partial_payments_cart_payment_mode';
+	public const CART_KEY               = 'datrooster_partial_payments_deposit';
 	public const MODE_FULL              = 'full';
 	public const MODE_DEPOSIT           = 'deposit';
 
@@ -420,14 +420,14 @@ final class DepositCartManager {
 			return;
 		}
 		?>
-		<tr class="drpp-remaining-balance">
+		<tr class="datrooster-partial-payments-remaining-balance">
 			<th><?php esc_html_e( 'Remaining product balance', 'datrooster-partial-payments' ); ?></th>
 			<td data-title="<?php esc_attr_e( 'Remaining product balance', 'datrooster-partial-payments' ); ?>">
 				<?php echo wp_kses_post( $this->format_price( $summary['remaining_product_total'] ) ); ?>
 			</td>
 		</tr>
 		<?php if ( $summary['remaining_product_tax'] > 0 ) : ?>
-			<tr class="drpp-remaining-balance">
+			<tr class="datrooster-partial-payments-remaining-balance">
 				<th><?php esc_html_e( 'Remaining product tax', 'datrooster-partial-payments' ); ?></th>
 				<td data-title="<?php esc_attr_e( 'Remaining product tax', 'datrooster-partial-payments' ); ?>">
 					<?php echo wp_kses_post( $this->format_price( $summary['remaining_product_tax'] ) ); ?>
@@ -435,7 +435,7 @@ final class DepositCartManager {
 			</tr>
 		<?php endif; ?>
 		<?php if ( $summary['remaining_shipping_total'] > 0 ) : ?>
-			<tr class="drpp-remaining-balance">
+			<tr class="datrooster-partial-payments-remaining-balance">
 				<th><?php esc_html_e( 'Remaining shipping balance', 'datrooster-partial-payments' ); ?></th>
 				<td data-title="<?php esc_attr_e( 'Remaining shipping balance', 'datrooster-partial-payments' ); ?>">
 					<?php echo wp_kses_post( $this->format_price( $summary['remaining_shipping_total'] ) ); ?>
@@ -443,14 +443,14 @@ final class DepositCartManager {
 			</tr>
 		<?php endif; ?>
 		<?php if ( $summary['remaining_shipping_tax'] > 0 ) : ?>
-			<tr class="drpp-remaining-balance">
+			<tr class="datrooster-partial-payments-remaining-balance">
 				<th><?php esc_html_e( 'Remaining shipping tax', 'datrooster-partial-payments' ); ?></th>
 				<td data-title="<?php esc_attr_e( 'Remaining shipping tax', 'datrooster-partial-payments' ); ?>">
 					<?php echo wp_kses_post( $this->format_price( $summary['remaining_shipping_tax'] ) ); ?>
 				</td>
 			</tr>
 		<?php endif; ?>
-		<tr class="drpp-remaining-balance drpp-remaining-balance-total">
+		<tr class="datrooster-partial-payments-remaining-balance datrooster-partial-payments-remaining-balance-total">
 			<th><?php esc_html_e( 'Estimated remaining balance', 'datrooster-partial-payments' ); ?></th>
 			<td data-title="<?php esc_attr_e( 'Estimated remaining balance', 'datrooster-partial-payments' ); ?>">
 				<?php echo wp_kses_post( $this->format_price( $summary['estimated_remaining_total'] ) ); ?>
@@ -670,7 +670,7 @@ final class DepositCartManager {
 
 		$this->enqueue_payment_selector_script();
 		?>
-		<div class="drpp-cart-selection drpp-cart-selection--<?php echo esc_attr( $context ); ?>">
+		<div class="datrooster-partial-payments-cart-selection datrooster-partial-payments-cart-selection--<?php echo esc_attr( $context ); ?>">
 			<?php if ( '' !== $notice ) : ?>
 				<p class="description"><?php echo esc_html( $notice ); ?></p>
 			<?php else : ?>

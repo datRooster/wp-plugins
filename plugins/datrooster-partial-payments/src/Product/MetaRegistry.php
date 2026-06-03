@@ -2,12 +2,12 @@
 /**
  * Registers deposit-related product meta.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Product;
+namespace DatRoosterPartialPayments\Product;
 
-use DatRooster\PartialPayments\Deposits\ProductSettings;
+use DatRoosterPartialPayments\Deposits\ProductSettings;
 
 defined( 'ABSPATH' ) || exit;
 

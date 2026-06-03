@@ -3,7 +3,7 @@ Contributors: datroooster
 Requires at least: 6.7
 Tested up to: 7.0
 Requires PHP: 8.1
-Stable tag: 0.6.5
+Stable tag: 0.6.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Requires Plugins: woocommerce
@@ -50,6 +50,10 @@ This release focuses on classic WooCommerce product, cart, checkout, and My Acco
 Not yet. The current release supports classic WooCommerce cart, checkout, and My Account flows. If your store uses WooCommerce Cart or Checkout Blocks, replace those page contents with `[woocommerce_cart]` and `[woocommerce_checkout]`.
 
 == Changelog ==
+
+= 0.6.6 =
+
+* Standardized plugin prefixes across namespaces, constants, options, hooks, metadata, request keys, and UI identifiers for WordPress.org review.
 
 = 0.6.5 =
 

@@ -2,7 +2,7 @@
 /**
  * Customer balance notification email (HTML).
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  *
  * @var string              $email_heading
  * @var array<int,string>   $message_lines
@@ -19,9 +19,9 @@ defined( 'ABSPATH' ) || exit;
 
 do_action( 'woocommerce_email_header', $email_heading, $email );
 
-foreach ( $message_lines as $drpp_message_line ) :
+foreach ( $message_lines as $datrooster_partial_payments_message_line ) :
 	?>
-	<p><?php echo esc_html( $drpp_message_line ); ?></p>
+	<p><?php echo esc_html( $datrooster_partial_payments_message_line ); ?></p>
 	<?php
 endforeach;
 

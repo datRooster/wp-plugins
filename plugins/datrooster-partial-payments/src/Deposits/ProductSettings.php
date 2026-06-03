@@ -2,18 +2,18 @@
 /**
  * Deposit-related product setting helpers.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Deposits;
+namespace DatRoosterPartialPayments\Deposits;
 
 defined( 'ABSPATH' ) || exit;
 
 final class ProductSettings {
-	public const META_BEHAVIOR          = '_drpp_deposit_behavior';
-	public const META_DEPOSIT_TYPE      = '_drpp_deposit_type';
-	public const META_DEPOSIT_AMOUNT    = '_drpp_deposit_amount';
-	public const META_DEFAULT_SELECTION = '_drpp_default_selection';
+	public const META_BEHAVIOR          = '_datrooster_partial_payments_deposit_behavior';
+	public const META_DEPOSIT_TYPE      = '_datrooster_partial_payments_deposit_type';
+	public const META_DEPOSIT_AMOUNT    = '_datrooster_partial_payments_deposit_amount';
+	public const META_DEFAULT_SELECTION = '_datrooster_partial_payments_default_selection';
 
 	public const BEHAVIOR_INHERIT = 'inherit';
 	public const BEHAVIOR_ENABLE  = 'enable';

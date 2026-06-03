@@ -2,10 +2,10 @@
 /**
  * Minimal PSR-4 style autoloader for the plugin.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments;
+namespace DatRoosterPartialPayments;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -13,7 +13,7 @@ final class Autoloader {
 	/**
 	 * Namespace prefix handled by this autoloader.
 	 */
-	private const PREFIX = 'DatRooster\\PartialPayments\\';
+	private const PREFIX = 'DatRoosterPartialPayments\\';
 
 	/**
 	 * Registers the autoloader.
@@ -33,7 +33,7 @@ final class Autoloader {
 		}
 
 		$relative_class = substr( $class_name, strlen( self::PREFIX ) );
-		$class_file     = DATROOSTER_PP_PATH . 'src/' . str_replace( '\\', '/', $relative_class ) . '.php';
+		$class_file     = DATROOSTER_PARTIAL_PAYMENTS_PATH . 'src/' . str_replace( '\\', '/', $relative_class ) . '.php';
 
 		if ( file_exists( $class_file ) ) {
 			require_once $class_file;

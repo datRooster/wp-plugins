@@ -2,18 +2,18 @@
 /**
  * Sends and schedules customer-facing balance notifications.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Emails;
+namespace DatRoosterPartialPayments\Emails;
 
-use DatRooster\PartialPayments\Deposits\SettingsResolver;
-use DatRooster\PartialPayments\Orders\BalanceOrderManager;
+use DatRoosterPartialPayments\Deposits\SettingsResolver;
+use DatRoosterPartialPayments\Orders\BalanceOrderManager;
 
 defined( 'ABSPATH' ) || exit;
 
 final class BalanceNotifications {
-	public const REMINDER_ACTION_HOOK = 'drpp_send_balance_payment_reminder';
+	public const REMINDER_ACTION_HOOK = 'datrooster_partial_payments_send_balance_payment_reminder';
 	public const SCHEDULER_GROUP      = 'datrooster-partial-payments';
 
 	/**
@@ -45,7 +45,7 @@ final class BalanceNotifications {
 	 * Registers notification hooks.
 	 */
 	public function register(): void {
-		add_action( 'drpp_balance_order_created', array( $this, 'handle_balance_order_created' ), 10, 2 );
+		add_action( 'datrooster_partial_payments_balance_order_created', array( $this, 'handle_balance_order_created' ), 10, 2 );
 		add_action( self::REMINDER_ACTION_HOOK, array( $this, 'handle_scheduled_reminder' ), 10, 1 );
 		add_action( 'woocommerce_order_status_changed', array( $this, 'maybe_clear_scheduled_reminder' ), 10, 4 );
 	}

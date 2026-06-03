@@ -2,10 +2,10 @@
 /**
  * Registers and dispatches WooCommerce email notifications.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Emails;
+namespace DatRoosterPartialPayments\Emails;
 
 defined( 'ABSPATH' ) || exit;
 

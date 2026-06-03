@@ -2,19 +2,19 @@
 /**
  * Plugin admin settings page.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Admin;
+namespace DatRoosterPartialPayments\Admin;
 
-use DatRooster\PartialPayments\Compatibility\WooCommerce;
-use DatRooster\PartialPayments\Orders\PartiallyPaidStatus;
+use DatRoosterPartialPayments\Compatibility\WooCommerce;
+use DatRoosterPartialPayments\Orders\PartiallyPaidStatus;
 
 defined( 'ABSPATH' ) || exit;
 
 final class SettingsPage {
-	public const GENERAL_OPTION = 'drpp_general_settings';
-	public const LABELS_OPTION  = 'drpp_label_settings';
+	public const GENERAL_OPTION = 'datrooster_partial_payments_general_settings';
+	public const LABELS_OPTION  = 'datrooster_partial_payments_label_settings';
 
 	/**
 	 * Registers the settings page hooks.
@@ -83,7 +83,7 @@ final class SettingsPage {
 	 */
 	public function register_settings(): void {
 		register_setting(
-			'drpp_general_group',
+			'datrooster_partial_payments_general_group',
 			self::GENERAL_OPTION,
 			array(
 				'type'              => 'array',
@@ -93,7 +93,7 @@ final class SettingsPage {
 		);
 
 		register_setting(
-			'drpp_labels_group',
+			'datrooster_partial_payments_labels_group',
 			self::LABELS_OPTION,
 			array(
 				'type'              => 'array',
@@ -103,18 +103,18 @@ final class SettingsPage {
 		);
 
 		add_settings_section(
-			'drpp_general_section',
+			'datrooster_partial_payments_general_section',
 			__( 'General settings', 'datrooster-partial-payments' ),
 			array( $this, 'render_general_section' ),
-			'drpp_general'
+			'datrooster_partial_payments_general'
 		);
 
 		add_settings_field(
 			'enabled',
 			__( 'Enable deposits', 'datrooster-partial-payments' ),
 			array( $this, 'render_checkbox_field' ),
-			'drpp_general',
-			'drpp_general_section',
+			'datrooster_partial_payments_general',
+			'datrooster_partial_payments_general_section',
 			array(
 				'option_name' => self::GENERAL_OPTION,
 				'key'         => 'enabled',
@@ -126,8 +126,8 @@ final class SettingsPage {
 			'require_login',
 			__( 'Require login', 'datrooster-partial-payments' ),
 			array( $this, 'render_checkbox_field' ),
-			'drpp_general',
-			'drpp_general_section',
+			'datrooster_partial_payments_general',
+			'datrooster_partial_payments_general_section',
 			array(
 				'option_name' => self::GENERAL_OPTION,
 				'key'         => 'require_login',
@@ -139,8 +139,8 @@ final class SettingsPage {
 			'deposit_type',
 			__( 'Deposit type', 'datrooster-partial-payments' ),
 			array( $this, 'render_select_field' ),
-			'drpp_general',
-			'drpp_general_section',
+			'datrooster_partial_payments_general',
+			'datrooster_partial_payments_general_section',
 			array(
 				'option_name' => self::GENERAL_OPTION,
 				'key'         => 'deposit_type',
@@ -156,8 +156,8 @@ final class SettingsPage {
 			'deposit_amount',
 			__( 'Deposit amount', 'datrooster-partial-payments' ),
 			array( $this, 'render_number_field' ),
-			'drpp_general',
-			'drpp_general_section',
+			'datrooster_partial_payments_general',
+			'datrooster_partial_payments_general_section',
 			array(
 				'option_name' => self::GENERAL_OPTION,
 				'key'         => 'deposit_amount',
@@ -171,8 +171,8 @@ final class SettingsPage {
 			'default_selection',
 			__( 'Default selection', 'datrooster-partial-payments' ),
 			array( $this, 'render_select_field' ),
-			'drpp_general',
-			'drpp_general_section',
+			'datrooster_partial_payments_general',
+			'datrooster_partial_payments_general_section',
 			array(
 				'option_name' => self::GENERAL_OPTION,
 				'key'         => 'default_selection',
@@ -187,8 +187,8 @@ final class SettingsPage {
 			'fully_paid_status',
 			__( 'Order fully paid status', 'datrooster-partial-payments' ),
 			array( $this, 'render_select_field' ),
-			'drpp_general',
-			'drpp_general_section',
+			'datrooster_partial_payments_general',
+			'datrooster_partial_payments_general_section',
 			array(
 				'option_name' => self::GENERAL_OPTION,
 				'key'         => 'fully_paid_status',
@@ -200,8 +200,8 @@ final class SettingsPage {
 			'disabled_gateways',
 			__( 'Disabled payment gateways', 'datrooster-partial-payments' ),
 			array( $this, 'render_multiselect_field' ),
-			'drpp_general',
-			'drpp_general_section',
+			'datrooster_partial_payments_general',
+			'datrooster_partial_payments_general_section',
 			array(
 				'option_name' => self::GENERAL_OPTION,
 				'key'         => 'disabled_gateways',
@@ -214,8 +214,8 @@ final class SettingsPage {
 			'minimum_deposit_eligible_amount',
 			__( 'Minimum eligible amount', 'datrooster-partial-payments' ),
 			array( $this, 'render_number_field' ),
-			'drpp_general',
-			'drpp_general_section',
+			'datrooster_partial_payments_general',
+			'datrooster_partial_payments_general_section',
 			array(
 				'option_name' => self::GENERAL_OPTION,
 				'key'         => 'minimum_deposit_eligible_amount',
@@ -229,8 +229,8 @@ final class SettingsPage {
 			'balance_due_days',
 			__( 'Balance due in days', 'datrooster-partial-payments' ),
 			array( $this, 'render_number_field' ),
-			'drpp_general',
-			'drpp_general_section',
+			'datrooster_partial_payments_general',
+			'datrooster_partial_payments_general_section',
 			array(
 				'option_name' => self::GENERAL_OPTION,
 				'key'         => 'balance_due_days',
@@ -244,8 +244,8 @@ final class SettingsPage {
 			'balance_reminder_enabled',
 			__( 'Send balance reminders', 'datrooster-partial-payments' ),
 			array( $this, 'render_checkbox_field' ),
-			'drpp_general',
-			'drpp_general_section',
+			'datrooster_partial_payments_general',
+			'datrooster_partial_payments_general_section',
 			array(
 				'option_name' => self::GENERAL_OPTION,
 				'key'         => 'balance_reminder_enabled',
@@ -257,8 +257,8 @@ final class SettingsPage {
 			'balance_reminder_days_before_due',
 			__( 'Reminder lead time', 'datrooster-partial-payments' ),
 			array( $this, 'render_number_field' ),
-			'drpp_general',
-			'drpp_general_section',
+			'datrooster_partial_payments_general',
+			'datrooster_partial_payments_general_section',
 			array(
 				'option_name' => self::GENERAL_OPTION,
 				'key'         => 'balance_reminder_days_before_due',
@@ -272,8 +272,8 @@ final class SettingsPage {
 			'tax_handling',
 			__( 'Tax handling', 'datrooster-partial-payments' ),
 			array( $this, 'render_select_field' ),
-			'drpp_general',
-			'drpp_general_section',
+			'datrooster_partial_payments_general',
+			'datrooster_partial_payments_general_section',
 			array(
 				'option_name' => self::GENERAL_OPTION,
 				'key'         => 'tax_handling',
@@ -288,8 +288,8 @@ final class SettingsPage {
 			'shipping_handling',
 			__( 'Shipping handling', 'datrooster-partial-payments' ),
 			array( $this, 'render_select_field' ),
-			'drpp_general',
-			'drpp_general_section',
+			'datrooster_partial_payments_general',
+			'datrooster_partial_payments_general_section',
 			array(
 				'option_name' => self::GENERAL_OPTION,
 				'key'         => 'shipping_handling',
@@ -305,8 +305,8 @@ final class SettingsPage {
 			'coupon_handling',
 			__( 'Coupon handling', 'datrooster-partial-payments' ),
 			array( $this, 'render_select_field' ),
-			'drpp_general',
-			'drpp_general_section',
+			'datrooster_partial_payments_general',
+			'datrooster_partial_payments_general_section',
 			array(
 				'option_name' => self::GENERAL_OPTION,
 				'key'         => 'coupon_handling',
@@ -319,18 +319,18 @@ final class SettingsPage {
 		);
 
 		add_settings_section(
-			'drpp_labels_selection_section',
+			'datrooster_partial_payments_labels_selection_section',
 			__( 'Deposit selection', 'datrooster-partial-payments' ),
 			array( $this, 'render_labels_selection_section' ),
-			'drpp_labels'
+			'datrooster_partial_payments_labels'
 		);
 
 		add_settings_field(
 			'pay_deposit_text',
 			__( 'Pay deposit text', 'datrooster-partial-payments' ),
 			array( $this, 'render_text_field' ),
-			'drpp_labels',
-			'drpp_labels_selection_section',
+			'datrooster_partial_payments_labels',
+			'datrooster_partial_payments_labels_selection_section',
 			array(
 				'option_name' => self::LABELS_OPTION,
 				'key'         => 'pay_deposit_text',
@@ -341,8 +341,8 @@ final class SettingsPage {
 			'pay_full_amount_text',
 			__( 'Pay full amount text', 'datrooster-partial-payments' ),
 			array( $this, 'render_text_field' ),
-			'drpp_labels',
-			'drpp_labels_selection_section',
+			'datrooster_partial_payments_labels',
+			'datrooster_partial_payments_labels_selection_section',
 			array(
 				'option_name' => self::LABELS_OPTION,
 				'key'         => 'pay_full_amount_text',
@@ -353,8 +353,8 @@ final class SettingsPage {
 			'deposit_text',
 			__( 'Deposit text', 'datrooster-partial-payments' ),
 			array( $this, 'render_text_field' ),
-			'drpp_labels',
-			'drpp_labels_selection_section',
+			'datrooster_partial_payments_labels',
+			'datrooster_partial_payments_labels_selection_section',
 			array(
 				'option_name' => self::LABELS_OPTION,
 				'key'         => 'deposit_text',
@@ -362,18 +362,18 @@ final class SettingsPage {
 		);
 
 		add_settings_section(
-			'drpp_labels_order_section',
+			'datrooster_partial_payments_labels_order_section',
 			__( 'Checkout and order', 'datrooster-partial-payments' ),
 			array( $this, 'render_labels_order_section' ),
-			'drpp_labels'
+			'datrooster_partial_payments_labels'
 		);
 
 		add_settings_field(
 			'to_pay_text',
 			__( 'To pay text', 'datrooster-partial-payments' ),
 			array( $this, 'render_text_field' ),
-			'drpp_labels',
-			'drpp_labels_order_section',
+			'datrooster_partial_payments_labels',
+			'datrooster_partial_payments_labels_order_section',
 			array(
 				'option_name' => self::LABELS_OPTION,
 				'key'         => 'to_pay_text',
@@ -384,8 +384,8 @@ final class SettingsPage {
 			'future_payments_text',
 			__( 'Future payments text', 'datrooster-partial-payments' ),
 			array( $this, 'render_text_field' ),
-			'drpp_labels',
-			'drpp_labels_order_section',
+			'datrooster_partial_payments_labels',
+			'datrooster_partial_payments_labels_order_section',
 			array(
 				'option_name' => self::LABELS_OPTION,
 				'key'         => 'future_payments_text',
@@ -396,8 +396,8 @@ final class SettingsPage {
 			'deposit_amount_text',
 			__( 'Deposit amount text', 'datrooster-partial-payments' ),
 			array( $this, 'render_text_field' ),
-			'drpp_labels',
-			'drpp_labels_order_section',
+			'datrooster_partial_payments_labels',
+			'datrooster_partial_payments_labels_order_section',
 			array(
 				'option_name' => self::LABELS_OPTION,
 				'key'         => 'deposit_amount_text',
@@ -482,11 +482,11 @@ final class SettingsPage {
 
 			<form action="options.php" method="post">
 				<?php if ( 'labels' === $tab ) : ?>
-					<?php settings_fields( 'drpp_labels_group' ); ?>
-					<?php do_settings_sections( 'drpp_labels' ); ?>
+					<?php settings_fields( 'datrooster_partial_payments_labels_group' ); ?>
+					<?php do_settings_sections( 'datrooster_partial_payments_labels' ); ?>
 				<?php else : ?>
-					<?php settings_fields( 'drpp_general_group' ); ?>
-					<?php do_settings_sections( 'drpp_general' ); ?>
+					<?php settings_fields( 'datrooster_partial_payments_general_group' ); ?>
+					<?php do_settings_sections( 'datrooster_partial_payments_general' ); ?>
 				<?php endif; ?>
 
 				<?php submit_button( __( 'Save changes', 'datrooster-partial-payments' ) ); ?>

@@ -2,26 +2,26 @@
 /**
  * Creates and manages balance payment orders for deposit purchases.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Orders;
+namespace DatRoosterPartialPayments\Orders;
 
-use DatRooster\PartialPayments\Deposits\SettingsResolver;
+use DatRoosterPartialPayments\Deposits\SettingsResolver;
 
 defined( 'ABSPATH' ) || exit;
 
 final class BalanceOrderManager {
 	public const BALANCE_ORDER_CREATED_VIA  = 'datrooster-partial-payments-balance';
-	public const META_IS_BALANCE_ORDER       = '_drpp_is_balance_order';
-	public const META_PARENT_DEPOSIT_ORDER   = '_drpp_parent_deposit_order_id';
-	public const META_BALANCE_ORDER_ID       = '_drpp_balance_order_id';
-	public const META_BALANCE_PAID           = '_drpp_balance_paid';
-	public const META_BALANCE_PAID_AT        = '_drpp_balance_paid_at';
-	public const META_BALANCE_CREATED_AT     = '_drpp_balance_created_at';
-	public const META_BALANCE_DUE_AT               = '_drpp_balance_due_at';
-	public const META_BALANCE_REMINDER_SENT_AT     = '_drpp_balance_reminder_sent_at';
-	public const META_BALANCE_REMINDER_SCHEDULED_AT = '_drpp_balance_reminder_scheduled_at';
+	public const META_IS_BALANCE_ORDER       = '_datrooster_partial_payments_is_balance_order';
+	public const META_PARENT_DEPOSIT_ORDER   = '_datrooster_partial_payments_parent_deposit_order_id';
+	public const META_BALANCE_ORDER_ID       = '_datrooster_partial_payments_balance_order_id';
+	public const META_BALANCE_PAID           = '_datrooster_partial_payments_balance_paid';
+	public const META_BALANCE_PAID_AT        = '_datrooster_partial_payments_balance_paid_at';
+	public const META_BALANCE_CREATED_AT     = '_datrooster_partial_payments_balance_created_at';
+	public const META_BALANCE_DUE_AT               = '_datrooster_partial_payments_balance_due_at';
+	public const META_BALANCE_REMINDER_SENT_AT     = '_datrooster_partial_payments_balance_reminder_sent_at';
+	public const META_BALANCE_REMINDER_SCHEDULED_AT = '_datrooster_partial_payments_balance_reminder_scheduled_at';
 
 	/**
 	 * Shared settings resolver.
@@ -83,7 +83,7 @@ final class BalanceOrderManager {
 	 * @return array<string,mixed>
 	 */
 	public function filter_account_orders_query( array $args ): array {
-		$args['drpp_exclude_balance_orders'] = true;
+		$args['datrooster_partial_payments_exclude_balance_orders'] = true;
 
 		return $args;
 	}
@@ -100,7 +100,7 @@ final class BalanceOrderManager {
 	 * @return array<int,\WC_Order|int>|object
 	 */
 	public function filter_account_order_results( array|object $results, array $args ): array|object {
-		if ( empty( $args['drpp_exclude_balance_orders'] ) ) {
+		if ( empty( $args['datrooster_partial_payments_exclude_balance_orders'] ) ) {
 			return $results;
 		}
 
@@ -147,7 +147,7 @@ final class BalanceOrderManager {
 			return $actions;
 		}
 
-		$actions['drpp-pay-balance'] = array(
+		$actions['datrooster-partial-payments-pay-balance'] = array(
 			'url'        => $balance_order->get_checkout_payment_url(),
 			'name'       => __( 'Pay balance', 'datrooster-partial-payments' ),
 			'aria-label' => sprintf(
@@ -189,7 +189,7 @@ final class BalanceOrderManager {
 			)
 		);
 		?>
-		<section class="woocommerce-order-details drpp-balance-details">
+		<section class="woocommerce-order-details datrooster-partial-payments-balance-details">
 			<h2 class="woocommerce-order-details__title"><?php esc_html_e( 'Remaining balance', 'datrooster-partial-payments' ); ?></h2>
 			<p>
 				<?php
@@ -294,7 +294,7 @@ final class BalanceOrderManager {
 		 * @param int $balance_order_id Newly created balance order ID.
 		 * @param int $parent_order_id  Parent deposit order ID.
 		 */
-		do_action( 'drpp_balance_order_created', $balance_order->get_id(), $order->get_id() );
+		do_action( 'datrooster_partial_payments_balance_order_created', $balance_order->get_id(), $order->get_id() );
 	}
 
 	/**
@@ -394,13 +394,13 @@ final class BalanceOrderManager {
 	 */
 	private function copy_balance_product_items( \WC_Order $source_order, \WC_Order $balance_order ): void {
 		foreach ( $source_order->get_items( 'line_item' ) as $item_id => $item ) {
-			$remaining_total = (float) $item->get_meta( '_drpp_remaining_products_total', true );
+			$remaining_total = (float) $item->get_meta( '_datrooster_partial_payments_remaining_products_total', true );
 
 			if ( $remaining_total <= 0 ) {
 				continue;
 			}
 
-			$remaining_tax  = (float) $item->get_meta( '_drpp_remaining_products_tax', true );
+			$remaining_tax  = (float) $item->get_meta( '_datrooster_partial_payments_remaining_products_tax', true );
 			$source_total   = (float) $item->get_total();
 			$source_tax     = (float) $item->get_total_tax();
 			$item_taxes     = $item->get_taxes();
@@ -422,7 +422,7 @@ final class BalanceOrderManager {
 				$product_item->set_taxes( $scaled_taxes );
 			}
 
-			$product_item->add_meta_data( '_drpp_balance_parent_line_item_id', $item_id, true );
+			$product_item->add_meta_data( '_datrooster_partial_payments_balance_parent_line_item_id', $item_id, true );
 			$balance_order->add_item( $product_item );
 		}
 	}
@@ -434,8 +434,8 @@ final class BalanceOrderManager {
 	 * @param \WC_Order $balance_order Balance order instance.
 	 */
 	private function copy_balance_shipping_items( \WC_Order $source_order, \WC_Order $balance_order ): void {
-		$remaining_shipping_total = (float) $source_order->get_meta( '_drpp_remaining_shipping_total', true );
-		$remaining_shipping_tax   = (float) $source_order->get_meta( '_drpp_remaining_shipping_tax', true );
+		$remaining_shipping_total = (float) $source_order->get_meta( '_datrooster_partial_payments_remaining_shipping_total', true );
+		$remaining_shipping_tax   = (float) $source_order->get_meta( '_datrooster_partial_payments_remaining_shipping_tax', true );
 		$current_shipping_total   = (float) $source_order->get_shipping_total();
 		$current_shipping_tax     = (float) $source_order->get_shipping_tax();
 
@@ -474,7 +474,7 @@ final class BalanceOrderManager {
 				);
 			}
 
-			$shipping_item->add_meta_data( '_drpp_balance_parent_shipping_item_id', $item_id, true );
+			$shipping_item->add_meta_data( '_datrooster_partial_payments_balance_parent_shipping_item_id', $item_id, true );
 			$balance_order->add_item( $shipping_item );
 		}
 	}
@@ -508,7 +508,7 @@ final class BalanceOrderManager {
 		}
 
 		$query_args = $args;
-		unset( $query_args['drpp_exclude_balance_orders'], $query_args['page'], $query_args['offset'] );
+		unset( $query_args['datrooster_partial_payments_exclude_balance_orders'], $query_args['page'], $query_args['offset'] );
 
 		$query_args['limit']       = -1;
 		$query_args['paginate']    = false;
@@ -573,7 +573,7 @@ final class BalanceOrderManager {
 	 * @param \WC_Order $order Order object.
 	 */
 	private function is_deposit_order( \WC_Order $order ): bool {
-		return 'yes' === $order->get_meta( '_drpp_has_deposit', true ) && ! $this->is_balance_order( $order );
+		return 'yes' === $order->get_meta( '_datrooster_partial_payments_has_deposit', true ) && ! $this->is_balance_order( $order );
 	}
 
 	/**
@@ -591,7 +591,7 @@ final class BalanceOrderManager {
 	 * @param \WC_Order $order Parent deposit order.
 	 */
 	private function get_expected_balance_total( \WC_Order $order ): float {
-		return (float) $order->get_meta( '_drpp_estimated_remaining_total', true );
+		return (float) $order->get_meta( '_datrooster_partial_payments_estimated_remaining_total', true );
 	}
 
 	/**

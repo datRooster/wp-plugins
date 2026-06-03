@@ -2,10 +2,10 @@
 /**
  * WooCommerce compatibility helpers.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Compatibility;
+namespace DatRoosterPartialPayments\Compatibility;
 
 defined( 'ABSPATH' ) || exit;
 

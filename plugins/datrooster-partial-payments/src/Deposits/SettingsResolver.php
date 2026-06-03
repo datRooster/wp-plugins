@@ -2,12 +2,12 @@
 /**
  * Resolves the effective deposit settings for products.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Deposits;
+namespace DatRoosterPartialPayments\Deposits;
 
-use DatRooster\PartialPayments\Admin\SettingsPage;
+use DatRoosterPartialPayments\Admin\SettingsPage;
 
 defined( 'ABSPATH' ) || exit;
 

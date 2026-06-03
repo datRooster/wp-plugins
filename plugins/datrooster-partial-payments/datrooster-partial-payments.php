@@ -3,7 +3,7 @@
  * Plugin Name:       DatRooster Partial Payments
  * Plugin URI:        https://github.com/datRooster/wp-plugins
  * Description:       WooCommerce deposits, split payments, and linked balance collection orders.
- * Version:           0.6.5
+ * Version:           0.6.6
  * Requires at least: 6.7
  * Requires PHP:      8.1
  * Author:            DatRooster
@@ -16,15 +16,15 @@
  * WC requires at least: 9.0
  * WC tested up to:   10.7
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'DATROOSTER_PP_FILE', __FILE__ );
-define( 'DATROOSTER_PP_PATH', plugin_dir_path( __FILE__ ) );
-define( 'DATROOSTER_PP_URL', plugin_dir_url( __FILE__ ) );
-define( 'DATROOSTER_PP_BASENAME', plugin_basename( __FILE__ ) );
+define( 'DATROOSTER_PARTIAL_PAYMENTS_FILE', __FILE__ );
+define( 'DATROOSTER_PARTIAL_PAYMENTS_PATH', plugin_dir_path( __FILE__ ) );
+define( 'DATROOSTER_PARTIAL_PAYMENTS_URL', plugin_dir_url( __FILE__ ) );
+define( 'DATROOSTER_PARTIAL_PAYMENTS_BASENAME', plugin_basename( __FILE__ ) );
 
 /*
  * DatRooster Partial Payments is free software: you can redistribute it and/or modify
@@ -40,11 +40,11 @@ define( 'DATROOSTER_PP_BASENAME', plugin_basename( __FILE__ ) );
  * You should have received a copy of the GNU General Public License
  * along with DatRooster Partial Payments. If not, see the license URI above.
  */
-define( 'DATROOSTER_PP_VERSION', '0.6.5' );
+define( 'DATROOSTER_PARTIAL_PAYMENTS_VERSION', '0.6.6' );
 
-require_once DATROOSTER_PP_PATH . 'src/Autoloader.php';
+require_once DATROOSTER_PARTIAL_PAYMENTS_PATH . 'src/Autoloader.php';
 
-\DatRooster\PartialPayments\Autoloader::register();
+\DatRoosterPartialPayments\Autoloader::register();
 
 add_action(
 	'before_woocommerce_init',
@@ -60,8 +60,8 @@ add_action(
 	}
 );
 
-register_activation_hook( __FILE__, array( \DatRooster\PartialPayments\Plugin::class, 'activate' ) );
-register_deactivation_hook( __FILE__, array( \DatRooster\PartialPayments\Plugin::class, 'deactivate' ) );
+register_activation_hook( __FILE__, array( \DatRoosterPartialPayments\Plugin::class, 'activate' ) );
+register_deactivation_hook( __FILE__, array( \DatRoosterPartialPayments\Plugin::class, 'deactivate' ) );
 
-$datrooster_partial_payments = new \DatRooster\PartialPayments\Plugin();
+$datrooster_partial_payments = new \DatRoosterPartialPayments\Plugin();
 $datrooster_partial_payments->boot();

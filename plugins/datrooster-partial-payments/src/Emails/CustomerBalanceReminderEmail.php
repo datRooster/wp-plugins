@@ -2,10 +2,10 @@
 /**
  * Customer reminder email for outstanding balance orders.
  *
- * @package DatRooster\PartialPayments
+ * @package DatRoosterPartialPayments
  */
 
-namespace DatRooster\PartialPayments\Emails;
+namespace DatRoosterPartialPayments\Emails;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -14,7 +14,7 @@ final class CustomerBalanceReminderEmail extends AbstractBalanceEmail {
 	 * Configures the email metadata.
 	 */
 	public function __construct() {
-		$this->id          = 'drpp_customer_balance_reminder';
+		$this->id          = 'datrooster_partial_payments_customer_balance_reminder';
 		$this->title       = __( 'Balance payment reminder', 'datrooster-partial-payments' );
 		$this->description = __( 'Sent to customers when a remaining balance is still unpaid and a reminder should be issued.', 'datrooster-partial-payments' );
 
