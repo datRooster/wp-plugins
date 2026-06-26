@@ -28,16 +28,21 @@ fi
 mkdir -p "$languages_dir"
 
 plugin_version="$(sed -nE 's/^ \* Version:[[:space:]]*([0-9]+(\.[0-9]+)*)/\1/p' "$plugin_main_file" | head -n 1)"
+plugin_name="$(sed -nE 's/^ \* Plugin Name:[[:space:]]*(.+)$/\1/p' "$plugin_main_file" | head -n 1)"
 
 if [[ -z "$plugin_version" ]]; then
 	echo "Unable to detect plugin version in ${plugin_main_file}" >&2
 	exit 1
 fi
 
+if [[ -z "$plugin_name" ]]; then
+	plugin_name="$slug"
+fi
+
 php_files=()
 
 while IFS= read -r file; do
-	php_files+=("$file")
+	php_files+=("${file#"$plugin_dir"/}")
 done < <(find "$plugin_dir" -name '*.php' -not -path '*/vendor/*' | sort)
 
 if [[ "${#php_files[@]}" -eq 0 ]]; then
@@ -45,28 +50,31 @@ if [[ "${#php_files[@]}" -eq 0 ]]; then
 	exit 1
 fi
 
-xgettext \
-	--language=PHP \
-	--from-code=UTF-8 \
-	--package-name="DatRooster Partial Payments" \
-	--package-version="${plugin_version}" \
-	--msgid-bugs-address="https://github.com/datRooster/wp-plugins/issues" \
-	--add-comments=translators \
-	--keyword=__ \
-	--keyword=_e \
-	--keyword=_x:1,2c \
-	--keyword=_ex:1,2c \
-	--keyword=_n:1,2 \
-	--keyword=_n_noop:1,2 \
-	--keyword=_nx:1,2,4c \
-	--keyword=esc_html__ \
-	--keyword=esc_html_e \
-	--keyword=esc_html_x:1,2c \
-	--keyword=esc_attr__ \
-	--keyword=esc_attr_e \
-	--keyword=esc_attr_x:1,2c \
-	-o "$pot_file" \
-	"${php_files[@]}"
+(
+	cd "$plugin_dir"
+	xgettext \
+		--language=PHP \
+		--from-code=UTF-8 \
+		--package-name="${plugin_name}" \
+		--package-version="${plugin_version}" \
+		--msgid-bugs-address="https://github.com/datRooster/wp-plugins/issues" \
+		--add-comments=translators \
+		--keyword=__ \
+		--keyword=_e \
+		--keyword=_x:1,2c \
+		--keyword=_ex:1,2c \
+		--keyword=_n:1,2 \
+		--keyword=_n_noop:1,2 \
+		--keyword=_nx:1,2,4c \
+		--keyword=esc_html__ \
+		--keyword=esc_html_e \
+		--keyword=esc_html_x:1,2c \
+		--keyword=esc_attr__ \
+		--keyword=esc_attr_e \
+		--keyword=esc_attr_x:1,2c \
+		-o "$pot_file" \
+		"${php_files[@]}"
+)
 
 for po_file in "$languages_dir"/"$slug"-*.po; do
 	if [[ ! -f "$po_file" ]]; then

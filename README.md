@@ -15,7 +15,8 @@ Monorepo per lo sviluppo di plugin WordPress moderni, con focus iniziale su este
 wp-plugins/
 ├── docs/
 ├── plugins/
-│   └── datrooster-partial-payments/
+│   ├── datrooster-partial-payments/
+│   └── datrooster-treasure-coupons/
 ├── .github/
 ├── composer.json
 └── phpcs.xml.dist
@@ -24,6 +25,7 @@ wp-plugins/
 ## Plugin attuali
 
 - `datrooster-partial-payments`: base del plugin WooCommerce per acconti, depositi e pagamenti rateali, con impostazioni globali, override per prodotto, flusso storefront classico, email saldo e localizzazione iniziale.
+- `datrooster-treasure-coupons`: plugin WooCommerce di gamification per creare cacce al tesoro con indizi via shortcode e coupon promozionali unici generati al completamento.
 
 ## Convenzioni di lavoro
 
@@ -60,3 +62,4 @@ wp-plugins/
 - il flusso completo e documentato in `docs/release-process.md`.
 - la manutenzione delle traduzioni del plugin e documentata in `docs/i18n-process.md`.
 - la preparazione finale per WordPress.org e documentata in `docs/wordpress-org-distribution-notes.md` e `docs/wordpress-org-submission-checklist.md`.
+- la roadmap del plugin gamification coupon e documentata in `docs/treasure-coupons-roadmap.md`.

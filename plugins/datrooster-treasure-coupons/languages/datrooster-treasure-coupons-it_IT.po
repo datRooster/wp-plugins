@@ -1,0 +1,303 @@
+# Italian translations for DatRooster Treasure Coupons.
+msgid ""
+msgstr ""
+"Project-Id-Version: DatRooster Treasure Coupons 0.2.0\n"
+"Report-Msgid-Bugs-To: https://github.com/datRooster/wp-plugins/issues\n"
+"POT-Creation-Date: 2026-06-26 22:37+0200\n"
+"PO-Revision-Date: 2026-06-26 22:21+0200\n"
+"Last-Translator: DatRooster\n"
+"Language-Team: Italian\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/Admin/SettingsPage.php:44 src/Frontend/Shortcodes.php:85
+msgid "Collect clue"
+msgstr "Raccogli indizio"
+
+#: src/Admin/SettingsPage.php:45
+msgid "Clue collected"
+msgstr "Indizio raccolto"
+
+#: src/Admin/SettingsPage.php:46
+msgid "You unlocked your reward."
+msgstr "Hai sbloccato il tuo premio."
+
+#: src/Admin/SettingsPage.php:47
+msgid "Your treasure coupon has been applied to the cart."
+msgstr "Il tuo coupon della caccia al tesoro è stato applicato al carrello."
+
+#: src/Admin/SettingsPage.php:88 src/Admin/SettingsPage.php:89
+msgid "Treasure Coupons"
+msgstr "Coupon Tesoro"
+
+#: src/Admin/SettingsPage.php:112
+msgid "Campaign settings"
+msgstr "Impostazioni campagna"
+
+#: src/Admin/SettingsPage.php:119
+msgid "Enable treasure hunt"
+msgstr "Abilita caccia al tesoro"
+
+#: src/Admin/SettingsPage.php:122
+msgid "Allow visitors to collect clues and unlock coupons."
+msgstr "Consenti ai visitatori di raccogliere indizi e sbloccare coupon."
+
+#: src/Admin/SettingsPage.php:128
+msgid "Hunt slug"
+msgstr "Slug caccia"
+
+#: src/Admin/SettingsPage.php:131
+msgid ""
+"Internal identifier used by the shortcodes. Use lowercase letters, numbers, "
+"and hyphens."
+msgstr ""
+"Identificativo interno usato dagli shortcode. Usa lettere minuscole, numeri "
+"e trattini."
+
+#: src/Admin/SettingsPage.php:137
+msgid "Required clues"
+msgstr "Indizi richiesti"
+
+#: src/Admin/SettingsPage.php:142
+msgid "Number of unique clues required before the reward coupon is generated."
+msgstr "Numero di indizi unici necessari prima di generare il coupon premio."
+
+#: src/Admin/SettingsPage.php:148
+msgid "Require login"
+msgstr "Richiedi accesso"
+
+#: src/Admin/SettingsPage.php:151
+msgid "Restrict campaigns to authenticated customers."
+msgstr "Limita le campagne ai clienti autenticati."
+
+#: src/Admin/SettingsPage.php:157
+msgid "Auto-apply coupon"
+msgstr "Applica automaticamente il coupon"
+
+#: src/Admin/SettingsPage.php:160
+msgid ""
+"Automatically apply the unlocked coupon when the customer visits the cart."
+msgstr ""
+"Applica automaticamente il coupon sbloccato quando il cliente visita il "
+"carrello."
+
+#: src/Admin/SettingsPage.php:166
+msgid "Coupon prefix"
+msgstr "Prefisso coupon"
+
+#: src/Admin/SettingsPage.php:169
+msgid "Prefix used for generated WooCommerce coupon codes."
+msgstr "Prefisso usato per i codici coupon WooCommerce generati."
+
+#: src/Admin/SettingsPage.php:175
+msgid "Reward type"
+msgstr "Tipo di premio"
+
+#: src/Admin/SettingsPage.php:179
+msgid "Percentage discount"
+msgstr "Sconto percentuale"
+
+#: src/Admin/SettingsPage.php:180
+msgid "Fixed cart discount"
+msgstr "Sconto fisso sul carrello"
+
+#: src/Admin/SettingsPage.php:181
+msgid "Free shipping"
+msgstr "Spedizione gratuita"
+
+#: src/Admin/SettingsPage.php:183
+msgid "Defines the WooCommerce reward generated at completion."
+msgstr "Definisce il premio WooCommerce generato al completamento."
+
+#: src/Admin/SettingsPage.php:189
+msgid "Discount amount"
+msgstr "Importo sconto"
+
+#: src/Admin/SettingsPage.php:194
+msgid ""
+"Use 10 for 10% when the reward type is percentage. Ignored for free shipping "
+"rewards."
+msgstr ""
+"Usa 10 per il 10% quando il premio è percentuale. Ignorato per i premi con "
+"spedizione gratuita."
+
+#: src/Admin/SettingsPage.php:200
+msgid "Minimum spend"
+msgstr "Spesa minima"
+
+#: src/Admin/SettingsPage.php:205
+msgid "Optional minimum cart subtotal required by the generated coupon."
+msgstr "Subtotale minimo opzionale del carrello richiesto dal coupon generato."
+
+#: src/Admin/SettingsPage.php:211
+msgid "Coupon validity days"
+msgstr "Giorni validità coupon"
+
+#: src/Admin/SettingsPage.php:216
+msgid "Number of days the unlocked coupon remains valid."
+msgstr "Numero di giorni in cui il coupon sbloccato resta valido."
+
+#: src/Admin/SettingsPage.php:222
+msgid "Clue button label"
+msgstr "Etichetta pulsante indizio"
+
+#: src/Admin/SettingsPage.php:228
+msgid "Collected label"
+msgstr "Etichetta indizio raccolto"
+
+#: src/Admin/SettingsPage.php:234
+msgid "Completion message"
+msgstr "Messaggio completamento"
+
+#: src/Admin/SettingsPage.php:240
+msgid "Applied coupon message"
+msgstr "Messaggio coupon applicato"
+
+#: src/Admin/SettingsPage.php:243
+msgid ""
+"Shown in the temporary storefront notice when the unlocked coupon is applied "
+"automatically."
+msgstr ""
+"Mostrato nell'avviso temporaneo del sito quando il coupon sbloccato viene "
+"applicato automaticamente."
+
+#: src/Admin/SettingsPage.php:253
+msgid "You do not have permission to manage Treasure Coupons."
+msgstr "Non hai i permessi per gestire Coupon Tesoro."
+
+#: src/Admin/SettingsPage.php:259
+msgid "DatRooster Treasure Coupons"
+msgstr "DatRooster Coupon Tesoro"
+
+#: src/Admin/SettingsPage.php:262
+msgid ""
+"Create a simple treasure hunt across pages, posts, and products. Visitors "
+"collect clues and unlock a unique WooCommerce coupon."
+msgstr ""
+"Crea una semplice caccia al tesoro tra pagine, articoli e prodotti. I "
+"visitatori raccolgono indizi e sbloccano un coupon WooCommerce unico."
+
+#: src/Admin/SettingsPage.php:274
+msgid "Shortcode examples"
+msgstr "Esempi shortcode"
+
+#: src/Admin/SettingsPage.php:275
+msgid ""
+"Place clues anywhere on the site. Each clue ID should be unique inside the "
+"same hunt."
+msgstr ""
+"Posiziona gli indizi ovunque nel sito. Ogni ID indizio deve essere unico "
+"nella stessa caccia."
+
+#: src/Admin/SettingsPage.php:278
+msgid "Hidden key clue"
+msgstr "Indizio chiave nascosto"
+
+#: src/Admin/SettingsPage.php:280
+msgid "Hidden gem clue"
+msgstr "Indizio gemma nascosto"
+
+#: src/Admin/SettingsPage.php:282
+msgid "Hidden map clue"
+msgstr "Indizio mappa nascosto"
+
+#: src/Admin/SettingsPage.php:284
+msgid "Hidden clue"
+msgstr "Indizio nascosto"
+
+#: src/Admin/SettingsPage.php:289
+msgid "Testing tools"
+msgstr "Strumenti di test"
+
+#: src/Admin/SettingsPage.php:290
+msgid ""
+"Reset your current treasure hunt progress when testing the same clues "
+"multiple times."
+msgstr ""
+"Reimposta il progresso corrente della caccia quando testi più volte gli "
+"stessi indizi."
+
+#: src/Admin/SettingsPage.php:294
+msgid "Reset my test progress"
+msgstr "Reimposta il mio progresso di test"
+
+#: src/Admin/SettingsPage.php:305
+msgid "You do not have permission to reset Treasure Coupons progress."
+msgstr "Non hai i permessi per reimpostare il progresso di Coupon Tesoro."
+
+#: src/Admin/SettingsPage.php:335
+msgid "Your Treasure Coupons test progress has been reset."
+msgstr "Il progresso di test di Coupon Tesoro è stato reimpostato."
+
+#: src/Admin/SettingsPage.php:376
+msgid ""
+"Configure the first active treasure hunt. Future milestones can extend this "
+"into multiple campaigns."
+msgstr ""
+"Configura la prima caccia al tesoro attiva. Le prossime versioni potranno "
+"estenderla a più campagne."
+
+#: src/Compatibility/WooCommerce.php:30
+msgid ""
+"DatRooster Treasure Coupons requires WooCommerce to be installed and active."
+msgstr "DatRooster Coupon Tesoro richiede WooCommerce installato e attivo."
+
+#. translators: %s: coupon code.
+#: src/Frontend/CouponAutoApply.php:103
+#, php-format
+msgid "%1$s Code: %2$s"
+msgstr "%1$s Codice: %2$s"
+
+#: src/Frontend/Shortcodes.php:72 src/Frontend/Shortcodes.php:175
+msgid "Treasure hunt is currently disabled."
+msgstr "La caccia al tesoro è attualmente disabilitata."
+
+#: src/Frontend/Shortcodes.php:98
+msgid "Treasure clue shortcode needs both hunt and clue attributes."
+msgstr ""
+"Lo shortcode dell'indizio richiede sia l'attributo hunt sia l'attributo clue."
+
+#: src/Frontend/Shortcodes.php:116
+msgid "Reward unlocked"
+msgstr "Premio sbloccato"
+
+#: src/Frontend/Shortcodes.php:193
+msgid "Treasure progress shortcode needs a hunt attribute."
+msgstr "Lo shortcode del progresso richiede l'attributo hunt."
+
+#: src/Frontend/Shortcodes.php:210
+msgid "Treasure hunt progress"
+msgstr "Progresso caccia al tesoro"
+
+#. translators: 1: collected clues. 2: required clues.
+#: src/Frontend/Shortcodes.php:215
+#, php-format
+msgid "%1$d of %2$d clues"
+msgstr "%1$d di %2$d indizi"
+
+#: src/Frontend/Shortcodes.php:234
+msgid "Keep exploring the site to unlock your reward coupon."
+msgstr "Continua a esplorare il sito per sbloccare il tuo coupon premio."
+
+#: src/Frontend/Shortcodes.php:272
+msgid "Log in to join this treasure hunt."
+msgstr "Accedi per partecipare a questa caccia al tesoro."
+
+#: src/Frontend/Shortcodes.php:289
+msgid "Clue collected. Nice find."
+msgstr "Indizio raccolto. Ottima scoperta."
+
+#: src/Frontend/Shortcodes.php:290
+msgid "Treasure hunt completed. Your coupon is ready."
+msgstr "Caccia al tesoro completata. Il tuo coupon è pronto."
+
+#: src/Frontend/Shortcodes.php:291
+msgid "We could not verify that clue. Please try again."
+msgstr "Non siamo riusciti a verificare questo indizio. Riprova."
+
+#: src/Frontend/Shortcodes.php:292
+msgid "This treasure hunt is currently disabled."
+msgstr "Questa caccia al tesoro è attualmente disabilitata."

@@ -1,0 +1,290 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the DatRooster Treasure Coupons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: DatRooster Treasure Coupons 0.2.0\n"
+"Report-Msgid-Bugs-To: https://github.com/datRooster/wp-plugins/issues\n"
+"POT-Creation-Date: 2026-06-26 22:37+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/Admin/SettingsPage.php:44 src/Frontend/Shortcodes.php:85
+msgid "Collect clue"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:45
+msgid "Clue collected"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:46
+msgid "You unlocked your reward."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:47
+msgid "Your treasure coupon has been applied to the cart."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:88 src/Admin/SettingsPage.php:89
+msgid "Treasure Coupons"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:112
+msgid "Campaign settings"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:119
+msgid "Enable treasure hunt"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:122
+msgid "Allow visitors to collect clues and unlock coupons."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:128
+msgid "Hunt slug"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:131
+msgid ""
+"Internal identifier used by the shortcodes. Use lowercase letters, numbers, "
+"and hyphens."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:137
+msgid "Required clues"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:142
+msgid "Number of unique clues required before the reward coupon is generated."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:148
+msgid "Require login"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:151
+msgid "Restrict campaigns to authenticated customers."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:157
+msgid "Auto-apply coupon"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:160
+msgid ""
+"Automatically apply the unlocked coupon when the customer visits the cart."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:166
+msgid "Coupon prefix"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:169
+msgid "Prefix used for generated WooCommerce coupon codes."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:175
+msgid "Reward type"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:179
+msgid "Percentage discount"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:180
+msgid "Fixed cart discount"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:181
+msgid "Free shipping"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:183
+msgid "Defines the WooCommerce reward generated at completion."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:189
+msgid "Discount amount"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:194
+msgid ""
+"Use 10 for 10% when the reward type is percentage. Ignored for free shipping "
+"rewards."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:200
+msgid "Minimum spend"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:205
+msgid "Optional minimum cart subtotal required by the generated coupon."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:211
+msgid "Coupon validity days"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:216
+msgid "Number of days the unlocked coupon remains valid."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:222
+msgid "Clue button label"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:228
+msgid "Collected label"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:234
+msgid "Completion message"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:240
+msgid "Applied coupon message"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:243
+msgid ""
+"Shown in the temporary storefront notice when the unlocked coupon is applied "
+"automatically."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:253
+msgid "You do not have permission to manage Treasure Coupons."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:259
+msgid "DatRooster Treasure Coupons"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:262
+msgid ""
+"Create a simple treasure hunt across pages, posts, and products. Visitors "
+"collect clues and unlock a unique WooCommerce coupon."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:274
+msgid "Shortcode examples"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:275
+msgid ""
+"Place clues anywhere on the site. Each clue ID should be unique inside the "
+"same hunt."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:278
+msgid "Hidden key clue"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:280
+msgid "Hidden gem clue"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:282
+msgid "Hidden map clue"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:284
+msgid "Hidden clue"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:289
+msgid "Testing tools"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:290
+msgid ""
+"Reset your current treasure hunt progress when testing the same clues "
+"multiple times."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:294
+msgid "Reset my test progress"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:305
+msgid "You do not have permission to reset Treasure Coupons progress."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:335
+msgid "Your Treasure Coupons test progress has been reset."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:376
+msgid ""
+"Configure the first active treasure hunt. Future milestones can extend this "
+"into multiple campaigns."
+msgstr ""
+
+#: src/Compatibility/WooCommerce.php:30
+msgid ""
+"DatRooster Treasure Coupons requires WooCommerce to be installed and active."
+msgstr ""
+
+#. translators: %s: coupon code.
+#: src/Frontend/CouponAutoApply.php:103
+#, php-format
+msgid "%1$s Code: %2$s"
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:72 src/Frontend/Shortcodes.php:175
+msgid "Treasure hunt is currently disabled."
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:98
+msgid "Treasure clue shortcode needs both hunt and clue attributes."
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:116
+msgid "Reward unlocked"
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:193
+msgid "Treasure progress shortcode needs a hunt attribute."
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:210
+msgid "Treasure hunt progress"
+msgstr ""
+
+#. translators: 1: collected clues. 2: required clues.
+#: src/Frontend/Shortcodes.php:215
+#, php-format
+msgid "%1$d of %2$d clues"
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:234
+msgid "Keep exploring the site to unlock your reward coupon."
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:272
+msgid "Log in to join this treasure hunt."
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:289
+msgid "Clue collected. Nice find."
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:290
+msgid "Treasure hunt completed. Your coupon is ready."
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:291
+msgid "We could not verify that clue. Please try again."
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:292
+msgid "This treasure hunt is currently disabled."
+msgstr ""

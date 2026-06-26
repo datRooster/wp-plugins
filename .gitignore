@@ -4,6 +4,8 @@
 
 node_modules/
 
+/dist/
+
 plugins/*/vendor/
 plugins/*/node_modules/
 plugins/*/build/
