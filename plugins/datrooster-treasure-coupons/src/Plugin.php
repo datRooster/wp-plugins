@@ -8,7 +8,9 @@
 namespace DatRoosterTreasureCoupons;
 
 use DatRoosterTreasureCoupons\Admin\SettingsPage;
+use DatRoosterTreasureCoupons\Blocks\BlockRegistry;
 use DatRoosterTreasureCoupons\Compatibility\WooCommerce;
+use DatRoosterTreasureCoupons\Customizer\UniversalPlacement;
 use DatRoosterTreasureCoupons\Frontend\CouponAutoApply;
 use DatRoosterTreasureCoupons\Frontend\FormHandler;
 use DatRoosterTreasureCoupons\Frontend\Shortcodes;
@@ -72,6 +74,12 @@ final class Plugin {
 
 		$shortcodes = new Shortcodes( $progress_store, $coupon_generator );
 		$shortcodes->register();
+
+		$block_registry = new BlockRegistry( $shortcodes );
+		$block_registry->register();
+
+		$universal_placement = new UniversalPlacement( $shortcodes );
+		$universal_placement->register();
 
 		$coupon_auto_apply = new CouponAutoApply( $progress_store );
 		$coupon_auto_apply->register();

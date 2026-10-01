@@ -78,14 +78,19 @@ final class FormHandler {
 		}
 
 		$progress = $this->progress_store->collect_clue( $hunt_slug, $clue_id );
-		$status   = 'collected';
+		$coupon_code = '';
+		$status      = 'collected';
 
 		if ( count( $progress['clues'] ) >= absint( $settings['required_clues'] ) ) {
 			$coupon_code = $this->coupon_generator->maybe_generate_for_hunt( $hunt_slug );
 			$status      = '' !== $coupon_code ? 'completed' : 'collected';
 		}
 
-		$this->redirect_with_status( $redirect, $status );
+		$this->redirect_with_status(
+			$redirect,
+			$status,
+			$coupon_code
+		);
 	}
 
 	/**
@@ -116,6 +121,7 @@ final class FormHandler {
 		return remove_query_arg(
 			array(
 				'datrooster_treasure_status',
+				'datrooster_treasure_coupon',
 			),
 			esc_url_raw( $redirect )
 		);
@@ -126,12 +132,20 @@ final class FormHandler {
 	 *
 	 * @param string $redirect Redirect URL.
 	 * @param string $status Status code.
+	 * @param string $coupon_code Optional coupon code to show after manual unlock.
 	 */
-	private function redirect_with_status( string $redirect, string $status ): void {
+	private function redirect_with_status( string $redirect, string $status, string $coupon_code = '' ): void {
+		$args = array(
+			'datrooster_treasure_status' => sanitize_key( $status ),
+		);
+
+		if ( '' !== $coupon_code ) {
+			$args['datrooster_treasure_coupon'] = wc_format_coupon_code( $coupon_code );
+		}
+
 		wp_safe_redirect(
 			add_query_arg(
-				'datrooster_treasure_status',
-				sanitize_key( $status ),
+				$args,
 				$redirect
 			)
 		);

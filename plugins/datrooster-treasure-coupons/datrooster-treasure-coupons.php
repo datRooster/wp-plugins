@@ -3,7 +3,7 @@
  * Plugin Name:       DatRooster Treasure Coupons
  * Plugin URI:        https://github.com/datRooster/wp-plugins
  * Description:       WooCommerce treasure hunt campaigns that unlock unique promotional coupons.
- * Version:           0.2.0
+ * Version:           0.3.11
  * Requires at least: 6.7
  * Requires PHP:      8.1
  * Author:            DatRooster
@@ -25,7 +25,7 @@ define( 'DATROOSTER_TREASURE_COUPONS_FILE', __FILE__ );
 define( 'DATROOSTER_TREASURE_COUPONS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'DATROOSTER_TREASURE_COUPONS_URL', plugin_dir_url( __FILE__ ) );
 define( 'DATROOSTER_TREASURE_COUPONS_BASENAME', plugin_basename( __FILE__ ) );
-define( 'DATROOSTER_TREASURE_COUPONS_VERSION', '0.2.0' );
+define( 'DATROOSTER_TREASURE_COUPONS_VERSION', '0.3.11' );
 
 /*
  * DatRooster Treasure Coupons is free software: you can redistribute it and/or modify

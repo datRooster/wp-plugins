@@ -3,6 +3,119 @@
 	box-sizing: border-box;
 }
 
+.datrooster-treasure-clue {
+	display: inline-block;
+}
+
+.datrooster-treasure-clue--text,
+.datrooster-treasure-clue--text .datrooster-treasure-clue__form {
+	display: inline;
+}
+
+.datrooster-treasure-clue__form {
+	margin: 0;
+}
+
+.datrooster-treasure-universal {
+	box-sizing: border-box;
+}
+
+.datrooster-treasure-universal--floating,
+.datrooster-treasure-universal--css_selector {
+	max-width: min(320px, calc(100vw - 32px));
+	position: fixed;
+	z-index: 99990;
+}
+
+.datrooster-treasure-universal--bottom-right {
+	bottom: 24px;
+	right: 24px;
+}
+
+.datrooster-treasure-universal--bottom-left {
+	bottom: 24px;
+	left: 24px;
+}
+
+.datrooster-treasure-universal--top-right {
+	right: 24px;
+	top: 64px;
+}
+
+.datrooster-treasure-universal--top-left {
+	left: 24px;
+	top: 64px;
+}
+
+.datrooster-treasure-universal--document-positioned {
+	bottom: auto;
+	left: var(--datrooster-treasure-x, 50%);
+	position: absolute;
+	right: auto;
+	top: var(--datrooster-treasure-y, 50%);
+	transform: translate(-50%, -50%);
+}
+
+.datrooster-treasure-universal--after-content,
+.datrooster-treasure-universal--woocommerce-cart,
+.datrooster-treasure-universal--woocommerce-checkout,
+.datrooster-treasure-universal--woocommerce-product,
+.datrooster-treasure-universal--placed {
+	margin: 1rem 0;
+	max-width: none;
+	position: static;
+}
+
+.datrooster-treasure-universal--drag-ready {
+	cursor: grab;
+	outline: 2px dashed rgba(37, 99, 235, 0.82);
+	outline-offset: 8px;
+	touch-action: none;
+}
+
+.datrooster-treasure-universal--drag-ready::before {
+	background: #1d4ed8;
+	border-radius: 999px;
+	bottom: calc(100% + 10px);
+	box-shadow: 0 10px 20px rgba(15, 23, 42, 0.18);
+	color: #fff;
+	content: attr(data-datrooster-drag-hint);
+	display: block;
+	font-size: 12px;
+	font-weight: 700;
+	left: 50%;
+	line-height: 1.25;
+	max-width: 220px;
+	padding: 8px 10px;
+	position: absolute;
+	text-align: center;
+	transform: translateX(-50%);
+	width: max-content;
+}
+
+.datrooster-treasure-universal--drag-ready[data-datrooster-save-state]::after {
+	background: #052e2b;
+	border-radius: 999px;
+	box-shadow: 0 10px 20px rgba(15, 23, 42, 0.18);
+	color: #fff;
+	content: attr(data-datrooster-save-state);
+	display: block;
+	font-size: 12px;
+	font-weight: 700;
+	left: 50%;
+	line-height: 1.25;
+	padding: 8px 10px;
+	position: absolute;
+	text-align: center;
+	top: calc(100% + 10px);
+	transform: translateX(-50%);
+	width: max-content;
+}
+
+.datrooster-treasure-universal--is-dragging {
+	cursor: grabbing;
+}
+
 .datrooster-treasure-button {
 	align-items: center;
 	background: linear-gradient(135deg, #0f766e 0%, #eab308 100%);
@@ -18,6 +131,26 @@
 	padding: 0.85rem 1.2rem;
 	text-decoration: none;
 	transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.datrooster-treasure-text-button {
+	background: transparent;
+	border: 0;
+	color: inherit;
+	cursor: pointer;
+	display: inline;
+	font: inherit;
+	padding: 0;
+	text-decoration: underline dotted;
+	text-decoration-thickness: 0.08em;
+	text-underline-offset: 0.16em;
+	transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.datrooster-treasure-text-button:hover,
+.datrooster-treasure-text-button:focus {
+	color: #0f766e;
+	text-decoration-color: #eab308;
 }
 
 .datrooster-treasure-image-button {
@@ -163,6 +296,130 @@
 	z-index: 99999;
 }
 
+.datrooster-treasure-coupon-popup {
+	align-items: center;
+	background: rgba(15, 23, 42, 0.42);
+	box-sizing: border-box;
+	display: flex;
+	inset: 0;
+	justify-content: center;
+	min-height: 100vh;
+	min-height: 100dvh;
+	overflow-y: auto;
+	padding: 24px;
+	position: fixed;
+	width: 100%;
+	z-index: 2147483000;
+}
+
+.datrooster-treasure-coupon-popup__card {
+	background:
+		radial-gradient(circle at top left, rgba(234, 179, 8, 0.22), transparent 32%),
+		linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%);
+	border: 1px solid rgba(15, 118, 110, 0.16);
+	border-radius: 28px;
+	box-shadow: 0 28px 80px rgba(15, 23, 42, 0.28);
+	color: #0f172a;
+	max-height: calc(100vh - 48px);
+	max-height: calc(100dvh - 48px);
+	max-width: min(520px, calc(100vw - 32px));
+	overflow-y: auto;
+	padding: 1.6rem;
+	position: relative;
+	width: 100%;
+}
+
+.datrooster-treasure-coupon-popup__close {
+	align-items: center;
+	background: #052e2b;
+	border-radius: 999px;
+	color: #fff;
+	display: inline-flex;
+	font-size: 1.5rem;
+	height: 36px;
+	justify-content: center;
+	line-height: 1;
+	position: absolute;
+	right: 16px;
+	text-decoration: none;
+	top: 16px;
+	width: 36px;
+}
+
+.datrooster-treasure-coupon-popup__eyebrow {
+	color: #0f766e;
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	margin: 0 44px 0.4rem 0;
+	text-transform: uppercase;
+}
+
+.datrooster-treasure-coupon-popup h2 {
+	color: #052e2b;
+	font-size: clamp(1.6rem, 5vw, 2.25rem);
+	line-height: 1.05;
+	margin: 0 44px 0.75rem 0;
+}
+
+.datrooster-treasure-coupon-popup__code-row {
+	align-items: center;
+	background: #052e2b;
+	border-radius: 20px;
+	display: flex;
+	gap: 0.75rem;
+	justify-content: space-between;
+	margin: 1rem 0 0.8rem;
+	padding: 0.75rem;
+}
+
+.datrooster-treasure-coupon-popup__code-row code {
+	background: #fef3c7;
+	border-radius: 14px;
+	color: #713f12;
+	display: block;
+	font-size: clamp(1rem, 4vw, 1.2rem);
+	font-weight: 900;
+	letter-spacing: 0.08em;
+	padding: 0.72rem 0.9rem;
+	text-align: center;
+	width: 100%;
+}
+
+.datrooster-treasure-coupon-popup__copy {
+	background: #0f766e;
+	border: 0;
+	border-radius: 14px;
+	color: #fff;
+	cursor: pointer;
+	flex: 0 0 auto;
+	font-weight: 800;
+	padding: 0.78rem 1rem;
+}
+
+.datrooster-treasure-coupon-popup__hint {
+	color: #475569;
+	font-size: 0.95rem;
+	margin: 0;
+}
+
+.datrooster-treasure-coupon-popup__reward {
+	background: rgba(15, 118, 110, 0.1);
+	border-radius: 999px;
+	color: #0f766e;
+	display: inline-flex;
+	font-weight: 800;
+	margin: 0.25rem 0 0.1rem;
+	padding: 0.62rem 0.9rem;
+}
+
+.datrooster-treasure-coupon-popup__minimum {
+	color: #92400e;
+	font-size: 0.9rem;
+	font-weight: 700;
+	margin: 0.65rem 0 0;
+}
+
 @keyframes datrooster-treasure-soft-dismiss {
 	0%,
 	78% {
@@ -196,6 +453,15 @@
 	}
 }
 
+@media (max-width: 782px) {
+	.datrooster-treasure-universal--document-positioned {
+		bottom: auto;
+		left: var(--datrooster-treasure-tablet-x, var(--datrooster-treasure-x, 50%));
+		right: auto;
+		top: var(--datrooster-treasure-tablet-y, var(--datrooster-treasure-y, 50%));
+	}
+}
+
 @media (max-width: 560px) {
 	.datrooster-treasure-progress__header {
 		align-items: flex-start;
@@ -207,5 +473,38 @@
 		bottom: 16px;
 		left: 16px;
 		right: 16px;
+	}
+
+	.datrooster-treasure-coupon-popup {
+		align-items: flex-end;
+		padding: 16px;
+	}
+
+	.datrooster-treasure-coupon-popup__card {
+		border-radius: 24px;
+		max-height: calc(100vh - 32px);
+		max-height: calc(100dvh - 32px);
+		padding: 1.25rem;
+	}
+
+	.datrooster-treasure-coupon-popup__code-row {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.datrooster-treasure-universal--floating,
+	.datrooster-treasure-universal--css_selector {
+		bottom: 16px;
+		left: 16px;
+		max-width: calc(100vw - 32px);
+		right: auto;
+		top: auto;
+	}
+}
+
+@media (max-width: 480px) {
+	.datrooster-treasure-universal--document-positioned {
+		left: var(--datrooster-treasure-mobile-x, var(--datrooster-treasure-tablet-x, var(--datrooster-treasure-x, 50%)));
+		top: var(--datrooster-treasure-mobile-y, var(--datrooster-treasure-tablet-y, var(--datrooster-treasure-y, 50%)));
 	}
 }

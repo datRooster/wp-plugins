@@ -136,8 +136,13 @@ final class ProgressStore {
 			return array();
 		}
 
-		$raw_cookie = sanitize_text_field( wp_unslash( $_COOKIE[ self::COOKIE_NAME ] ) );
-		$decoded    = rawurldecode( $raw_cookie );
+		$raw_cookie = wp_unslash( $_COOKIE[ self::COOKIE_NAME ] );
+
+		if ( ! is_string( $raw_cookie ) ) {
+			return array();
+		}
+
+		$decoded = rawurldecode( $raw_cookie );
 
 		$envelope = json_decode( $decoded, true );
 

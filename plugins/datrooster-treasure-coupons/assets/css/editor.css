@@ -1,0 +1,29 @@
+.datrooster-treasure-editor-card {
+	background:
+		radial-gradient(circle at top left, rgba(234, 179, 8, 0.18), transparent 32%),
+		linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+	border: 1px solid #dbeafe;
+	border-radius: 18px;
+	box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+	color: #0f172a;
+	padding: 18px;
+}
+
+.datrooster-treasure-editor-card strong {
+	display: block;
+	font-size: 16px;
+	margin-bottom: 6px;
+}
+
+.datrooster-treasure-editor-card p {
+	margin: 0 0 12px;
+}
+
+.datrooster-treasure-editor-card code {
+	background: #fef3c7;
+	border-radius: 999px;
+	color: #713f12;
+	display: inline-block;
+	font-weight: 700;
+	padding: 6px 10px;
+}

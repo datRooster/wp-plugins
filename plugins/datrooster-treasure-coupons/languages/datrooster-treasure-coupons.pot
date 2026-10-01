@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: DatRooster Treasure Coupons 0.2.0\n"
+"Project-Id-Version: DatRooster Treasure Coupons 0.3.11\n"
 "Report-Msgid-Bugs-To: https://github.com/datRooster/wp-plugins/issues\n"
-"POT-Creation-Date: 2026-06-26 22:37+0200\n"
+"POT-Creation-Date: 2026-08-03 23:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/Admin/SettingsPage.php:44 src/Frontend/Shortcodes.php:85
+#: src/Admin/SettingsPage.php:44 src/Customizer/UniversalPlacement.php:107
+#: src/Frontend/Shortcodes.php:338
 msgid "Collect clue"
 msgstr ""
 
@@ -25,7 +26,7 @@ msgstr ""
 msgid "Clue collected"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:46
+#: src/Admin/SettingsPage.php:46 src/Frontend/Shortcodes.php:205
 msgid "You unlocked your reward."
 msgstr ""
 
@@ -49,7 +50,7 @@ msgstr ""
 msgid "Allow visitors to collect clues and unlock coupons."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:128
+#: src/Admin/SettingsPage.php:128 src/Blocks/BlockRegistry.php:190
 msgid "Hunt slug"
 msgstr ""
 
@@ -196,7 +197,8 @@ msgstr ""
 msgid "Hidden map clue"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:284
+#: src/Admin/SettingsPage.php:284 src/Blocks/BlockRegistry.php:105
+#: src/Customizer/UniversalPlacement.php:111
 msgid "Hidden clue"
 msgstr ""
 
@@ -228,63 +230,413 @@ msgid ""
 "into multiple campaigns."
 msgstr ""
 
+#: src/Blocks/BlockRegistry.php:71 src/Blocks/BlockRegistry.php:185
+msgid "Treasure clue"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:72 src/Blocks/BlockRegistry.php:186
+msgid "Place a collectible clue anywhere in page content."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:115 src/Blocks/BlockRegistry.php:187
+msgid "Treasure progress"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:116 src/Blocks/BlockRegistry.php:188
+msgid "Show collected clues and the unlocked coupon code."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:189
+msgid "Treasure settings"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:191 src/Customizer/UniversalPlacement.php:273
+msgid "Clue ID"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:192
+msgid "Use a unique ID for each clue inside the same hunt."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:193 src/Customizer/UniversalPlacement.php:280
+msgid "Visible label"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:194 src/Customizer/UniversalPlacement.php:286
+msgid "Display style"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:195 src/Customizer/UniversalPlacement.php:288
+msgid "Button"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:196 src/Customizer/UniversalPlacement.php:289
+msgid "Hidden text link"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:197 src/Blocks/BlockRegistry.php:198
+#: src/Customizer/UniversalPlacement.php:290
+#: src/Customizer/UniversalPlacement.php:297
+msgid "Image marker"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:199 src/Customizer/UniversalPlacement.php:299
+msgid "Default key"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:200 src/Customizer/UniversalPlacement.php:300
+msgid "Default gem"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:201 src/Customizer/UniversalPlacement.php:301
+msgid "Default map"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:202 src/Blocks/BlockRegistry.php:203
+#: src/Customizer/UniversalPlacement.php:302
+#: src/Customizer/UniversalPlacement.php:309
+msgid "Custom image URL"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:204 src/Customizer/UniversalPlacement.php:315
+msgid "Image alternative text"
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:205
+msgid "Add a clue ID before publishing this block."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:206
+msgid "Customers will click this button to collect the clue."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:207
+msgid "This can be hidden inside normal page copy."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:208
+msgid "The selected PNG marker will be clickable on the storefront."
+msgstr ""
+
+#: src/Blocks/BlockRegistry.php:209
+msgid "This block shows hunt progress and the unlocked coupon code."
+msgstr ""
+
 #: src/Compatibility/WooCommerce.php:30
 msgid ""
 "DatRooster Treasure Coupons requires WooCommerce to be installed and active."
 msgstr ""
 
+#: src/Customizer/UniversalPlacement.php:167
+msgid "Treasure Coupons placement"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:168
+msgid ""
+"Place a treasure clue or progress module without editing page content. Use "
+"this for carts, checkout pages, custom templates, and theme fallback pages."
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:176
+msgid "Enable universal placement"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:182
+msgid "Where to show it"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:184
+msgid "Entire site"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:185
+msgid "Front page only"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:186
+#: src/Customizer/UniversalPlacement.php:197
+msgid "Specific page"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:187
+msgid "WooCommerce cart"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:188
+msgid "WooCommerce checkout"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:189
+msgid "WooCommerce product pages"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:190
+msgid "WooCommerce shop archive"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:203
+msgid "Placement method"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:205
+msgid "Floating overlay"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:206
+msgid "After page content"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:207
+msgid "Advanced CSS selector"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:208
+msgid "Before cart content"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:209
+msgid "Before checkout form"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:210
+msgid "Before product summary"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:217
+msgid "Floating fallback position"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:219
+msgid "Bottom right"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:220
+msgid "Bottom left"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:221
+msgid "Top right"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:222
+msgid "Top left"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:229
+msgid "Horizontal responsive position (%)"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:230
+msgid ""
+"Drag the marker in the preview, or set a manual horizontal position from 0 "
+"to 100."
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:236
+msgid "Vertical page position (px)"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:237
+msgid ""
+"Drag the marker in the preview, or set a manual vertical position in page "
+"pixels."
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:243
+msgid "CSS selector"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:244
+msgid ""
+"Advanced mode only. Example: .cart_totals or #site-footer. If the selector "
+"is not found, the floating fallback remains visible."
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:250
+msgid "CSS selector insertion"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:252
+msgid "Inside target, at the end"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:253
+msgid "Inside target, at the beginning"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:254
+msgid "Before target"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:255
+msgid "After target"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:262
+msgid "Content to render"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:264
+msgid "Clue only"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:265
+msgid "Progress only"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:266
+msgid "Clue and progress"
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:274
+msgid "Use a unique ID for this automatically placed clue."
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:337
+msgid "Position received. Publish or wait for autosave."
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:367
+#: src/Customizer/UniversalPlacement.php:580
+msgid "Drag to place this treasure clue. Release to save the position."
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:368
+msgid "Saving position..."
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:369
+msgid "Position saved."
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:370
+msgid "Could not save the position. Please try again."
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:385
+msgid "You do not have permission to save Treasure Coupons placement."
+msgstr ""
+
+#: src/Customizer/UniversalPlacement.php:406
+msgid "Invalid treasure clue position."
+msgstr ""
+
 #. translators: %s: coupon code.
-#: src/Frontend/CouponAutoApply.php:103
+#: src/Frontend/CouponAutoApply.php:125
 #, php-format
 msgid "%1$s Code: %2$s"
 msgstr ""
 
-#: src/Frontend/Shortcodes.php:72 src/Frontend/Shortcodes.php:175
+#. translators: 1: coupon code. 2: remaining cart amount.
+#: src/Frontend/CouponAutoApply.php:190
+#, php-format
+msgid "Coupon %1$s is unlocked. Add %2$s more to your cart to use it."
+msgstr ""
+
+#. translators: %s: coupon code.
+#: src/Frontend/CouponAutoApply.php:198
+#, php-format
+msgid "Coupon %s is unlocked and ready to use."
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:145 src/Frontend/Shortcodes.php:200
+#: src/Frontend/Shortcodes.php:230
+msgid "Close coupon popup"
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:149 src/Frontend/Shortcodes.php:203
+#: src/Frontend/Shortcodes.php:235
+msgid "Treasure reward unlocked"
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:152 src/Frontend/Shortcodes.php:206
+#: src/Frontend/Shortcodes.php:240
+msgid "Your coupon code is ready"
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:166 src/Frontend/Shortcodes.php:201
+#: src/Frontend/Shortcodes.php:232
+msgid "Copied"
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:168 src/Frontend/Shortcodes.php:202
+#: src/Frontend/Shortcodes.php:233
+msgid "Copy code"
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:172 src/Frontend/Shortcodes.php:204
+#: src/Frontend/Shortcodes.php:236
+msgid "Save it and use it at checkout when you are ready."
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:254
+msgid "You won free shipping."
+msgstr ""
+
+#. translators: %s: formatted discount amount.
+#: src/Frontend/Shortcodes.php:260
+#, php-format
+msgid "You won %s off your cart."
+msgstr ""
+
+#. translators: %s: discount percentage.
+#: src/Frontend/Shortcodes.php:267
+#, php-format
+msgid "You won %s off."
+msgstr ""
+
+#. translators: %s: formatted minimum spend.
+#: src/Frontend/Shortcodes.php:286
+#, php-format
+msgid "Minimum spend required to use it: %s."
+msgstr ""
+
+#: src/Frontend/Shortcodes.php:324 src/Frontend/Shortcodes.php:459
 msgid "Treasure hunt is currently disabled."
 msgstr ""
 
-#: src/Frontend/Shortcodes.php:98
+#: src/Frontend/Shortcodes.php:352
 msgid "Treasure clue shortcode needs both hunt and clue attributes."
 msgstr ""
 
-#: src/Frontend/Shortcodes.php:116
+#: src/Frontend/Shortcodes.php:371
 msgid "Reward unlocked"
 msgstr ""
 
-#: src/Frontend/Shortcodes.php:193
+#: src/Frontend/Shortcodes.php:477
 msgid "Treasure progress shortcode needs a hunt attribute."
 msgstr ""
 
-#: src/Frontend/Shortcodes.php:210
+#: src/Frontend/Shortcodes.php:494
 msgid "Treasure hunt progress"
 msgstr ""
 
 #. translators: 1: collected clues. 2: required clues.
-#: src/Frontend/Shortcodes.php:215
+#: src/Frontend/Shortcodes.php:499
 #, php-format
 msgid "%1$d of %2$d clues"
 msgstr ""
 
-#: src/Frontend/Shortcodes.php:234
+#: src/Frontend/Shortcodes.php:518
 msgid "Keep exploring the site to unlock your reward coupon."
 msgstr ""
 
-#: src/Frontend/Shortcodes.php:272
+#: src/Frontend/Shortcodes.php:556
 msgid "Log in to join this treasure hunt."
 msgstr ""
 
-#: src/Frontend/Shortcodes.php:289
+#: src/Frontend/Shortcodes.php:571
 msgid "Clue collected. Nice find."
 msgstr ""
 
-#: src/Frontend/Shortcodes.php:290
+#: src/Frontend/Shortcodes.php:572
 msgid "Treasure hunt completed. Your coupon is ready."
 msgstr ""
 
-#: src/Frontend/Shortcodes.php:291
+#: src/Frontend/Shortcodes.php:573
 msgid "We could not verify that clue. Please try again."
 msgstr ""
 
-#: src/Frontend/Shortcodes.php:292
+#: src/Frontend/Shortcodes.php:574
 msgid "This treasure hunt is currently disabled."
 msgstr ""

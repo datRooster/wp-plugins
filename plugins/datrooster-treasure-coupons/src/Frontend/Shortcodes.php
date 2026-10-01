@@ -43,7 +43,11 @@ final class Shortcodes {
 	 * Registers shortcodes and assets.
 	 */
 	public function register(): void {
+		add_action( 'template_redirect', array( $this, 'maybe_send_treasure_status_nocache_headers' ), 0 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'maybe_enqueue_global_frontend_script' ), 11 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'maybe_enqueue_coupon_popup_assets' ), 20 );
+		add_action( 'wp_footer', array( $this, 'render_coupon_popup' ) );
 		add_shortcode( 'datrooster_treasure_clue', array( $this, 'render_clue_shortcode' ) );
 		add_shortcode( 'datrooster_treasure_progress', array( $this, 'render_progress_shortcode' ) );
 	}
@@ -58,6 +62,254 @@ final class Shortcodes {
 			array(),
 			DATROOSTER_TREASURE_COUPONS_VERSION
 		);
+
+		wp_register_script(
+			'datrooster-treasure-coupons-frontend',
+			DATROOSTER_TREASURE_COUPONS_URL . 'assets/js/frontend.js',
+			array(),
+			DATROOSTER_TREASURE_COUPONS_VERSION,
+			false
+		);
+	}
+
+	/**
+	 * Prevents mobile/page caches from serving stale pages after treasure actions.
+	 */
+	public function maybe_send_treasure_status_nocache_headers(): void {
+		if ( '' === $this->get_query_status() ) {
+			return;
+		}
+
+		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+			define( 'DONOTCACHEPAGE', true );
+		}
+
+		if ( ! headers_sent() ) {
+			nocache_headers();
+		}
+	}
+
+	/**
+	 * Enqueues the tiny frontend helper so mobile cached pages can still read completion URLs.
+	 */
+	public function maybe_enqueue_global_frontend_script(): void {
+		$settings = SettingsPage::get_settings();
+
+		if ( empty( $settings['enabled'] ) ) {
+			return;
+		}
+
+		wp_enqueue_script( 'datrooster-treasure-coupons-frontend' );
+		$this->add_frontend_defaults_script();
+	}
+
+	/**
+	 * Enqueues popup assets when a manually unlocked coupon is present in the redirect URL.
+	 */
+	public function maybe_enqueue_coupon_popup_assets(): void {
+		$coupon_code = $this->get_query_coupon_code();
+
+		if ( '' === $coupon_code ) {
+			return;
+		}
+
+		wp_enqueue_style( 'datrooster-treasure-coupons' );
+		wp_enqueue_script( 'datrooster-treasure-coupons-frontend' );
+		wp_add_inline_script(
+			'datrooster-treasure-coupons-frontend',
+			'window.datroosterTreasureCouponPopup = ' . wp_json_encode( $this->get_coupon_popup_payload( $coupon_code, SettingsPage::get_settings() ) ) . ';',
+			'before'
+		);
+	}
+
+	/**
+	 * Renders a coupon popup after manual reward unlock.
+	 */
+	public function render_coupon_popup(): void {
+		$coupon_code = $this->get_query_coupon_code();
+
+		if ( '' === $coupon_code ) {
+			return;
+		}
+
+		$settings  = SettingsPage::get_settings();
+		$close_url = remove_query_arg(
+			array(
+				'datrooster_treasure_status',
+				'datrooster_treasure_coupon',
+			)
+		);
+		?>
+		<div class="datrooster-treasure-coupon-popup" role="dialog" aria-modal="false" aria-labelledby="datrooster-treasure-coupon-popup-title">
+			<div class="datrooster-treasure-coupon-popup__card">
+				<a class="datrooster-treasure-coupon-popup__close" href="<?php echo esc_url( $close_url ); ?>" aria-label="<?php esc_attr_e( 'Close coupon popup', 'datrooster-treasure-coupons' ); ?>">
+					<span aria-hidden="true">&times;</span>
+				</a>
+				<p class="datrooster-treasure-coupon-popup__eyebrow">
+					<?php esc_html_e( 'Treasure reward unlocked', 'datrooster-treasure-coupons' ); ?>
+				</p>
+				<h2 id="datrooster-treasure-coupon-popup-title">
+					<?php esc_html_e( 'Your coupon code is ready', 'datrooster-treasure-coupons' ); ?>
+				</h2>
+				<p>
+					<?php echo esc_html( (string) $settings['completion_message'] ); ?>
+				</p>
+				<p class="datrooster-treasure-coupon-popup__reward">
+					<?php echo esc_html( $this->get_reward_summary( $settings ) ); ?>
+				</p>
+				<div class="datrooster-treasure-coupon-popup__code-row">
+					<code><?php echo esc_html( $coupon_code ); ?></code>
+					<button
+						type="button"
+						class="datrooster-treasure-coupon-popup__copy"
+						data-datrooster-copy-code="<?php echo esc_attr( $coupon_code ); ?>"
+						data-datrooster-copied-label="<?php esc_attr_e( 'Copied', 'datrooster-treasure-coupons' ); ?>"
+					>
+						<?php esc_html_e( 'Copy code', 'datrooster-treasure-coupons' ); ?>
+					</button>
+				</div>
+				<p class="datrooster-treasure-coupon-popup__hint">
+					<?php esc_html_e( 'Save it and use it at checkout when you are ready.', 'datrooster-treasure-coupons' ); ?>
+				</p>
+				<?php if ( '' !== $this->get_minimum_spend_hint( $settings ) ) : ?>
+					<p class="datrooster-treasure-coupon-popup__minimum">
+						<?php echo esc_html( $this->get_minimum_spend_hint( $settings ) ); ?>
+					</p>
+				<?php endif; ?>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Adds translated default popup text for the JavaScript fallback.
+	 */
+	private function add_frontend_defaults_script(): void {
+		static $added = false;
+
+		if ( $added ) {
+			return;
+		}
+
+		$added = true;
+
+		wp_add_inline_script(
+			'datrooster-treasure-coupons-frontend',
+			'window.datroosterTreasureCouponPopupDefaults = ' . wp_json_encode(
+				array(
+					'closeLabel'  => __( 'Close coupon popup', 'datrooster-treasure-coupons' ),
+					'copiedLabel' => __( 'Copied', 'datrooster-treasure-coupons' ),
+					'copyLabel'   => __( 'Copy code', 'datrooster-treasure-coupons' ),
+					'eyebrow'     => __( 'Treasure reward unlocked', 'datrooster-treasure-coupons' ),
+					'hint'        => __( 'Save it and use it at checkout when you are ready.', 'datrooster-treasure-coupons' ),
+					'message'     => __( 'You unlocked your reward.', 'datrooster-treasure-coupons' ),
+					'title'       => __( 'Your coupon code is ready', 'datrooster-treasure-coupons' ),
+				)
+			) . ';',
+			'before'
+		);
+	}
+
+	/**
+	 * Returns popup data for the PHP render and JavaScript fallback.
+	 *
+	 * @param string              $coupon_code Coupon code.
+	 * @param array<string,mixed> $settings Plugin settings.
+	 *
+	 * @return array<string,string>
+	 */
+	private function get_coupon_popup_payload( string $coupon_code, array $settings ): array {
+		$close_url = remove_query_arg(
+			array(
+				'datrooster_treasure_status',
+				'datrooster_treasure_coupon',
+			)
+		);
+
+		return array(
+			'closeLabel'     => __( 'Close coupon popup', 'datrooster-treasure-coupons' ),
+			'closeUrl'       => esc_url_raw( $close_url ),
+			'copiedLabel'    => __( 'Copied', 'datrooster-treasure-coupons' ),
+			'copyLabel'      => __( 'Copy code', 'datrooster-treasure-coupons' ),
+			'couponCode'     => wc_format_coupon_code( $coupon_code ),
+			'eyebrow'        => __( 'Treasure reward unlocked', 'datrooster-treasure-coupons' ),
+			'hint'           => __( 'Save it and use it at checkout when you are ready.', 'datrooster-treasure-coupons' ),
+			'message'        => (string) $settings['completion_message'],
+			'minimumHint'    => $this->get_minimum_spend_hint( $settings ),
+			'rewardSummary'  => $this->get_reward_summary( $settings ),
+			'title'          => __( 'Your coupon code is ready', 'datrooster-treasure-coupons' ),
+		);
+	}
+
+	/**
+	 * Returns a readable reward summary for the popup.
+	 *
+	 * @param array<string,mixed> $settings Plugin settings.
+	 */
+	private function get_reward_summary( array $settings ): string {
+		$discount_type = sanitize_key( (string) $settings['discount_type'] );
+		$amount        = (float) $settings['discount_amount'];
+
+		if ( 'free_shipping' === $discount_type ) {
+			return __( 'You won free shipping.', 'datrooster-treasure-coupons' );
+		}
+
+		if ( 'fixed_cart' === $discount_type ) {
+			return sprintf(
+				/* translators: %s: formatted discount amount. */
+				__( 'You won %s off your cart.', 'datrooster-treasure-coupons' ),
+				$this->format_money( $amount )
+			);
+		}
+
+		return sprintf(
+			/* translators: %s: discount percentage. */
+			__( 'You won %s off.', 'datrooster-treasure-coupons' ),
+			$this->format_percentage( $amount )
+		);
+	}
+
+	/**
+	 * Returns the minimum spend hint for the popup.
+	 *
+	 * @param array<string,mixed> $settings Plugin settings.
+	 */
+	private function get_minimum_spend_hint( array $settings ): string {
+		$minimum_spend = (float) $settings['minimum_spend'];
+
+		if ( $minimum_spend <= 0 ) {
+			return '';
+		}
+
+		return sprintf(
+			/* translators: %s: formatted minimum spend. */
+			__( 'Minimum spend required to use it: %s.', 'datrooster-treasure-coupons' ),
+			$this->format_money( $minimum_spend )
+		);
+	}
+
+	/**
+	 * Formats a percentage for customer-facing reward copy.
+	 *
+	 * @param float $amount Raw percentage amount.
+	 */
+	private function format_percentage( float $amount ): string {
+		$decimals = floor( $amount ) === $amount ? 0 : 2;
+
+		return number_format_i18n( $amount, $decimals ) . '%';
+	}
+
+	/**
+	 * Formats a money amount as plain text.
+	 *
+	 * @param float $amount Raw money amount.
+	 */
+	private function format_money( float $amount ): string {
+		if ( function_exists( 'wc_price' ) ) {
+			return wp_strip_all_tags( wc_price( $amount ) );
+		}
+
+		return number_format_i18n( $amount, 2 );
 	}
 
 	/**
@@ -81,6 +333,7 @@ final class Shortcodes {
 				'hunt'      => (string) $settings['hunt_slug'],
 				'clue'      => '',
 				'label'     => (string) $settings['clue_button_label'],
+				'display'   => 'button',
 				'image'     => '',
 				'image_alt' => __( 'Collect clue', 'datrooster-treasure-coupons' ),
 			),
@@ -91,6 +344,7 @@ final class Shortcodes {
 		$hunt_slug = sanitize_title( (string) $atts['hunt'] );
 		$clue_id   = sanitize_key( (string) $atts['clue'] );
 		$label     = sanitize_text_field( (string) $atts['label'] );
+		$display   = $this->sanitize_display( (string) $atts['display'] );
 		$image_url = $this->resolve_image_url( (string) $atts['image'] );
 		$image_alt = sanitize_text_field( (string) $atts['image_alt'] );
 
@@ -103,10 +357,11 @@ final class Shortcodes {
 		$progress  = $this->progress_store->get_progress( $hunt_slug );
 		$collected = in_array( $clue_id, $progress['clues'], true );
 		$completed = '' !== $this->coupon_generator->maybe_generate_for_hunt( $hunt_slug );
+		$display   = 'image' === $display && '' === $image_url ? 'button' : $display;
 
 		ob_start();
 		?>
-		<div class="datrooster-treasure-clue">
+		<span class="datrooster-treasure-clue datrooster-treasure-clue--<?php echo esc_attr( $display ); ?>">
 			<?php if ( $collected ) : ?>
 				<span class="datrooster-treasure-pill datrooster-treasure-pill--collected">
 					<?php echo esc_html( (string) $settings['collected_label'] ); ?>
@@ -116,14 +371,14 @@ final class Shortcodes {
 					<?php esc_html_e( 'Reward unlocked', 'datrooster-treasure-coupons' ); ?>
 				</span>
 			<?php else : ?>
-				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+				<form class="datrooster-treasure-clue__form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 					<input type="hidden" name="action" value="<?php echo esc_attr( FormHandler::ACTION ); ?>" />
 					<input type="hidden" name="hunt" value="<?php echo esc_attr( $hunt_slug ); ?>" />
 					<input type="hidden" name="clue" value="<?php echo esc_attr( $clue_id ); ?>" />
 					<input type="hidden" name="redirect_to" value="<?php echo esc_url( $this->get_current_url() ); ?>" />
 					<?php wp_nonce_field( FormHandler::ACTION ); ?>
-					<button class="<?php echo esc_attr( '' !== $image_url ? 'datrooster-treasure-image-button' : 'datrooster-treasure-button' ); ?>" type="submit">
-						<?php if ( '' !== $image_url ) : ?>
+					<button class="<?php echo esc_attr( $this->get_clue_button_class( $display ) ); ?>" type="submit">
+						<?php if ( 'image' === $display && '' !== $image_url ) : ?>
 							<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php echo esc_attr( $image_alt ); ?>" loading="lazy" decoding="async" />
 							<span class="screen-reader-text"><?php echo esc_html( $label ); ?></span>
 						<?php else : ?>
@@ -132,7 +387,7 @@ final class Shortcodes {
 					</button>
 				</form>
 			<?php endif; ?>
-		</div>
+		</span>
 		<?php
 
 		return (string) ob_get_clean();
@@ -161,6 +416,35 @@ final class Shortcodes {
 		}
 
 		return esc_url_raw( $image );
+	}
+
+	/**
+	 * Sanitizes the clue display mode.
+	 *
+	 * @param string $display Requested display mode.
+	 */
+	private function sanitize_display( string $display ): string {
+		$display = sanitize_key( $display );
+		$allowed = array( 'button', 'text', 'image' );
+
+		return in_array( $display, $allowed, true ) ? $display : 'button';
+	}
+
+	/**
+	 * Returns the CSS class for a clue trigger.
+	 *
+	 * @param string $display Display mode.
+	 */
+	private function get_clue_button_class( string $display ): string {
+		if ( 'image' === $display ) {
+			return 'datrooster-treasure-image-button';
+		}
+
+		if ( 'text' === $display ) {
+			return 'datrooster-treasure-text-button';
+		}
+
+		return 'datrooster-treasure-button';
 	}
 
 	/**
@@ -277,13 +561,11 @@ final class Shortcodes {
 	 * Renders a status notice after clue collection.
 	 */
 	private function render_status_notice(): string {
-		$status = filter_input( INPUT_GET, 'datrooster_treasure_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+		$status = $this->get_query_status();
 
-		if ( empty( $status ) ) {
+		if ( '' === $status ) {
 			return '';
 		}
-
-		$status = sanitize_key( (string) $status );
 
 		$messages = array(
 			'collected' => __( 'Clue collected. Nice find.', 'datrooster-treasure-coupons' ),
@@ -297,6 +579,34 @@ final class Shortcodes {
 		}
 
 		return '<div class="datrooster-treasure-notice datrooster-treasure-notice--transient">' . esc_html( $messages[ $status ] ) . '</div>';
+	}
+
+	/**
+	 * Returns a normalized status from treasure action redirect URLs.
+	 */
+	private function get_query_status(): string {
+		$status = filter_input( INPUT_GET, 'datrooster_treasure_status', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+		if ( ! is_string( $status ) || '' === $status ) {
+			return '';
+		}
+
+		return sanitize_key( $status );
+	}
+
+	/**
+	 * Returns a coupon code from the completion redirect URL.
+	 */
+	private function get_query_coupon_code(): string {
+		$coupon = filter_input( INPUT_GET, 'datrooster_treasure_coupon', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+		if ( 'completed' !== $this->get_query_status() || ! is_string( $coupon ) || '' === $coupon ) {
+			return '';
+		}
+
+		$coupon = sanitize_text_field( $coupon );
+
+		return function_exists( 'wc_format_coupon_code' ) ? wc_format_coupon_code( $coupon ) : $coupon;
 	}
 
 	/**
